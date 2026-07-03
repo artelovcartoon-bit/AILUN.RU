@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ailun.ru — маркетплейс объявлений ОАЭ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --green-950:#0A2E1C;
+    --green-900:#0F3D24;
+    --green-700:#167A47;
+    --green-600:#1B8F53;
+    --green-500:#2FA365;
+    --green-100:#E9F6EE;
+    --green-50:#F4FBF6;
+    --gold:#C9972E;
+    --gold-100:#FBF3E1;
+    --ink:#122318;
+    --ink-soft:#4B5D53;
+    --line:#E1EBE4;
+    --white:#FFFFFF;
+    --radius:16px;
+    --radius-sm:10px;
+    --shadow:0 8px 24px rgba(15,61,36,.10);
+    --shadow-lg:0 20px 50px rgba(10,46,28,.25);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    font-family:'Inter',sans-serif;
+    color:var(--ink);
+    background:
+      radial-gradient(circle at 20% -10%, #1a5c39 0%, transparent 55%),
+      linear-gradient(160deg,var(--green-950) 0%,var(--green-900) 45%,#0c3220 100%);
+    min-height:100vh;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,.display{font-family:'Unbounded',sans-serif;}
+  button{font-family:inherit;cursor:pointer;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--gold-100);color:var(--green-900);}
+  :focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+
+  /* lattice signature texture */
+  .lattice{
+    position:absolute;inset:0;opacity:.10;pointer-events:none;
+    background-image:
+      linear-gradient(45deg, var(--white) 1px, transparent 1px),
+      linear-gradient(-45deg, var(--white) 1px, transparent 1px);
+    background-size:26px 26px;
+  }
+
+  .app-shell{
+    max-width:480px;margin:0 auto;background:var(--white);
+    min-height:100vh;position:relative;box-shadow:var(--shadow-lg);
+    overflow:hidden;
+  }
+  .status-bar{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:10px 20px 6px;font-size:13px;font-weight:600;color:var(--green-950);
+    background:var(--white);
+  }
+  .status-bar .dots{display:flex;gap:3px;align-items:center;}
+  .status-bar .bar{width:3px;background:var(--green-950);border-radius:1px;}
+  .status-bar .bar:nth-child(1){height:5px;} .status-bar .bar:nth-child(2){height:7px;}
+  .status-bar .bar:nth-child(3){height:9px;} .status-bar .bar:nth-child(4){height:11px;}
+
+  /* ---------- Partner banner ---------- */
+  .partner-banner{
+    background:linear-gradient(120deg,var(--green-900),var(--green-700));
+    color:var(--white);padding:10px 16px;display:flex;align-items:center;
+    justify-content:space-between;gap:10px;position:relative;overflow:hidden;
+  }
+  .partner-banner span{font-size:12.5px;font-weight:500;line-height:1.3;position:relative;z-index:1;}
+  .partner-banner b{color:var(--gold);}
+  .partner-banner button{
+    background:var(--gold);color:var(--green-950);border:none;border-radius:999px;
+    padding:7px 13px;font-size:12px;font-weight:700;white-space:nowrap;position:relative;z-index:1;
+    box-shadow:0 4px 10px rgba(201,151,46,.4);
+  }
+
+  /* ---------- Header ---------- */
+  header.main{padding:14px 16px 12px;background:var(--white);border-bottom:1px solid var(--line);}
+  .top-row{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;}
+  .logo{display:flex;align-items:center;gap:9px;}
+  .logo-mark{
+    width:36px;height:36px;border-radius:11px;
+    background:linear-gradient(145deg,var(--green-600),var(--green-900));
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.15);
+  }
+  .logo-mark svg{width:19px;height:19px;}
+  .logo-text{font-family:'Unbounded',sans-serif;font-weight:700;font-size:19px;color:var(--green-950);letter-spacing:.2px;}
+  .auth-actions{display:flex;align-items:center;gap:8px;}
+  .btn{
+    border:none;border-radius:999px;padding:9px 14px;font-size:13px;font-weight:700;
+    display:inline-flex;align-items:center;gap:6px;white-space:nowrap;transition:transform .15s ease;
+  }
+  .btn:active{transform:scale(.96);}
+  .btn-primary{background:var(--green-700);color:var(--white);}
+  .btn-primary:hover{background:var(--green-600);}
+  .btn-ghost{background:transparent;color:var(--green-700);font-weight:600;padding:9px 8px;}
+  .btn-outline{background:var(--white);color:var(--green-900);border:1px solid var(--line);}
+  .icon-btn{
+    width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--white);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .avatar-btn{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--green-50);
+    border-radius:999px;padding:4px 10px 4px 4px;}
+  .avatar-circle{width:26px;height:26px;border-radius:50%;background:var(--green-700);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;}
+
+  .cta-row{display:flex;gap:8px;}
+  .search-field{
+    flex:1;display:flex;align-items:center;gap:8px;background:var(--green-50);
+    border:1px solid var(--line);border-radius:999px;padding:11px 14px;color:var(--ink-soft);font-size:13.5px;
+  }
+  .search-field svg{flex-shrink:0;}
+
+  .cats-strip{display:flex;gap:8px;padding:6px 16px 2px;overflow-x:auto;background:var(--white);}
+  .cats-strip::-webkit-scrollbar{display:none;}
+  .cat-chip{
+    flex-shrink:0;display:flex;align-items:center;gap:6px;background:var(--green-50);
+    border:1px solid var(--line);border-radius:999px;padding:7px 12px;font-size:12.5px;font-weight:600;color:var(--green-900);
+  }
+  .cat-chip.active{background:var(--green-700);color:#fff;border-color:var(--green-700);}
+
+  main{padding:18px 16px 100px;background:var(--green-50);min-height:60vh;}
+
+  /* ---------- Home: category grid ---------- */
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;margin:4px 0 12px;}
+  .section-head h2{font-size:16.5px;margin:0;color:var(--green-950);}
+  .section-head .link{font-size:12.5px;font-weight:700;color:var(--green-700);}
+  .hero-card{
+    position:relative;border-radius:20px;overflow:hidden;padding:22px 18px;margin-bottom:20px;
+    background:linear-gradient(135deg,var(--green-900),var(--green-600));color:#fff;
+  }
+  .hero-card h1{font-size:20px;margin:0 0 6px;line-height:1.25;}
+  .hero-card p{margin:0;font-size:13px;color:#dff2e6;line-height:1.5;max-width:80%;}
+
+  .grid-cats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:26px;}
+  .cat-card{
+    background:var(--white);border:1px solid var(--line);border-radius:var(--radius-sm);
+    padding:14px 8px 12px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:8px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .cat-card:active{transform:scale(.96);}
+  .cat-card .ico{
+    width:44px;height:44px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:20px;
+    background:var(--green-100);
+  }
+  .cat-card span{font-size:12px;font-weight:600;line-height:1.25;color:var(--green-950);}
+  .cat-card small{font-size:10.5px;color:var(--ink-soft);font-weight:500;}
+
+  .promo-row{display:flex;gap:10px;overflow-x:auto;margin-bottom:24px;padding-bottom:2px;}
+  .promo-row::-webkit-scrollbar{display:none;}
+  .promo-card{
+    flex-shrink:0;width:150px;height:96px;border-radius:14px;padding:12px;color:#fff;
+    display:flex;flex-direction:column;justify-content:space-between;font-weight:700;font-size:13px;
+  }
+
+  /* ---------- Provider list (category screen) ---------- */
+  .back-row{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+  .back-btn{
+    width:34px;height:34px;border-radius:50%;background:var(--white);border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .screen-title{font-size:18px;color:var(--green-950);margin:0;}
+  .screen-sub{font-size:12.5px;color:var(--ink-soft);margin:2px 0 0;}
+
+  .subcat-chips{display:flex;gap:8px;overflow-x:auto;margin-bottom:16px;padding-bottom:2px;}
+  .subcat-chips::-webkit-scrollbar{display:none;}
+  .chip{
+    flex-shrink:0;border:1px solid var(--line);background:var(--white);border-radius:999px;
+    padding:8px 13px;font-size:12.5px;font-weight:600;color:var(--green-900);
+  }
+  .chip.active{background:var(--green-900);color:#fff;border-color:var(--green-900);}
+
+  .provider-card{
+    display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);
+    border-radius:var(--radius-sm);padding:12px;margin-bottom:10px;
+  }
+  .provider-thumb{
+    width:52px;height:52px;border-radius:12px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    font-size:22px;background:var(--green-100);
+  }
+  .provider-info{flex:1;min-width:0;}
+  .provider-info h3{font-size:14px;margin:0 0 3px;color:var(--green-950);}
+  .provider-meta{display:flex;align-items:center;gap:8px;font-size:11.5px;color:var(--ink-soft);}
+  .rating{display:flex;align-items:center;gap:3px;color:var(--gold);font-weight:700;}
+  .chev{color:var(--ink-soft);flex-shrink:0;}
+
+  /* ---------- Product grid ---------- */
+  .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .product-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;}
+  .product-media{
+    height:92px;background:var(--green-100);display:flex;align-items:center;justify-content:center;font-size:30px;
+    position:relative;
+  }
+  .fav-btn{
+    position:absolute;top:8px;right:8px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.9);
+    border:none;display:flex;align-items:center;justify-content:center;
+  }
+  .fav-btn.active svg{fill:#E0455A;stroke:#E0455A;}
+  .product-body{padding:10px 10px 12px;}
+  .product-body h4{font-size:12.5px;margin:0 0 6px;line-height:1.3;font-weight:600;color:var(--green-950);
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:32px;}
+  .product-price{font-size:13px;font-weight:800;color:var(--green-700);margin-bottom:8px;}
+  .product-body .btn{width:100%;justify-content:center;padding:8px;font-size:12px;}
+
+  /* ---------- Bottom nav ---------- */
+  .bottom-nav{
+    position:sticky;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--line);
+    display:flex;justify-content:space-around;padding:9px 6px 12px;z-index:20;
+  }
+  .nav-item{display:flex;flex-direction:column;align-items:center;gap:3px;font-size:10px;font-weight:600;color:var(--ink-soft);
+    background:none;border:none;padding:4px 8px;}
+  .nav-item.active{color:var(--green-700);}
+
+  /* ---------- Footer ---------- */
+  footer{background:var(--green-950);color:#cfe6d8;padding:30px 20px 20px;position:relative;overflow:hidden;}
+  footer .lattice{opacity:.06;}
+  footer h5{font-family:'Unbounded',sans-serif;font-size:12px;color:#fff;margin:0 0 12px;letter-spacing:.3px;text-transform:uppercase;}
+  footer ul{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:9px;}
+  footer ul li a, footer ul li button{font-size:12.5px;color:#cfe6d8;background:none;border:none;padding:0;text-align:left;}
+  .footer-brand{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .footer-brand .logo-text{color:#fff;}
+  .footer-desc{font-size:12px;color:#9fc2ac;line-height:1.6;margin-bottom:18px;}
+  .whatsapp-cta{
+    display:flex;align-items:center;gap:10px;background:#155c37;border-radius:14px;padding:12px 14px;margin-bottom:18px;
+  }
+  .whatsapp-cta .wa-ico{
+    width:38px;height:38px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .whatsapp-cta div{flex:1;}
+  .whatsapp-cta strong{display:block;font-size:12.5px;color:#fff;}
+  .whatsapp-cta span{font-size:11px;color:#9fc2ac;}
+  .dev-line{font-size:11.5px;color:#9fc2ac;border-top:1px solid #1d5236;padding-top:16px;line-height:1.8;}
+  .dev-line b{color:#fff;}
+  .legal-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
+  .legal-row button{background:none;border:none;color:#9fc2ac;font-size:11px;text-decoration:underline;padding:0;}
+  .copyright{font-size:10.5px;color:#6f9682;margin-top:14px;}
+
+  /* ---------- Search overlay ---------- */
+  .overlay{
+    position:fixed;inset:0;background:rgba(10,46,28,.55);z-index:100;display:none;
+    align-items:flex-start;justify-content:center;
+  }
+  .overlay.open{display:flex;}
+  .overlay-panel{
+    width:100%;max-width:480px;background:var(--white);min-height:100vh;padding:14px 16px 30px;
+    animation:slideDown .2s ease;
+  }
+  @keyframes slideDown{from{transform:translateY(-14px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .overlay-top{display:flex;align-items:center;gap:10px;margin-bottom:16px;}
+  .overlay-top .search-field{background:var(--green-50);}
+  .overlay-top input{border:none;background:transparent;outline:none;flex:1;font-size:13.5px;color:var(--ink);}
+  .search-result-row{display:flex;align-items:center;gap:10px;padding:11px 4px;border-bottom:1px solid var(--line);}
+  .search-result-row .ico{width:32px;height:32px;border-radius:9px;background:var(--green-100);display:flex;
+    align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
+  .search-result-row div strong{display:block;font-size:13px;color:var(--green-950);}
+  .search-result-row div span{font-size:11px;color:var(--ink-soft);}
+  .recent-chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px;}
+
+  /* ---------- Modal (bottom sheet) ---------- */
+  .modal-overlay{
+    position:fixed;inset:0;background:rgba(10,46,28,.55);z-index:200;display:none;
+    align-items:flex-end;justify-content:center;
+  }
+  .modal-overlay.open{display:flex;}
+  .modal-sheet{
+    width:100%;max-width:480px;background:var(--white);border-radius:22px 22px 0 0;
+    max-height:88vh;overflow-y:auto;padding:18px 18px 26px;animation:slideUp .22s ease;
+  }
+  @keyframes slideUp{from{transform:translateY(30px);opacity:0;}to{transform:translateY(0);opacity:1;}}
+  .modal-handle{width:38px;height:4px;background:var(--line);border-radius:3px;margin:0 auto 14px;}
+  .modal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+  .modal-head h3{font-size:16px;margin:0;color:var(--green-950);}
+  .modal-close{width:30px;height:30px;border-radius:50%;background:var(--green-50);border:none;
+    display:flex;align-items:center;justify-content:center;}
+  .field-group{margin-bottom:14px;}
+  .field-group label{display:block;font-size:12px;font-weight:600;color:var(--ink-soft);margin-bottom:6px;}
+  .field-group input, .field-group select, .field-group textarea{
+    width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 12px;font-size:13.5px;
+    font-family:inherit;color:var(--ink);background:var(--green-50);
+  }
+  .field-group textarea{resize:vertical;min-height:70px;}
+  .modal-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;}
+  .modal-cat-grid button{
+    background:var(--green-50);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;
+    font-size:11px;font-weight:600;color:var(--green-950);display:flex;flex-direction:column;align-items:center;gap:6px;
+  }
+  .modal-cat-grid button.active{background:var(--green-700);color:#fff;border-color:var(--green-700);}
+  .subcat-list button{
+    width:100%;text-align:left;background:var(--white);border:1px solid var(--line);border-radius:11px;
+    padding:12px 14px;font-size:13px;font-weight:600;color:var(--green-950);margin-bottom:8px;display:flex;
+    justify-content:space-between;align-items:center;
+  }
+  .upload-row{display:flex;gap:8px;margin-bottom:4px;}
+  .upload-box{width:64px;height:64px;border-radius:12px;border:1.5px dashed var(--line);background:var(--green-50);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);flex-shrink:0;}
+  .legal-text{font-size:12.5px;line-height:1.75;color:var(--ink-soft);}
+  .legal-text h4{font-size:13px;color:var(--green-950);margin:16px 0 6px;}
+  .legal-text h4:first-child{margin-top:0;}
+
+  /* ---------- Toast ---------- */
+  .toast{
+    position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);
+    background:var(--green-950);color:#fff;padding:12px 18px;border-radius:999px;font-size:12.5px;font-weight:600;
+    z-index:300;opacity:0;transition:all .25s ease;display:flex;align-items:center;gap:8px;box-shadow:var(--shadow-lg);
+    max-width:90%;
+  }
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .screen{display:none;}
+  .screen.active{display:block;animation:fadeIn .18s ease;}
+  @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+
+  @media (min-width:481px){
+    body{padding:24px 0;}
+  }
+</style>
+</head>
+<body>
+
+<div class="app-shell" id="appShell">
+
+  <div class="status-bar">
+    <span>9:41</span>
+    <div class="dots">
+      <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+  </div>
+
+  <!-- Partner banner -->
+  <div class="partner-banner">
+    <div class="lattice"></div>
+    <span>Есть свой бренд или сервис? <b>Добавьте его на AILUN</b> и получайте клиентов уже сегодня</span>
+    <button id="partnerBtn">Стать партнёром</button>
+  </div>
+
+  <!-- Header -->
+  <header class="main">
+    <div class="top-row">
+      <div class="logo">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 20 L12 12 L16 20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <span class="logo-text">Ailun</span>
+      </div>
+      <div class="auth-actions" id="authActions"></div>
+    </div>
+    <div class="cta-row">
+      <div class="search-field" id="openSearchBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#4B5D53" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="#4B5D53" stroke-width="2" stroke-linecap="round"/></svg>
+        <span>Искать бренды, товары, услуги…</span>
+      </div>
+      <button class="icon-btn" id="filterBtn" title="Фильтры">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M7 12h10M10 18h4" stroke="#0F3D24" stroke-width="2" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <nav class="cats-strip" id="catsStrip"></nav>
+
+  <main id="mainArea">
+    <!-- HOME -->
+    <section class="screen active" data-screen="home" id="screenHome">
+      <div class="hero-card">
+        <div class="lattice"></div>
+        <h1>Всё для жизни в ОАЭ — <br>в одном приложении</h1>
+        <p>Недвижимость, авто, работа, магазины и Halal-сервисы рядом с вами</p>
+      </div>
+
+      <div class="section-head"><h2>Категории</h2></div>
+      <div class="grid-cats" id="gridCats"></div>
+
+      <div class="section-head"><h2>Акции и подборки</h2></div>
+      <div class="promo-row" id="promoRow"></div>
+
+      <div class="section-head"><h2>Рекомендуем</h2><span class="link" data-goto-cat="halal">Все Halal Market →</span></div>
+      <div class="product-grid" id="homeRecommend"></div>
+    </section>
+
+    <!-- CATEGORY -->
+    <section class="screen" data-screen="category" id="screenCategory"></section>
+
+    <!-- PROVIDER -->
+    <section class="screen" data-screen="provider" id="screenProvider"></section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-nav="home">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
+      Главная
+    </button>
+    <button class="nav-item" data-nav="search">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      Поиск
+    </button>
+    <button class="nav-item" data-nav="add">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>
+      Подать
+    </button>
+    <button class="nav-item" data-nav="fav">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      Избранное
+    </button>
+    <button class="nav-item" data-nav="profile">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
+      Профиль
+    </button>
+  </nav>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="lattice"></div>
+    <div class="footer-brand">
+      <div class="logo-mark">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 20 L12 12 L16 20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="logo-text">Ailun</span>
+    </div>
+    <p class="footer-desc">Маркетплейс объявлений для русскоязычного сообщества ОАЭ: недвижимость, авто, работа, товары и Halal-сервисы в одном приложении.</p>
+
+    <h5>Компания</h5>
+    <ul>
+      <li><button data-legal="about">О нас</button></li>
+      <li><button data-legal="ads">Реклама</button></li>
+      <li><button id="footerPartnerBtn">Стать партнёром</button></li>
+    </ul>
+
+    <h5>Категории</h5>
+    <ul id="footerCats"></ul>
+
+    <div class="whatsapp-cta" id="waCta">
+      <div class="wa-ico">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.7 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.4-5.1-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.4.8-.8.8-.5 1.3.9 1.7 1.9 2.3 3.4 3 .3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.6.8 1.9 1 .3.1.5.2.6.3.1.2.1 1-.2 1.6z"/></svg>
+      </div>
+      <div><strong>Написать нам в WhatsApp</strong><span>Ответим в течение 15 минут</span></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9fc2ac" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>
+
+    <div class="dev-line">
+      <b>Разработчик:</b> ALIEV AI · Aibek Aliev<br>
+      <b>Сайт:</b> ailun.ru &nbsp;·&nbsp; <b>Телефон:</b> +971 50 000 00 00
+      <div class="legal-row">
+        <button data-legal="privacy">Политика конфиденциальности</button>
+        <button data-legal="terms">Условия использования</button>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Ailun.ru. Все права защищены. Демо-версия интерфейса.</p>
+  </footer>
+
+</div>
+
+<!-- Search overlay -->
+<div class="overlay" id="searchOverlay">
+  <div class="overlay-panel">
+    <div class="overlay-top">
+      <div class="search-field" style="flex:1">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#4B5D53" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="#4B5D53" stroke-width="2" stroke-linecap="round"/></svg>
+        <input type="text" id="searchInput" placeholder="Например: iPhone, вилла, работа…" autocomplete="off">
+      </div>
+      <button class="btn btn-ghost" id="closeSearchBtn">Отмена</button>
+    </div>
+    <div id="searchBody"></div>
+  </div>
+</div>
+
+<!-- Generic bottom-sheet modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-sheet" id="modalSheet"></div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ===================== DATA ===================== */
+const DATA = [
+  { id:'halal', name:'Halal Market', icon:'🕌', tag:'Halal-сервисы',
+    subcats:['Агентства','Гостиницы','Апартаменты','Койко-места'],
+    catalog:{
+      'Агентства':[['Подбор жилья','от 500 AED'],['Консультация Halal-агента','Бесплатно'],['Сопровождение сделки','от 1200 AED']],
+      'Гостиницы':[['Номер Standard','180 AED/ночь'],['Номер Deluxe','320 AED/ночь'],['Семейный номер','450 AED/ночь']],
+      'Апартаменты':[['Студия в Marina','3200 AED/мес'],['1-спальная в JVC','4500 AED/мес'],['2-спальная в Al Barsha','6800 AED/мес']],
+      'Койко-места':[['Койко-место (муж.)','650 AED/мес'],['Койко-место (жен.)','700 AED/мес'],['Место в общей комнате','550 AED/мес']]
+    },
+    providers:[{name:'Амвадж Резиденс',rating:4.8,meta:'Ответ за 10 мин'},{name:'Baraka Homes',rating:4.6,meta:'Ответ за 20 мин'},{name:'Al Noor Halal Stay',rating:4.9,meta:'Ответ за 5 мин'}]
+  },
+  { id:'realty', name:'Недвижимость', icon:'🏠', tag:'Аренда и продажа',
+    subcats:['Квартиры','Виллы','Офисы','Койко-места'],
+    catalog:{
+      'Квартиры':[['Студия JLT','3800 AED/мес'],['1BR Downtown','7200 AED/мес'],['2BR Marina','9800 AED/мес']],
+      'Виллы':[['Вилла 4BR Arabian Ranches','220 000 AED/год'],['Таунхаус 3BR','165 000 AED/год']],
+      'Офисы':[['Офис 40 м²','55 000 AED/год'],['Коворкинг место','900 AED/мес']],
+      'Койко-места':[['Койко-место International City','500 AED/мес'],['Комната в шеринге','1400 AED/мес']]
+    },
+    providers:[{name:'Emirates Realty',rating:4.7,meta:'Ответ за 15 мин'},{name:'Дубай Резиденс',rating:4.5,meta:'Ответ за 30 мин'},{name:'Prime Properties UAE',rating:4.9,meta:'Ответ за 10 мин'}]
+  },
+  { id:'auto', name:'Автомобиль', icon:'🚗', tag:'Купить, продать, взять в аренду',
+    subcats:['Седаны','Внедорожники','Аренда авто','Запчасти'],
+    catalog:{
+      'Седаны':[['Toyota Camry 2022','78 000 AED'],['Honda Accord 2021','69 500 AED'],['Nissan Altima 2023','72 000 AED']],
+      'Внедорожники':[['Nissan Patrol 2020','145 000 AED'],['Toyota Land Cruiser 2019','155 000 AED']],
+      'Аренда авто':[['Аренда economy/сутки','95 AED'],['Аренда SUV/сутки','220 AED']],
+      'Запчасти':[['Комплект тормозных колодок','240 AED'],['Аккумулятор 70Ah','310 AED']]
+    },
+    providers:[{name:'AutoDXB',rating:4.6,meta:'20 объявлений'},{name:'Gulf Motors',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
+  },
+  { id:'fashion', name:'Магазины одежды', icon:'👕', tag:'Мужская, женская, детская',
+    subcats:['Мужская','Женская','Детская','Аксессуары'],
+    catalog:{
+      'Мужская':[['Рубашка льняная','149 AED'],['Джинсы slim fit','199 AED'],['Кроссовки кожаные','349 AED']],
+      'Женская':[['Абайя вышитая','259 AED'],['Платье летнее','179 AED'],['Сумка кожаная','299 AED']],
+      'Детская':[['Комплект детский','119 AED'],['Кроссовки детские','159 AED']],
+      'Аксессуары':[['Ремень кожаный','89 AED'],['Очки солнцезащитные','129 AED']]
+    },
+    providers:[{name:'Style Hub',rating:4.7,meta:'Новая коллекция'},{name:'Sandy Fashion',rating:4.5,meta:'Скидки до 30%'},{name:'Oasis Wear',rating:4.6,meta:'Доставка 1–2 дня'}]
+  },
+  { id:'electronics', name:'Электроника', icon:'📱', tag:'Смартфоны, ноутбуки, аудио',
+    subcats:['Смартфоны','Ноутбуки','Аудио','Умный дом'],
+    catalog:{
+      'Смартфоны':[['iPhone 15 128GB','3399 AED'],['Samsung S24','2999 AED'],['Xiaomi 14','2199 AED']],
+      'Ноутбуки':[['MacBook Air M2','4299 AED'],['Lenovo ThinkPad','2799 AED'],['Asus Zenbook','3199 AED']],
+      'Аудио':[['AirPods Pro 2','899 AED'],['JBL колонка','349 AED'],['Наушники накладные','249 AED']],
+      'Умный дом':[['Умная лампа','69 AED'],['Робот-пылесос','899 AED']]
+    },
+    providers:[{name:'TechPoint',rating:4.8,meta:'Гарантия 1 год'},{name:'GadgetPro',rating:4.5,meta:'Рассрочка 0%'},{name:'ElectroMax',rating:4.6,meta:'Доставка сегодня'}]
+  },
+  { id:'services', name:'Услуги', icon:'🛠️', tag:'Ремонт, клининг, обучение',
+    subcats:['Ремонт','Клининг','Переезды','Обучение'],
+    catalog:{
+      'Ремонт':[['Ремонт кондиционера','150 AED'],['Сантехник на дом','120 AED'],['Электрик','130 AED']],
+      'Клининг':[['Генеральная уборка','220 AED'],['Химчистка дивана','180 AED']],
+      'Переезды':[['Переезд по городу','350 AED'],['Грузчики + Ford','400 AED']],
+      'Обучение':[['Репетитор английского','80 AED/час'],['Курсы вождения','2200 AED']]
+    },
+    providers:[{name:'FixIt Dubai',rating:4.7,meta:'Выезд за 40 мин'},{name:'CleanPro',rating:4.6,meta:'Выезд сегодня'},{name:'HandyHub',rating:4.5,meta:'Работаем 24/7'}]
+  },
+  { id:'jobs', name:'Работа', icon:'💼', tag:'Вакансии и резюме',
+    subcats:['Вакансии','Резюме','Стажировки'],
+    catalog:{
+      'Вакансии':[['Продавец-консультант','3500 AED/мес'],['Водитель категории B','4200 AED/мес'],['Менеджер по продажам','5500 AED/мес']],
+      'Резюме':[['Резюме: бухгалтер','Ищу работу'],['Резюме: SMM-специалист','Ищу работу']],
+      'Стажировки':[['Стажировка маркетинг','1500 AED/мес'],['Стажировка разработка','2000 AED/мес']]
+    },
+    providers:[{name:'JobHub UAE',rating:4.6,meta:'120+ вакансий'},{name:'CareerLine',rating:4.4,meta:'Отклик за 1 клик'},{name:'WorkNow',rating:4.7,meta:'Проверенные компании'}]
+  },
+  { id:'food', name:'Рестораны', icon:'🍔', tag:'Доставка еды',
+    subcats:['Бургеры','Суши','Пицца','Шаурма','Шашлык'],
+    catalog:{
+      'Бургеры':[['Чизбургер classic','22 AED'],['Двойной бургер','32 AED']],
+      'Суши':[['Филадельфия ролл','38 AED'],['Калифорния ролл','34 AED']],
+      'Пицца':[['Пепперони','45 AED'],['Маргарита','38 AED']],
+      'Шаурма':[['Шаурма classic','14 AED'],['Шаурма острая','16 AED']],
+      'Шашлык':[['Шашлык из баранины','42 AED'],['Шашлык куриный','28 AED']]
+    },
+    providers:[{name:'Crispy King',rating:4.5,meta:'20–30 мин'},{name:'Osak Kebab',rating:4.7,meta:'35–45 мин'},{name:'Sushi Wave',rating:4.6,meta:'25–35 мин'},{name:'Toyboss Catering',rating:4.8,meta:'40–50 мин'}]
+  }
+];
+
+const WA_NUMBER = '971500000000'; // TODO: заменить на реальный номер WhatsApp
+
+/* ===================== STATE ===================== */
+const state = {
+  loggedIn:false,
+  favorites:new Set(),
+  recent:[],
+  activeCat:null,
+  activeProviderIdx:null,
+  activeChip:'Все',
+  listing:{catId:null, subcat:null}
+};
+
+/* ===================== HELPERS ===================== */
+function $(sel,root=document){return root.querySelector(sel);}
+function $all(sel,root=document){return [...root.querySelectorAll(sel)];}
+function toast(msg){
+  const t=$('#toast'); t.textContent=msg; t.classList.add('show');
+  clearTimeout(t._timer); t._timer=setTimeout(()=>t.classList.remove('show'),2400);
+}
+function catById(id){return DATA.find(c=>c.id===id);}
+function showScreen(name){
+  $all('.screen').forEach(s=>s.classList.remove('active'));
+  $(`.screen[data-screen="${name}"]`).classList.add('active');
+  $('#appShell').scrollIntoView({behavior:'instant',block:'start'});
+  window.scrollTo({top:0,behavior:'instant'});
+}
+function star(){return '★';}
+
+/* ===================== RENDER: AUTH ===================== */
+function renderAuth(){
+  const el = $('#authActions');
+  if(!state.loggedIn){
+    el.innerHTML = `
+      <button class="btn btn-ghost" id="loginBtn">Войти</button>
+      <button class="btn btn-primary" id="registerBtn">Регистрация</button>`;
+    $('#loginBtn').onclick=()=>openLoginModal();
+    $('#registerBtn').onclick=()=>openLoginModal();
+  } else {
+    el.innerHTML = `
+      <button class="btn btn-outline" id="addListingHeaderBtn">+ Объявление</button>
+      <button class="avatar-btn" id="profileBtn">
+        <span class="avatar-circle">Д</span>
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+      </button>`;
+    $('#addListingHeaderBtn').onclick=()=>openListingModal();
+    $('#profileBtn').onclick=()=>openProfileModal();
+  }
+}
+
+/* ===================== RENDER: CATEGORY STRIP + HOME GRID ===================== */
+function renderCatsStrip(){
+  $('#catsStrip').innerHTML = DATA.map(c=>`<button class="cat-chip" data-cat="${c.id}">${c.icon} ${c.name}</button>`).join('');
+  $all('.cat-chip').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
+}
+function renderHomeGrid(){
+  $('#gridCats').innerHTML = DATA.map(c=>`
+    <button class="cat-card" data-cat="${c.id}">
+      <div class="ico">${c.icon}</div>
+      <span>${c.name}</span>
+      <small>${c.providers.length} партнёра</small>
+    </button>`).join('');
+  $all('.cat-card').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
+
+  const promos = [
+    {t:'Скидки до 30%',s:'На одежду',bg:'linear-gradient(135deg,#167A47,#0F3D24)'},
+    {t:'Новые villa',s:'Недвижимость',bg:'linear-gradient(135deg,#C9972E,#8a641b)'},
+    {t:'0% рассрочка',s:'Электроника',bg:'linear-gradient(135deg,#2FA365,#0F3D24)'},
+  ];
+  $('#promoRow').innerHTML = promos.map(p=>`
+    <div class="promo-card" style="background:${p.bg}"><span>${p.t}</span><small style="font-weight:500;opacity:.85">${p.s}</small></div>
+  `).join('');
+
+  const halal = catById('halal');
+  const items = halal.catalog['Апартаменты'].concat(halal.catalog['Гостиницы']).slice(0,4);
+  $('#homeRecommend').innerHTML = items.map((it,i)=>productCard(halal.icon, it[0], it[1], `${halal.id}-rec-${i}`)).join('');
+  bindProductCards();
+
+  $('#footerCats').innerHTML = DATA.map(c=>`<li><button data-cat="${c.id}">${c.icon} ${c.name}</button></li>`).join('');
+  $all('#footerCats button').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
+}
+
+/* ===================== RENDER: CATEGORY SCREEN (providers list) ===================== */
+function openCategory(catId){
+  state.activeCat = catId;
+  const cat = catById(catId);
+  const el = $('#screenCategory');
+  el.innerHTML = `
+    <div class="back-row">
+      <button class="back-btn" id="backToHome"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div>
+        <h2 class="screen-title">${cat.icon} ${cat.name}</h2>
+        <p class="screen-sub">${cat.tag} · ${cat.providers.length} партнёра</p>
+      </div>
+    </div>
+    <div class="subcat-chips">${cat.subcats.map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+    <div id="providersList"></div>
+  `;
+  $('#providersList').innerHTML = cat.providers.map((p,i)=>`
+    <div class="provider-card" data-idx="${i}">
+      <div class="provider-thumb">${cat.icon}</div>
+      <div class="provider-info">
+        <h3>${p.name}</h3>
+        <div class="provider-meta"><span class="rating">${star()} ${p.rating}</span><span>·</span><span>${p.meta}</span></div>
+      </div>
+      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+    </div>`).join('');
+  $('#backToHome').onclick=()=>showScreen('home');
+  $all('#providersList .provider-card').forEach(card=>{
+    card.onclick=()=>openProvider(catId, +card.dataset.idx);
+  });
+  showScreen('category');
+}
+
+/* ===================== RENDER: PROVIDER SCREEN (products) ===================== */
+function openProvider(catId, idx){
+  state.activeCat = catId;
+  state.activeProviderIdx = idx;
+  state.activeChip = 'Все';
+  const cat = catById(catId);
+  const provider = cat.providers[idx];
+  renderProviderScreen(cat, provider);
+  showScreen('provider');
+}
+function renderProviderScreen(cat, provider){
+  const el = $('#screenProvider');
+  el.innerHTML = `
+    <div class="back-row">
+      <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div>
+        <h2 class="screen-title">${provider.name}</h2>
+        <p class="screen-sub"><span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}</p>
+      </div>
+    </div>
+    <div class="subcat-chips" id="providerChips">
+      <span class="chip active" data-chip="Все">Все</span>
+      ${cat.subcats.map(s=>`<span class="chip" data-chip="${s}">${s}</span>`).join('')}
+    </div>
+    <div class="product-grid" id="providerProducts"></div>
+  `;
+  $('#backToCategory').onclick=()=>showScreen('category');
+  $all('#providerChips .chip').forEach(chip=>{
+    chip.onclick=()=>{
+      $all('#providerChips .chip').forEach(c=>c.classList.remove('active'));
+      chip.classList.add('active');
+      state.activeChip = chip.dataset.chip;
+      renderProviderProducts(cat);
+    };
+  });
+  renderProviderProducts(cat);
+}
+function renderProviderProducts(cat){
+  let entries = [];
+  const subs = state.activeChip==='Все' ? cat.subcats : [state.activeChip];
+  subs.forEach(s=>{ (cat.catalog[s]||[]).forEach((it,i)=>entries.push({sub:s,name:it[0],price:it[1],idx:i})); });
+  $('#providerProducts').innerHTML = entries.map(e=>productCard(cat.icon, e.name, e.price, `${cat.id}-${e.sub}-${e.idx}`)).join('');
+  bindProductCards();
+}
+function productCard(icon,name,price,key){
+  const fav = state.favorites.has(key) ? 'active' : '';
+  return `
+  <div class="product-card">
+    <div class="product-media">${icon}
+      <button class="fav-btn ${fav}" data-fav="${key}">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </button>
+    </div>
+    <div class="product-body">
+      <h4>${name}</h4>
+      <div class="product-price">${price}</div>
+      <button class="btn btn-primary" data-contact="${name}">Написать</button>
+    </div>
+  </div>`;
+}
+function bindProductCards(){
+  $all('[data-fav]').forEach(b=>{
+    b.onclick=(e)=>{
+      e.stopPropagation();
+      const key=b.dataset.fav;
+      if(state.favorites.has(key)){state.favorites.delete(key); b.classList.remove('active');}
+      else {state.favorites.add(key); b.classList.add('active'); toast('Добавлено в избранное');}
+    };
+  });
+  $all('[data-contact]').forEach(b=>{
+    b.onclick=(e)=>{
+      e.stopPropagation();
+      openContactModal(b.dataset.contact);
+    };
+  });
+}
+
+/* ===================== SEARCH ===================== */
+function flattenSearchIndex(){
+  const idx=[];
+  DATA.forEach(c=>{
+    idx.push({type:'Категория',icon:c.icon,name:c.name,go:()=>openCategory(c.id)});
+    c.providers.forEach((p,i)=>idx.push({type:c.name,icon:c.icon,name:p.name,go:()=>{closeSearch();openProvider(c.id,i);}}));
+    Object.entries(c.catalog).forEach(([sub,items])=>items.forEach(it=>{
+      idx.push({type:`${c.name} · ${sub}`,icon:c.icon,name:it[0]+' — '+it[1],go:()=>{closeSearch();openCategory(c.id);}});
+    }));
+  });
+  return idx;
+}
+const SEARCH_INDEX = flattenSearchIndex();
+function openSearch(){
+  $('#searchOverlay').classList.add('open');
+  $('#searchInput').value='';
+  $('#searchInput').focus();
+  renderSearchBody('');
+}
+function closeSearch(){ $('#searchOverlay').classList.remove('open'); }
+function renderSearchBody(query){
+  const body = $('#searchBody');
+  if(!query){
+    body.innerHTML = `
+      ${state.recent.length? `<div class="section-head" style="margin-top:4px"><h2 style="font-size:14px">Недавние поиски</h2><span class="link" id="clearRecent">Очистить</span></div>
+      <div class="recent-chip-row">${state.recent.map(r=>`<span class="chip" data-recent="${r}">${r}</span>`).join('')}</div>` : ''}
+      <div class="section-head" style="margin-top:18px"><h2 style="font-size:14px">Популярные категории</h2></div>
+      ${DATA.slice(0,5).map(c=>`
+        <div class="search-result-row" data-goto-cat="${c.id}">
+          <div class="ico">${c.icon}</div><div><strong>${c.name}</strong><span>${c.tag}</span></div>
+        </div>`).join('')}
+    `;
+    $('#clearRecent') && ($('#clearRecent').onclick=()=>{state.recent=[]; renderSearchBody('');});
+    $all('[data-recent]').forEach(c=>c.onclick=()=>{$('#searchInput').value=c.dataset.recent; renderSearchBody(c.dataset.recent);});
+    $all('[data-goto-cat]').forEach(c=>c.onclick=()=>{closeSearch(); openCategory(c.dataset.gotoCat);});
+    return;
+  }
+  const q=query.toLowerCase();
+  const results = SEARCH_INDEX.filter(r=>r.name.toLowerCase().includes(q)).slice(0,20);
+  body.innerHTML = results.length ? results.map((r,i)=>`
+    <div class="search-result-row" data-res="${i}">
+      <div class="ico">${r.icon}</div><div><strong>${r.name}</strong><span>${r.type}</span></div>
+    </div>`).join('') : `<p style="color:var(--ink-soft);font-size:13px;margin-top:20px;text-align:center">Ничего не найдено по «${query}»</p>`;
+  $all('[data-res]').forEach(el=>{
+    el.onclick=()=>{
+      if(!state.recent.includes(query)){ state.recent.unshift(query); state.recent=state.recent.slice(0,6); }
+      results[+el.dataset.res].go();
+    };
+  });
+}
+$('#openSearchBtn').onclick = openSearch;
+$('#closeSearchBtn').onclick = closeSearch;
+$('#searchInput').addEventListener('input', e=>renderSearchBody(e.target.value.trim()));
+$all('[data-nav="search"]').forEach(b=>b.onclick=openSearch);
+$('#filterBtn').onclick=()=>toast('Демо: фильтры по цене, рейтингу и району');
+
+/* ===================== MODALS ===================== */
+function openModal(html){
+  $('#modalSheet').innerHTML = `<div class="modal-handle"></div>` + html;
+  $('#modalOverlay').classList.add('open');
+}
+function closeModal(){ $('#modalOverlay').classList.remove('open'); }
+$('#modalOverlay').addEventListener('click', e=>{ if(e.target.id==='modalOverlay') closeModal(); });
+
+function openContactModal(itemName){
+  openModal(`
+    <div class="modal-head"><h3>Связаться с продавцом</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">По объявлению «${itemName}»</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Здравствуйте! Интересует: '+itemName)}" target="_blank" rel="noopener">Написать в WhatsApp</a>
+    <button class="btn btn-outline" style="width:100%;justify-content:center" onclick="closeModal()">Отмена</button>
+  `);
+}
+
+function openLoginModal(){
+  openModal(`
+    <div class="modal-head"><h3>Вход в Ailun</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="field-group"><label>Номер телефона</label><input type="tel" placeholder="+971 50 000 00 00"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" onclick="doLogin()">Получить код</button>
+    <p style="font-size:11.5px;color:var(--ink-soft);text-align:center">Продолжая, вы принимаете <span data-legal-inline="terms" style="text-decoration:underline;cursor:pointer">условия использования</span></p>
+  `);
+  $('[data-legal-inline="terms"]').onclick=()=>openLegal('terms');
+}
+function doLogin(){ state.loggedIn=true; renderAuth(); closeModal(); toast('Добро пожаловать, Данияр!'); }
+
+function openProfileModal(){
+  openModal(`
+    <div class="modal-head"><h3>Профиль</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
+      <span class="avatar-circle" style="width:44px;height:44px;font-size:16px">Д</span>
+      <div><strong style="font-size:14px">Данияр</strong><div style="font-size:12px;color:var(--ink-soft)">+971 50 123 45 67</div></div>
+    </div>
+    <div class="subcat-list">
+      <button onclick="toast('Демо-раздел')"><span>⚙️ Настройки профиля</span> ›</button>
+      <button onclick="toast('Демо-раздел')"><span>📋 Мои объявления</span> ›</button>
+      <button onclick="toast('Демо-раздел')"><span>💬 Чаты</span> ›</button>
+      <button onclick="toast('Демо-раздел')"><span>💳 Кошелёк</span> ›</button>
+      <button onclick="toast('Демо-раздел')"><span>❤️ Избранное</span> ›</button>
+      <button style="color:#C0392B" onclick="doLogout()"><span>🚪 Выйти</span></button>
+    </div>
+  `);
+}
+function doLogout(){ state.loggedIn=false; renderAuth(); closeModal(); toast('Вы вышли из аккаунта'); }
+
+function openListingModal(){
+  state.listing = {catId:null, subcat:null};
+  openModal(`
+    <div class="modal-head"><h3>Подать объявление</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px">Выберите категорию</p>
+    <div class="modal-cat-grid" id="listingCatGrid">
+      ${DATA.map(c=>`<button data-cat="${c.id}"><span style="font-size:18px">${c.icon}</span>${c.name}</button>`).join('')}
+    </div>
+  `);
+  $all('#listingCatGrid button').forEach(b=>b.onclick=()=>openListingSubcats(b.dataset.cat));
+}
+function openListingSubcats(catId){
+  const cat = catById(catId);
+  state.listing.catId = catId;
+  openModal(`
+    <div class="modal-head"><h3>${cat.icon} ${cat.name}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px">Выберите подкатегорию</p>
+    <div class="subcat-list" id="listingSubcatList">
+      ${cat.subcats.map(s=>`<button data-sub="${s}"><span>${s}</span> ›</button>`).join('')}
+    </div>
+    <button class="btn btn-ghost" onclick="openListingModal()">← Назад к категориям</button>
+  `);
+  $all('#listingSubcatList button').forEach(b=>b.onclick=()=>openListingForm(catId, b.dataset.sub));
+}
+function openListingForm(catId, subcat){
+  const cat = catById(catId);
+  state.listing.subcat = subcat;
+  openModal(`
+    <div class="modal-head"><h3>Добавить объявление</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px;color:var(--green-700);font-weight:700;margin-bottom:14px">${cat.icon} ${cat.name} → ${subcat} · бесплатно</p>
+    <div class="field-group"><label>Фотографии</label>
+      <div class="upload-row">
+        <div class="upload-box">📷</div><div class="upload-box">+</div><div class="upload-box">+</div>
+      </div>
+    </div>
+    <div class="field-group"><label>Название*</label><input type="text" placeholder="Например: ${(cat.catalog[subcat]&&cat.catalog[subcat][0][0])||subcat}"></div>
+    <div class="field-group"><label>Описание*</label><textarea placeholder="Расскажите подробнее о вашем объявлении"></textarea></div>
+    <div class="field-group"><label>Город*</label>
+      <select><option>Дубай</option><option>Абу-Даби</option><option>Шарджа</option><option>Аджман</option></select>
+    </div>
+    <div class="field-group"><label>Цена*</label><input type="text" placeholder="Договорная или сумма в AED"></div>
+    <div class="field-group"><label>Номер телефона*</label><input type="tel" placeholder="+971 50 000 00 00"></div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitListing()">Опубликовать бесплатно</button>
+  `);
+}
+function submitListing(){
+  closeModal();
+  toast('Объявление отправлено на модерацию ✓');
+}
+
+function openPartnerModal(){
+  openModal(`
+    <div class="modal-head"><h3>Стать партнёром AILUN</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px">Разместите свой бренд, магазин или сервис на AILUN и получайте клиентов из русскоязычного сообщества ОАЭ. Напишите нам — подключим за 1 день.</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Здравствуйте! Хочу стать партнёром AILUN')}" target="_blank" rel="noopener">Написать в WhatsApp</a>
+  `);
+}
+$('#partnerBtn').onclick = openPartnerModal;
+$('#footerPartnerBtn').onclick = openPartnerModal;
+
+/* Legal modals */
+const LEGAL = {
+  privacy:{title:'Политика конфиденциальности', body:`
+    <h4>1. Общие положения</h4><p>Настоящая политика определяет порядок обработки персональных данных пользователей платформы Ailun.ru.</p>
+    <h4>2. Какие данные мы собираем</h4><p>Номер телефона, город, история поиска и объявления, размещённые пользователем.</p>
+    <h4>3. Как мы используем данные</h4><p>Для показа релевантных объявлений, связи с продавцами и улучшения работы сервиса.</p>
+    <h4>4. Передача третьим лицам</h4><p>Мы не передаём персональные данные третьим лицам без согласия пользователя, за исключением случаев, предусмотренных законом.</p>
+    <p style="margin-top:16px;color:var(--ink-soft)">Демо-текст. Финальная редакция готовится юристом перед публикацией.</p>`},
+  terms:{title:'Условия использования', body:`
+    <h4>1. Принятие условий</h4><p>Используя Ailun.ru, вы соглашаетесь с настоящими условиями.</p>
+    <h4>2. Размещение объявлений</h4><p>Пользователь несёт ответственность за достоверность размещаемой информации.</p>
+    <h4>3. Запрещённый контент</h4><p>Запрещено размещение объявлений, нарушающих законодательство ОАЭ.</p>
+    <h4>4. Ответственность</h4><p>Ailun.ru является площадкой для размещения объявлений и не несёт ответственности за сделки между пользователями.</p>
+    <p style="margin-top:16px;color:var(--ink-soft)">Демо-текст. Финальная редакция готовится юристом перед публикацией.</p>`},
+  about:{title:'О нас', body:`<p style="line-height:1.7">Ailun — маркетплейс объявлений для русскоязычного сообщества ОАЭ. Мы объединяем недвижимость, авто, работу, магазины и Halal-сервисы в одном приложении, чтобы жизнь в Эмиратах была проще.</p>`},
+  ads:{title:'Реклама', body:`<p style="line-height:1.7">Хотите разместить рекламу на AILUN? Свяжитесь с нами через WhatsApp — подберём формат под ваш бюджет и аудиторию.</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">Написать в WhatsApp</a>`}
+};
+function openLegal(key){
+  const l = LEGAL[key];
+  openModal(`<div class="modal-head"><h3>${l.title}</h3><button class="modal-close" onclick="closeModal()">✕</button></div><div class="legal-text">${l.body}</div>`);
+}
+$all('[data-legal]').forEach(b=>b.onclick=()=>openLegal(b.dataset.legal));
+
+/* Bottom nav */
+$all('.nav-item').forEach(b=>{
+  b.onclick=()=>{
+    $all('.nav-item').forEach(n=>n.classList.remove('active'));
+    b.classList.add('active');
+    const key=b.dataset.nav;
+    if(key==='home') showScreen('home');
+    else if(key==='search') openSearch();
+    else if(key==='add') state.loggedIn ? openListingModal() : openLoginModal();
+    else if(key==='fav') toast(state.favorites.size? `У вас ${state.favorites.size} избранных товаров`:'Пока нет избранных товаров');
+    else if(key==='profile') state.loggedIn ? openProfileModal() : openLoginModal();
+  };
+});
+
+/* ===================== INIT ===================== */
+renderAuth();
+renderCatsStrip();
+renderHomeGrid();
+</script>
+</body>
+</html>
