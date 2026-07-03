@@ -163,9 +163,11 @@
 
   /* ---------- Category pill (header) ---------- */
   .cat-all-pill{
-    display:flex;align-items:center;gap:6px;background:var(--green-50);border:1px solid var(--line);
-    border-radius:999px;padding:10px 12px;font-size:12px;font-weight:700;color:var(--green-950);white-space:nowrap;flex-shrink:0;
+    display:flex;align-items:center;gap:5px;background:var(--green-700);border:1px solid var(--green-700);
+    border-radius:999px;padding:9px 10px;font-size:11px;font-weight:700;color:#fff;white-space:nowrap;flex-shrink:0;
+    box-shadow:0 3px 8px rgba(22,122,71,.28);
   }
+  .cta-row .search-field{flex:1;}
 
   /* ---------- Home: feature tiles + quick row ---------- */
   .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
@@ -277,29 +279,16 @@
     background:none;border:none;padding:4px 8px;}
   .nav-item.active{color:var(--green-700);}
 
-  /* ---------- Footer ---------- */
-  footer{background:var(--green-950);color:#cfe6d8;padding:30px 20px 20px;position:relative;overflow:hidden;}
-  footer .lattice{opacity:.06;}
-  footer h5{font-family:'Unbounded',sans-serif;font-size:12px;color:#fff;margin:0 0 12px;letter-spacing:.3px;text-transform:uppercase;}
-  footer ul{list-style:none;margin:0 0 22px;padding:0;display:flex;flex-direction:column;gap:9px;}
-  footer ul li a, footer ul li button{font-size:12.5px;color:#cfe6d8;background:none;border:none;padding:0;text-align:left;}
-  .footer-brand{display:flex;align-items:center;gap:8px;margin-bottom:10px;}
-  .footer-brand .logo-text{color:#fff;}
-  .footer-desc{font-size:12px;color:#9fc2ac;line-height:1.6;margin-bottom:18px;}
-  .whatsapp-cta{
-    display:flex;align-items:center;gap:10px;background:#155c37;border-radius:14px;padding:12px 14px;margin-bottom:18px;
+  /* ---------- Mini footer (light, compact) ---------- */
+  .mini-footer{padding:18px 20px 24px;text-align:center;border-top:1px solid var(--line);background:var(--white);}
+  .mini-wa{
+    display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:700;color:var(--green-900);
+    background:var(--green-50);border:1px solid var(--line);border-radius:999px;padding:9px 16px;margin-bottom:14px;
   }
-  .whatsapp-cta .wa-ico{
-    width:38px;height:38px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;flex-shrink:0;
-  }
-  .whatsapp-cta div{flex:1;}
-  .whatsapp-cta strong{display:block;font-size:12.5px;color:#fff;}
-  .whatsapp-cta span{font-size:11px;color:#9fc2ac;}
-  .dev-line{font-size:11.5px;color:#9fc2ac;border-top:1px solid #1d5236;padding-top:16px;line-height:1.8;}
-  .dev-line b{color:#fff;}
-  .legal-row{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px;}
-  .legal-row button{background:none;border:none;color:#9fc2ac;font-size:11px;text-decoration:underline;padding:0;}
-  .copyright{font-size:10.5px;color:#6f9682;margin-top:14px;}
+  .mini-footer-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-bottom:10px;}
+  .mini-footer-links button{background:none;border:none;color:var(--ink-soft);font-size:11px;text-decoration:underline;padding:0;}
+  .mini-footer-dev{font-size:11px;color:var(--ink-soft);margin:0 0 4px;}
+  .mini-footer-copy{font-size:10px;color:#9aa79f;margin:0;}
 
   /* ---------- Search overlay ---------- */
   .overlay{
@@ -396,9 +385,6 @@
   <header class="main">
     <div class="top-row">
       <div class="logo">
-        <button class="icon-btn" id="menuBtn" title="Меню">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-        </button>
         <div class="logo-mark">
           <svg viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 20 L12 12 L16 20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
         </div>
@@ -408,7 +394,7 @@
     </div>
     <div class="cta-row">
       <button class="cat-all-pill" id="catAllPill">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
         Все категории
       </button>
       <div class="search-field" id="openSearchBtn">
@@ -460,45 +446,19 @@
     </button>
   </nav>
 
-  <!-- FOOTER -->
-  <footer>
-    <div class="lattice"></div>
-    <div class="footer-brand">
-      <div class="logo-mark">
-        <svg viewBox="0 0 24 24" fill="none"><path d="M4 20 L12 4 L20 20 M8 20 L12 12 L16 20" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </div>
-      <span class="logo-text">Ailun</span>
+  <!-- Mini footer -->
+  <div class="mini-footer">
+    <a class="mini-wa" href="#" target="_blank" rel="noopener" id="miniWaLink">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.7 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.4-5.1-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.4.8-.8.8-.5 1.3.9 1.7 1.9 2.3 3.4 3 .3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.6.8 1.9 1 .3.1.5.2.6.3.1.2.1 1-.2 1.6z"/></svg>
+      Написать в WhatsApp
+    </a>
+    <div class="mini-footer-links">
+      <button data-legal="privacy">Политика конфиденциальности</button>
+      <button data-legal="terms">Условия использования</button>
     </div>
-    <p class="footer-desc">Маркетплейс объявлений для русскоязычного сообщества ОАЭ: недвижимость, авто, работа, товары и Halal-сервисы в одном приложении.</p>
-
-    <h5>Компания</h5>
-    <ul>
-      <li><button data-legal="about">О нас</button></li>
-      <li><button data-legal="ads">Реклама</button></li>
-      <li><button id="footerPartnerBtn">Стать партнёром</button></li>
-    </ul>
-
-    <h5>Категории</h5>
-    <ul id="footerCats"></ul>
-
-    <div class="whatsapp-cta" id="waCta">
-      <div class="wa-ico">
-        <svg width="19" height="19" viewBox="0 0 24 24" fill="#fff"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.7 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.4-5.1-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.4.8-.8.8-.5 1.3.9 1.7 1.9 2.3 3.4 3 .3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.6.8 1.9 1 .3.1.5.2.6.3.1.2.1 1-.2 1.6z"/></svg>
-      </div>
-      <div><strong>Написать нам в WhatsApp</strong><span>Ответим в течение 15 минут</span></div>
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9fc2ac" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-    </div>
-
-    <div class="dev-line">
-      <b>Разработчик:</b> ALIEV AI · Aibek Aliev<br>
-      <b>Сайт:</b> ailun.ru &nbsp;·&nbsp; <b>Телефон:</b> +971 50 000 00 00
-      <div class="legal-row">
-        <button data-legal="privacy">Политика конфиденциальности</button>
-        <button data-legal="terms">Условия использования</button>
-      </div>
-    </div>
-    <p class="copyright">© 2026 Ailun.ru. Все права защищены. Демо-версия интерфейса.</p>
-  </footer>
+    <p class="mini-footer-dev">Разработчик: ALIEV AI · ailun.ru · +971 50 000 00 00</p>
+    <p class="mini-footer-copy">© 2026 Ailun.ru. Демо-версия интерфейса.</p>
+  </div>
 
 </div>
 
@@ -750,9 +710,6 @@ function renderHomeGrid(){
   renderQuickRow();
   renderListings();
   renderPagination();
-
-  $('#footerCats').innerHTML = DATA.map(c=>`<li><button data-cat="${c.id}">${c.icon} ${c.name}</button></li>`).join('');
-  $all('#footerCats button').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
 }
 function openAllCategoriesModal(){
   openModal(`
@@ -929,7 +886,6 @@ $('#searchInput').addEventListener('input', e=>renderSearchBody(e.target.value.t
 $all('[data-nav="search"]').forEach(b=>b.onclick=openSearch);
 $('#searchGoBtn').onclick = openSearch;
 $('#catAllPill').onclick = openAllCategoriesModal;
-$('#menuBtn').onclick = openAllCategoriesModal;
 
 /* ===================== MODALS ===================== */
 function openModal(html){
@@ -1035,7 +991,7 @@ function openPartnerModal(){
     <a class="btn btn-primary" style="width:100%;justify-content:center" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Здравствуйте! Хочу стать партнёром AILUN')}" target="_blank" rel="noopener">Написать в WhatsApp</a>
   `);
 }
-$('#footerPartnerBtn').onclick = openPartnerModal;
+$('#miniWaLink').href = `https://wa.me/${WA_NUMBER}`;
 
 /* Legal modals */
 const LEGAL = {
