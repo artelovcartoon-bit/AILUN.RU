@@ -119,6 +119,37 @@
   }
   .search-field svg{flex-shrink:0;}
 
+  /* ---------- Metro search (Moscow) ---------- */
+  .metro-search-bar{position:relative;padding:10px 16px 12px;background:var(--white);border-bottom:1px solid var(--line);}
+  .metro-input-wrap{
+    display:flex;align-items:center;gap:8px;background:var(--green-50);border:1px solid var(--line);
+    border-radius:999px;padding:10px 14px;
+  }
+  .metro-input-wrap svg{flex-shrink:0;}
+  .metro-input-wrap input{border:none;background:transparent;outline:none;flex:1;font-size:13.5px;color:var(--ink);}
+  .metro-suggestions{
+    display:none;position:absolute;left:16px;right:16px;top:56px;background:var(--white);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);z-index:30;overflow:hidden;
+  }
+  .metro-suggestions.open{display:block;}
+  .metro-suggest-item{
+    display:flex;align-items:center;gap:8px;width:100%;text-align:left;background:none;border:none;
+    padding:11px 14px;font-size:13px;font-weight:600;color:var(--green-950);border-bottom:1px solid var(--line);
+  }
+  .metro-suggest-item:last-child{border-bottom:none;}
+  .metro-suggest-item:hover, .metro-suggest-item:active{background:var(--green-50);}
+  .metro-empty{padding:12px 14px;font-size:12.5px;color:var(--ink-soft);}
+  .metro-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}
+  .metro-chips:empty{margin-top:0;}
+  .metro-chip{
+    display:inline-flex;align-items:center;gap:6px;background:var(--green-700);color:#fff;border-radius:999px;
+    padding:7px 8px 7px 12px;font-size:12px;font-weight:600;
+  }
+  .metro-chip button{
+    background:rgba(255,255,255,.22);border:none;color:#fff;width:18px;height:18px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;flex-shrink:0;
+  }
+
   .cats-strip{display:flex;gap:8px;padding:6px 16px 2px;overflow-x:auto;background:var(--white);}
   .cats-strip::-webkit-scrollbar{display:none;}
   .cat-chip{
@@ -153,6 +184,9 @@
   }
   .cat-card span{font-size:12px;font-weight:600;line-height:1.25;color:var(--green-950);}
   .cat-card small{font-size:10.5px;color:var(--ink-soft);font-weight:500;}
+  .cat-card.active{background:var(--green-700);border-color:var(--green-700);}
+  .cat-card.active .ico{background:rgba(255,255,255,.2);}
+  .cat-card.active span{color:#fff;}
 
   .promo-row{display:flex;gap:10px;overflow-x:auto;margin-bottom:24px;padding-bottom:2px;}
   .promo-row::-webkit-scrollbar{display:none;}
@@ -425,6 +459,16 @@
     </div>
   </div>
 
+  <!-- Metro search (Moscow) -->
+  <div class="metro-search-bar" id="metroSearchBar">
+    <div class="metro-input-wrap">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z" stroke="#167A47" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="#167A47" stroke-width="2"/></svg>
+      <input type="text" id="metroInput" placeholder="Станция метро (например, Строгино)" autocomplete="off">
+    </div>
+    <div class="metro-suggestions" id="metroSuggestions"></div>
+    <div class="metro-chips" id="metroChips"></div>
+  </div>
+
   <!-- Header -->
   <header class="main">
     <div class="top-row">
@@ -544,12 +588,16 @@ const DATA = [
     providers:[{name:'Амвадж Резиденс',rating:4.8,meta:'Ответ за 10 мин'},{name:'Baraka Homes',rating:4.6,meta:'Ответ за 20 мин'},{name:'Al Noor Halal Stay',rating:4.9,meta:'Ответ за 5 мин'}]
   },
   { id:'realty', name:'Недвижимость', icon:'🏠', tag:'Аренда и продажа',
-    subcats:['Квартиры','Виллы','Офисы','Койко-места'],
+    subcats:['Продам квартиру','Сдам квартиру','Сниму квартиру','Койко-место','Агентство','Комната','Земельные участки'],
+    subIcons:{'Продам квартиру':'🏷️','Сдам квартиру':'🔑','Сниму квартиру':'🔍','Койко-место':'🛏️','Агентство':'🏢','Комната':'🚪','Земельные участки':'🌍'},
     catalog:{
-      'Квартиры':[['Студия JLT','3800 AED/мес'],['1BR Downtown','7200 AED/мес'],['2BR Marina','9800 AED/мес']],
-      'Виллы':[['Вилла 4BR Arabian Ranches','220 000 AED/год'],['Таунхаус 3BR','165 000 AED/год']],
-      'Офисы':[['Офис 40 м²','55 000 AED/год'],['Коворкинг место','900 AED/мес']],
-      'Койко-места':[['Койко-место International City','500 AED/мес'],['Комната в шеринге','1400 AED/мес']]
+      'Продам квартиру':[['Студия JLT','380 000 AED'],['1BR Downtown','950 000 AED'],['2BR Marina','1 250 000 AED']],
+      'Сдам квартиру':[['Студия JLT','3800 AED/мес'],['1BR Downtown','7200 AED/мес'],['2BR Marina','9800 AED/мес']],
+      'Сниму квартиру':[['Ищу студию до 3500 AED/мес','Аренда'],['Ищу 1BR до 7000 AED/мес','Аренда'],['Ищу 2BR до 9000 AED/мес','Аренда']],
+      'Койко-место':[['Койко-место International City','500 AED/мес'],['Койко-место (жен.)','700 AED/мес']],
+      'Агентство':[['Подбор жилья','от 500 AED'],['Сопровождение сделки','от 1200 AED'],['Оценка недвижимости','от 300 AED']],
+      'Комната':[['Комната в квартире, Marina','2200 AED/мес'],['Комната с отдельным входом','2600 AED/мес']],
+      'Земельные участки':[['Участок 500 м², Al Ain','450 000 AED'],['Участок 1000 м², Sharjah','780 000 AED']]
     },
     providers:[{name:'Emirates Realty',rating:4.7,meta:'Ответ за 15 мин'},{name:'Дубай Резиденс',rating:4.5,meta:'Ответ за 30 мин'},{name:'Prime Properties UAE',rating:4.9,meta:'Ответ за 10 мин'}]
   },
@@ -635,6 +683,8 @@ const state = {
   activeCat:null,
   activeProviderIdx:null,
   activeChip:'Все',
+  pendingSubcatFilter:null,
+  selectedMetro:[],
   listing:{catId:null, subcat:null}
 };
 
@@ -653,6 +703,75 @@ function showScreen(name){
   window.scrollTo({top:0,behavior:'instant'});
 }
 function star(){return '★';}
+
+/* ===================== METRO SEARCH (Moscow) ===================== */
+const METRO_RAW = [
+  'Строгино','Мякинино','Крылатское','Молодёжная','Кунцевская','Пионерская','Филёвский парк',
+  'Багратионовская','Фили','Кутузовская','Славянский бульвар','Парк Победы','Киевская','Смоленская',
+  'Арбатская','Площадь Революции','Курская','Бауманская','Электрозаводская','Семёновская','Партизанская',
+  'Измайловская','Первомайская','Щёлковская','Митино','Пятницкое шоссе','Волоколамская','Сокольники',
+  'Красносельская','Комсомольская','Красные Ворота','Чистые пруды','Лубянка','Охотный Ряд',
+  'Библиотека имени Ленина','Кропоткинская','Парк Культуры','Фрунзенская','Спортивная','Воробьёвы горы',
+  'Университет','Проспект Вернадского','Юго-Западная','Тёплый Стан','Коньково','Беляево','Каховская',
+  'Севастопольская','Чертановская','Южная','Пражская','Аннино','Бульвар Дмитрия Донского',
+  'Новые Черёмушки','Калужская','Битцевский парк','Лесопарковая','Тропарёво','Румянцево','Саларьево',
+  'Домодедовская','Красногвардейская','Марьино','Братиславская','Люблино','Волжская','Печатники',
+  'Кузьминки','Рязанский проспект','Выхино','Лермонтовский проспект','Жулебино','Котельники','Царицыно',
+  'Каширская','Кантемировская','Алма-Атинская','Планерная','Сходненская','Тушинская','Спартак',
+  'Щукинская','Октябрьское поле','Полежаевская','Беговая','Динамо','Аэропорт','Сокол','Войковская',
+  'Водный стадион','Речной вокзал','Ховрино'
+];
+function translit(str){
+  const map={а:'a',б:'b',в:'v',г:'g',д:'d',е:'e',ё:'e',ж:'zh',з:'z',и:'i',й:'y',к:'k',л:'l',м:'m',
+    н:'n',о:'o',п:'p',р:'r',с:'s',т:'t',у:'u',ф:'f',х:'h',ц:'ts',ч:'ch',ш:'sh',щ:'sch',ъ:'',ы:'y',
+    ь:'',э:'e',ю:'yu',я:'ya'};
+  return str.toLowerCase().split('').map(ch=>map[ch]!==undefined?map[ch]:ch).join('');
+}
+const METRO_LIST = [...new Set(METRO_RAW)].map(name=>({name, tr:translit(name)}));
+
+function renderMetroSuggestions(q){
+  const box = $('#metroSuggestions');
+  if(!q){ box.innerHTML=''; box.classList.remove('open'); return; }
+  const query = q.toLowerCase().trim();
+  const matches = METRO_LIST.filter(m=>{
+    if(state.selectedMetro.includes(m.name)) return false;
+    return m.name.toLowerCase().startsWith(query) || m.tr.startsWith(query);
+  }).slice(0,6);
+  if(!matches.length){
+    box.innerHTML = '<div class="metro-empty">Станция не найдена</div>';
+    box.classList.add('open');
+    return;
+  }
+  box.innerHTML = matches.map(m=>`<button class="metro-suggest-item" data-name="${m.name}">🚇 ${m.name}</button>`).join('');
+  box.classList.add('open');
+  $all('.metro-suggest-item', box).forEach(btn=>btn.onclick=()=>addMetro(btn.dataset.name));
+}
+function addMetro(name){
+  if(!state.selectedMetro.includes(name)) state.selectedMetro.push(name);
+  const input = $('#metroInput');
+  input.value=''; input.focus();
+  renderMetroSuggestions('');
+  renderMetroChips();
+  toast(`Добавлено: ${name}`);
+}
+function removeMetro(name){
+  state.selectedMetro = state.selectedMetro.filter(n=>n!==name);
+  renderMetroChips();
+}
+function renderMetroChips(){
+  const box = $('#metroChips');
+  box.innerHTML = state.selectedMetro.map(n=>`<span class="metro-chip">🚇 ${n}<button data-remove="${n}" aria-label="Убрать">✕</button></span>`).join('');
+  $all('[data-remove]', box).forEach(b=>b.onclick=()=>removeMetro(b.dataset.remove));
+}
+function initMetroSearch(){
+  const input = $('#metroInput');
+  input.addEventListener('input', e=>renderMetroSuggestions(e.target.value));
+  input.addEventListener('focus', e=>{ if(e.target.value.trim()) renderMetroSuggestions(e.target.value); });
+  document.addEventListener('click', e=>{
+    if(!e.target.closest('#metroSearchBar')) $('#metroSuggestions').classList.remove('open');
+  });
+  renderMetroChips();
+}
 
 /* ===================== RENDER: AUTH ===================== */
 function renderAuth(){
@@ -714,13 +833,12 @@ function renderFeatureTiles(){
   $all('.feature-tile').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
 }
 function renderQuickRow(){
-  const quickIds = ['realty','auto','services','electronics','construction'];
+  const quickIds = ['realty','auto','fashion','services','electronics','jobs','food','construction'];
   $('#quickRow').innerHTML = quickIds.map(id=>{
     const c = catById(id);
     return `<button class="quick-tile" data-cat="${c.id}"><span class="ico">${c.icon}</span><span>${c.name}</span></button>`;
-  }).join('') + `<button class="quick-tile tile-more" id="quickMoreBtn"><span class="ico">+</span><span>Ещё</span></button>`;
+  }).join('');
   $all('.quick-tile[data-cat]').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
-  $('#quickMoreBtn').onclick = openAllCategoriesModal;
 }
 function renderListings(){
   $('#listingsGrid').innerHTML = LISTINGS.map((l,i)=>`
@@ -779,8 +897,10 @@ function openAllCategoriesModal(){
 /* ===================== RENDER: CATEGORY SCREEN (providers list) ===================== */
 function openCategory(catId){
   state.activeCat = catId;
+  state.pendingSubcatFilter = null;
   const cat = catById(catId);
   const el = $('#screenCategory');
+  const subIco = s => (cat.subIcons && cat.subIcons[s]) || cat.icon;
   el.innerHTML = `
     <div class="back-row">
       <button class="back-btn" id="backToHome"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -789,9 +909,24 @@ function openCategory(catId){
         <p class="screen-sub">${cat.tag} · ${cat.providers.length} партнёра</p>
       </div>
     </div>
-    <div class="subcat-chips">${cat.subcats.map(s=>`<span class="chip">${s}</span>`).join('')}</div>
+    <div class="grid-cats" id="subcatGrid">
+      ${cat.subcats.map(s=>`
+        <button class="cat-card" data-sub="${s}">
+          <span class="ico">${subIco(s)}</span>
+          <span>${s}</span>
+        </button>`).join('')}
+    </div>
     <div id="providersList"></div>
   `;
+  $all('#subcatGrid .cat-card').forEach(card=>{
+    card.onclick=()=>{
+      const s = card.dataset.sub;
+      const already = state.pendingSubcatFilter === s;
+      $all('#subcatGrid .cat-card').forEach(c=>c.classList.remove('active'));
+      state.pendingSubcatFilter = already ? null : s;
+      if(!already) card.classList.add('active');
+    };
+  });
   $('#providersList').innerHTML = cat.providers.map((p,i)=>`
     <div class="provider-card" data-idx="${i}">
       <div class="provider-thumb">${cat.icon}</div>
@@ -812,7 +947,7 @@ function openCategory(catId){
 function openProvider(catId, idx){
   state.activeCat = catId;
   state.activeProviderIdx = idx;
-  state.activeChip = 'Все';
+  state.activeChip = state.pendingSubcatFilter || 'Все';
   const cat = catById(catId);
   const provider = cat.providers[idx];
   renderProviderScreen(cat, provider);
@@ -829,8 +964,8 @@ function renderProviderScreen(cat, provider){
       </div>
     </div>
     <div class="subcat-chips" id="providerChips">
-      <span class="chip active" data-chip="Все">Все</span>
-      ${cat.subcats.map(s=>`<span class="chip" data-chip="${s}">${s}</span>`).join('')}
+      <span class="chip ${state.activeChip==='Все'?'active':''}" data-chip="Все">Все</span>
+      ${cat.subcats.map(s=>`<span class="chip ${state.activeChip===s?'active':''}" data-chip="${s}">${s}</span>`).join('')}
     </div>
     <div class="product-grid" id="providerProducts"></div>
   `;
@@ -1214,6 +1349,7 @@ function showVendorCreatedModal(vendor){
 /* ===================== INIT ===================== */
 renderAuth();
 renderHomeGrid();
+initMetroSearch();
 </script>
 </body>
 </html>
