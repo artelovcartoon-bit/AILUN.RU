@@ -195,13 +195,11 @@
     display:flex;flex-direction:column;justify-content:space-between;font-weight:700;font-size:13px;
   }
 
-  /* ---------- Category pill (header) ---------- */
-  .cat-all-pill{
-    display:flex;align-items:center;gap:4px;background:var(--green-700);border:1px solid var(--green-700);
-    border-radius:999px;padding:8px 9px;font-size:10px;font-weight:700;color:#fff;white-space:nowrap;flex-shrink:0;
-    box-shadow:0 3px 8px rgba(22,122,71,.28);
+  /* ---------- Category icon button (header) ---------- */
+  .cat-all-icon-btn{
+    display:flex;align-items:center;justify-content:center;background:var(--green-700);border:none;
+    border-radius:12px;width:40px;height:40px;flex-shrink:0;box-shadow:0 3px 8px rgba(22,122,71,.28);
   }
-  .cat-all-pill svg{width:11px;height:11px;flex-shrink:0;}
 
   /* ---------- Home: feature tiles + quick row ---------- */
   .feature-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
@@ -253,6 +251,23 @@
   }
   .listing-footer span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
   .listing-footer .heart{margin-left:auto;cursor:pointer;font-size:11px;}
+
+  /* ---------- Listing rows (subcategory listings, single column) ---------- */
+  .listing-row-card{
+    display:flex;gap:10px;background:var(--white);border:1px solid var(--line);border-radius:12px;
+    overflow:hidden;margin-bottom:10px;padding:8px;
+  }
+  .listing-row-media{
+    width:88px;height:88px;border-radius:10px;flex-shrink:0;background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;font-size:26px;color:#fff;
+  }
+  .listing-row-body{flex:1;min-width:0;padding:2px 2px 2px 0;}
+  .listing-row-body h4{font-size:13px;margin:2px 0 5px;font-weight:700;color:var(--green-950);line-height:1.3;}
+  .listing-row-actions{margin-left:auto;display:flex;align-items:center;gap:6px;}
+  .msg-ico{
+    width:24px;height:24px;border-radius:7px;background:var(--green-100);display:inline-flex;
+    align-items:center;justify-content:center;font-size:12px;cursor:pointer;flex-shrink:0;
+  }
 
   .pagination{display:flex;align-items:center;justify-content:center;gap:6px;margin:6px 0 20px;}
   .pagination button{
@@ -443,6 +458,9 @@
   .screen.active{display:block;animation:fadeIn .18s ease;}
   @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 
+  .app-shell.hide-top-search .metro-search-bar,
+  .app-shell.hide-top-search header.main{display:none;}
+
   @media (min-width:481px){
     body{padding:24px 0;}
   }
@@ -481,15 +499,13 @@
       <div class="auth-actions" id="authActions"></div>
     </div>
     <div class="cta-row">
-      <button class="cat-all-pill" id="catAllPill">
-        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-        Все категории
+      <button class="cat-all-icon-btn" id="catAllPill" aria-label="Все категории">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
       </button>
-      <div class="search-field" id="openSearchBtn">
+      <div class="search-field" id="openSearchBtn" style="flex:1">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#4B5D53" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="#4B5D53" stroke-width="2" stroke-linecap="round"/></svg>
-        <span>Поиск...</span>
+        <span>Поиск по метро, например: Строгино</span>
       </div>
-      <button class="btn btn-primary" id="searchGoBtn" style="padding:9px 12px">Искать</button>
     </div>
   </header>
 
@@ -599,6 +615,34 @@ const DATA = [
       'Комната':[['Комната в квартире, Marina','2200 AED/мес'],['Комната с отдельным входом','2600 AED/мес']],
       'Земельные участки':[['Участок 500 м², Al Ain','450 000 AED'],['Участок 1000 м², Sharjah','780 000 AED']]
     },
+    listings:{
+      'Продам квартиру':[
+        {photo:'realty-sale1', title:'Студия JLT', desc:'Студия 38 м², полностью меблирована, встроенная кухня', price:'380 000 AED', old:'420 000 AED', user:'Данияр'},
+        {photo:'realty-sale2', title:'1BR Downtown', desc:'1-спальная, вид на Burj Khalifa, паркинг включён', price:'950 000 AED', old:'1 050 000 AED', user:'Айгуль'},
+        {photo:'realty-sale3', title:'2BR Marina', desc:'2-спальная, полная отделка, рядом марина', price:'1 250 000 AED', old:'1 350 000 AED', user:'Марат'}
+      ],
+      'Сдам квартиру':[
+        {photo:'realty-rent1', title:'Студия JLT', desc:'Студия 40 м², вся техника, wi-fi включён', price:'3800 AED/мес', old:'4200 AED/мес', user:'Бермет'},
+        {photo:'realty-rent2', title:'1BR Downtown', desc:'1-спальная, консьерж 24/7, бассейн', price:'7200 AED/мес', old:'7900 AED/мес', user:'Нурлан'},
+        {photo:'realty-rent3', title:'2BR Marina', desc:'2-спальная, панорамные окна, парковка', price:'9800 AED/мес', old:'10 500 AED/мес', user:'Гульнара'}
+      ],
+      'Сниму квартиру':[
+        {photo:'realty-seek1', title:'Ищу студию', desc:'Рассмотрю варианты в JLT, Marina, JVC', price:'до 3500 AED/мес', old:'', user:'Ержан'},
+        {photo:'realty-seek2', title:'Ищу 1BR', desc:'Срочно, заселение в течение недели', price:'до 7000 AED/мес', old:'', user:'Айым'}
+      ],
+      'Койко-место':[
+        {photo:'realty-bed1', title:'Койко-место International City', desc:'Общая комната, кондиционер, wi-fi', price:'500 AED/мес', old:'600 AED/мес', user:'Данияр'},
+        {photo:'realty-bed2', title:'Койко-место (жен.)', desc:'Al Barsha, чисто, рядом супермаркет', price:'700 AED/мес', old:'800 AED/мес', user:'Айгуль'}
+      ],
+      'Агентство':[
+        {photo:'realty-agency1', title:'Подбор жилья', desc:'Поможем найти квартиру под бюджет за 1 день', price:'от 500 AED', old:'', user:'Emirates Realty'},
+        {photo:'realty-agency2', title:'Сопровождение сделки', desc:'Полное юридическое сопровождение аренды/покупки', price:'от 1200 AED', old:'', user:'Prime Properties'}
+      ],
+      'Комната':[
+        {photo:'realty-room1', title:'Комната в квартире, Marina', desc:'Отдельная комната с окном, общая кухня', price:'2200 AED/мес', old:'2500 AED/мес', user:'Марат'},
+        {photo:'realty-room2', title:'Комната с отдельным входом', desc:'Тихий район, парковка во дворе', price:'2600 AED/мес', old:'', user:'Бермет'}
+      ]
+    },
     providers:[{name:'Emirates Realty',rating:4.7,meta:'Ответ за 15 мин'},{name:'Дубай Резиденс',rating:4.5,meta:'Ответ за 30 мин'},{name:'Prime Properties UAE',rating:4.9,meta:'Ответ за 10 мин'}]
   },
   { id:'auto', name:'Автомобиль', icon:'🚗', tag:'Купить, продать, взять в аренду',
@@ -683,8 +727,8 @@ const state = {
   activeCat:null,
   activeProviderIdx:null,
   activeChip:'Все',
-  pendingSubcatFilter:null,
   selectedMetro:[],
+  searchMode:'general',
   listing:{catId:null, subcat:null}
 };
 
@@ -699,6 +743,7 @@ function catById(id){return DATA.find(c=>c.id===id);}
 function showScreen(name){
   $all('.screen').forEach(s=>s.classList.remove('active'));
   $(`.screen[data-screen="${name}"]`).classList.add('active');
+  $('#appShell').classList.toggle('hide-top-search', name==='category');
   $('#appShell').scrollIntoView({behavior:'instant',block:'start'});
   window.scrollTo({top:0,behavior:'instant'});
 }
@@ -897,7 +942,6 @@ function openAllCategoriesModal(){
 /* ===================== RENDER: CATEGORY SCREEN (providers list) ===================== */
 function openCategory(catId){
   state.activeCat = catId;
-  state.pendingSubcatFilter = null;
   const cat = catById(catId);
   const el = $('#screenCategory');
   const subIco = s => (cat.subIcons && cat.subIcons[s]) || cat.icon;
@@ -906,86 +950,115 @@ function openCategory(catId){
       <button class="back-btn" id="backToHome"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div>
         <h2 class="screen-title">${cat.icon} ${cat.name}</h2>
-        <p class="screen-sub">${cat.tag} · ${cat.providers.length} партнёра</p>
+        <p class="screen-sub">${cat.tag}</p>
       </div>
     </div>
-    <div class="grid-cats" id="subcatGrid">
+    <div id="subcatList">
       ${cat.subcats.map(s=>`
-        <button class="cat-card" data-sub="${s}">
-          <span class="ico">${subIco(s)}</span>
-          <span>${s}</span>
-        </button>`).join('')}
+        <div class="provider-card" data-sub="${s}">
+          <div class="provider-thumb">${subIco(s)}</div>
+          <div class="provider-info"><h3>${s}</h3></div>
+          <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+        </div>`).join('')}
     </div>
-    <div id="providersList"></div>
   `;
-  $all('#subcatGrid .cat-card').forEach(card=>{
-    card.onclick=()=>{
-      const s = card.dataset.sub;
-      const already = state.pendingSubcatFilter === s;
-      $all('#subcatGrid .cat-card').forEach(c=>c.classList.remove('active'));
-      state.pendingSubcatFilter = already ? null : s;
-      if(!already) card.classList.add('active');
-    };
-  });
-  $('#providersList').innerHTML = cat.providers.map((p,i)=>`
-    <div class="provider-card" data-idx="${i}">
-      <div class="provider-thumb">${cat.icon}</div>
-      <div class="provider-info">
-        <h3>${p.name}</h3>
-        <div class="provider-meta"><span class="rating">${star()} ${p.rating}</span><span>·</span><span>${p.meta}</span></div>
-      </div>
-      <svg class="chev" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-    </div>`).join('');
   $('#backToHome').onclick=()=>showScreen('home');
-  $all('#providersList .provider-card').forEach(card=>{
-    card.onclick=()=>openProvider(catId, +card.dataset.idx);
+  $all('#subcatList .provider-card').forEach(card=>{
+    card.onclick=()=>openSubcat(catId, card.dataset.sub);
   });
   showScreen('category');
 }
 
-/* ===================== RENDER: PROVIDER SCREEN (products) ===================== */
+/* ===================== RENDER: PROVIDER / SUBCAT SCREEN (products) ===================== */
 function openProvider(catId, idx){
   state.activeCat = catId;
   state.activeProviderIdx = idx;
-  state.activeChip = state.pendingSubcatFilter || 'Все';
+  state.activeChip = 'Все';
   const cat = catById(catId);
   const provider = cat.providers[idx];
   renderProviderScreen(cat, provider);
   showScreen('provider');
 }
+function openSubcat(catId, subcat){
+  state.activeCat = catId;
+  state.activeProviderIdx = null;
+  state.activeChip = subcat;
+  const cat = catById(catId);
+  renderProviderScreen(cat, null);
+  showScreen('provider');
+}
 function renderProviderScreen(cat, provider){
   const el = $('#screenProvider');
+  const heading = provider ? provider.name : `${cat.icon} ${cat.name}`;
+  const sub = provider
+    ? `<span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}`
+    : cat.tag;
   el.innerHTML = `
     <div class="back-row">
       <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div>
-        <h2 class="screen-title">${provider.name}</h2>
-        <p class="screen-sub"><span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}</p>
+        <h2 class="screen-title">${heading}</h2>
+        <p class="screen-sub">${sub}</p>
       </div>
-    </div>
-    <div class="subcat-chips" id="providerChips">
-      <span class="chip ${state.activeChip==='Все'?'active':''}" data-chip="Все">Все</span>
-      ${cat.subcats.map(s=>`<span class="chip ${state.activeChip===s?'active':''}" data-chip="${s}">${s}</span>`).join('')}
     </div>
     <div class="product-grid" id="providerProducts"></div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
-  $all('#providerChips .chip').forEach(chip=>{
-    chip.onclick=()=>{
-      $all('#providerChips .chip').forEach(c=>c.classList.remove('active'));
-      chip.classList.add('active');
-      state.activeChip = chip.dataset.chip;
-      renderProviderProducts(cat);
-    };
-  });
   renderProviderProducts(cat);
 }
 function renderProviderProducts(cat){
-  let entries = [];
   const subs = state.activeChip==='Все' ? cat.subcats : [state.activeChip];
+  if(cat.listings){
+    renderListingRows(cat, subs);
+    return;
+  }
+  let entries = [];
   subs.forEach(s=>{ (cat.catalog[s]||[]).forEach((it,i)=>entries.push({sub:s,name:it[0],price:it[1],idx:i})); });
+  $('#providerProducts').className = 'product-grid';
   $('#providerProducts').innerHTML = entries.map(e=>productCard(cat.icon, e.name, e.price, `${cat.id}-${e.sub}-${e.idx}`)).join('');
   bindProductCards();
+}
+function renderListingRows(cat, subs){
+  let rows = [];
+  subs.forEach(s=>{
+    const items = cat.listings[s];
+    if(items){
+      items.forEach((l,i)=>rows.push({...l, sub:s, idx:i}));
+    } else {
+      (cat.catalog[s]||[]).forEach((it,i)=>rows.push({title:it[0], price:it[1], desc:'', old:'', user:'', sub:s, idx:i}));
+    }
+  });
+  const box = $('#providerProducts');
+  box.className = 'listing-row-list';
+  box.innerHTML = rows.map(r=>{
+    const key = `${cat.id}-${r.sub}-${r.idx}`;
+    const fav = state.favorites.has(key) ? '❤️' : '🤍';
+    const mediaStyle = r.photo ? `style="background-image:url('https://picsum.photos/seed/${r.photo}/200/200')"` : '';
+    return `
+    <div class="listing-row-card">
+      <div class="listing-row-media" ${mediaStyle}>${r.photo?'':cat.icon}</div>
+      <div class="listing-row-body">
+        ${r.desc?`<p class="listing-desc">${r.desc}</p>`:''}
+        <h4>${r.title}</h4>
+        <div class="listing-price"><b>${r.price}</b>${r.old?`<s>${r.old}</s>`:''}</div>
+        <div class="listing-footer">
+          ${r.user?`<span class="avatar-circle-sm">${r.user[0]}</span><span>${r.user}</span>`:''}
+          <span class="listing-row-actions">
+            <span class="msg-ico" data-contact="${r.title}">✉️</span>
+            <span class="heart" data-fav="${key}">${fav}</span>
+          </span>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+  $all('#providerProducts [data-contact]').forEach(b=>b.onclick=()=>openContactModal(b.dataset.contact));
+  $all('#providerProducts [data-fav]').forEach(h=>{
+    h.onclick=()=>{
+      const key=h.dataset.fav;
+      if(state.favorites.has(key)){state.favorites.delete(key); h.textContent='🤍';}
+      else {state.favorites.add(key); h.textContent='❤️'; toast('Добавлено в избранное');}
+    };
+  });
 }
 function productCard(icon,name,price,key){
   const fav = state.favorites.has(key) ? 'active' : '';
@@ -1034,12 +1107,56 @@ function flattenSearchIndex(){
 }
 const SEARCH_INDEX = flattenSearchIndex();
 function openSearch(){
+  state.searchMode = 'general';
+  $('#searchInput').placeholder = 'Например: iPhone, вилла, работа…';
   $('#searchOverlay').classList.add('open');
   $('#searchInput').value='';
   $('#searchInput').focus();
   renderSearchBody('');
 }
+function openMetroOverlay(){
+  state.searchMode = 'metro';
+  $('#searchInput').placeholder = 'Например: Строгино';
+  $('#searchOverlay').classList.add('open');
+  $('#searchInput').value='';
+  $('#searchInput').focus();
+  renderMetroSearchBody('');
+}
 function closeSearch(){ $('#searchOverlay').classList.remove('open'); }
+function renderMetroSearchBody(query){
+  const body = $('#searchBody');
+  const q = query.toLowerCase().trim();
+  const list = q
+    ? METRO_LIST.filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,8)
+    : METRO_LIST.slice(0,6);
+  body.innerHTML = `
+    <div class="section-head" style="margin-top:4px"><h2 style="font-size:14px">${q?'Станции':'Популярные станции'}</h2></div>
+    ${list.length ? list.map(m=>`
+      <div class="search-result-row" data-metro="${m.name}">
+        <div class="ico">🚇</div><div><strong>${m.name}</strong><span>Станция метро</span></div>
+      </div>`).join('') : `<p style="color:var(--ink-soft);font-size:13px;margin-top:20px;text-align:center">Станция не найдена</p>`}
+  `;
+  $all('[data-metro]').forEach(row=>row.onclick=()=>renderMetroResults(row.dataset.metro));
+}
+function renderMetroResults(stationName){
+  addMetro(stationName);
+  const body = $('#searchBody');
+  const sample = LISTINGS.slice(0,4);
+  body.innerHTML = `
+    <div class="section-head" style="margin-top:4px"><h2 style="font-size:14px">🚇 ${stationName} · Объявления рядом</h2></div>
+    ${sample.map(l=>`
+      <div class="listing-row-card">
+        <div class="listing-row-media" style="background-image:url('https://picsum.photos/seed/${l.photo}/200/200')"></div>
+        <div class="listing-row-body">
+          <p class="listing-desc">${l.desc}</p>
+          <div class="listing-price"><b>${l.price}</b><s>${l.old}</s></div>
+          <div class="listing-footer">
+            <span class="avatar-circle-sm">${l.user[0]}</span><span>${l.user}</span>
+          </div>
+        </div>
+      </div>`).join('')}
+  `;
+}
 function renderSearchBody(query){
   const body = $('#searchBody');
   if(!query){
@@ -1070,11 +1187,13 @@ function renderSearchBody(query){
     };
   });
 }
-$('#openSearchBtn').onclick = openSearch;
+$('#openSearchBtn').onclick = openMetroOverlay;
 $('#closeSearchBtn').onclick = closeSearch;
-$('#searchInput').addEventListener('input', e=>renderSearchBody(e.target.value.trim()));
+$('#searchInput').addEventListener('input', e=>{
+  if(state.searchMode==='metro') renderMetroSearchBody(e.target.value);
+  else renderSearchBody(e.target.value.trim());
+});
 $all('[data-nav="search"]').forEach(b=>b.onclick=openSearch);
-$('#searchGoBtn').onclick = openSearch;
 $('#catAllPill').onclick = openAllCategoriesModal;
 
 /* ===================== MODALS ===================== */
