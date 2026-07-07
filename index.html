@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ailun.ru — маркетплейс объявлений ОАЭ</title>
+<title>Ailun.ru — маркетплейс объявлений Москвы и России</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
@@ -583,14 +583,14 @@
   <!-- Mini footer -->
   <div class="mini-footer">
     <a class="mini-wa" href="#" target="_blank" rel="noopener" id="miniWaLink">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="#25D366"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2zm5.7 14.2c-.2.6-1.4 1.2-2 1.3-.5.1-1.2.1-1.9-.1-.4-.1-1-.3-1.7-.6-3-1.3-5-4.4-5.1-4.6-.2-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.2-.2.5-.3.7-.3h.5c.2 0 .4 0 .6.5.2.6.7 1.9.8 2 .1.2.1.4 0 .6-.4.8-.8.8-.5 1.3.9 1.7 1.9 2.3 3.4 3 .3.1.5.1.6-.1.2-.2.7-.8.9-1.1.2-.3.4-.2.6-.1.2.1 1.6.8 1.9 1 .3.1.5.2.6.3.1.2.1 1-.2 1.6z"/></svg>
-      Написать в WhatsApp
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="#167A47"><circle cx="12" cy="12" r="10"/><text x="12" y="16" font-size="10" fill="#fff" text-anchor="middle" font-family="Arial,sans-serif" font-weight="700">M</text></svg>
+      Написать в МАКС
     </a>
     <div class="mini-footer-links">
       <button data-legal="privacy">Политика конфиденциальности</button>
       <button data-legal="terms">Условия использования</button>
     </div>
-    <p class="mini-footer-dev">Разработчик: ALIEV AI · ailun.ru · +971 50 000 00 00</p>
+    <p class="mini-footer-dev">Разработчик: ALIEV AI · ailun.ru · +7 900 000-00-00</p>
     <p class="mini-footer-copy">© 2026 Ailun.ru. Демо-версия интерфейса.</p>
     <button class="mini-admin-link" id="openAdminBtn">⚙ Демо: панель супер-админа</button>
   </div>
@@ -624,10 +624,10 @@ const DATA = [
   { id:'halal', name:'Halal Market', icon:'🕌', tag:'Halal-сервисы',
     subcats:['Агентства','Гостиницы','Апартаменты','Койко-места'],
     catalog:{
-      'Агентства':[['Подбор жилья','от 500 AED'],['Консультация Halal-агента','Бесплатно'],['Сопровождение сделки','от 1200 AED']],
-      'Гостиницы':[['Номер Standard','180 AED/ночь'],['Номер Deluxe','320 AED/ночь'],['Семейный номер','450 AED/ночь']],
-      'Апартаменты':[['Студия в Marina','3200 AED/мес'],['1-спальная в JVC','4500 AED/мес'],['2-спальная в Al Barsha','6800 AED/мес']],
-      'Койко-места':[['Койко-место (муж.)','650 AED/мес'],['Койко-место (жен.)','700 AED/мес'],['Место в общей комнате','550 AED/мес']]
+      'Агентства':[['Подбор жилья','от 12 500 ₽'],['Консультация Halal-агента','Бесплатно'],['Сопровождение сделки','от 30 000 ₽']],
+      'Гостиницы':[['Номер Standard','4 500 ₽/ночь'],['Номер Deluxe','8 000 ₽/ночь'],['Семейный номер','11 250 ₽/ночь']],
+      'Апартаменты':[['Студия, м. Марьино','80 000 ₽/мес'],['1-спальная, м. Митино','112 500 ₽/мес'],['2-спальная, м. Беляево','170 000 ₽/мес']],
+      'Койко-места':[['Койко-место (муж.)','16 250 ₽/мес'],['Койко-место (жен.)','17 500 ₽/мес'],['Место в общей комнате','13 750 ₽/мес']]
     },
     providers:[{name:'Амвадж Резиденс',rating:4.8,meta:'Ответ за 10 мин'},{name:'Baraka Homes',rating:4.6,meta:'Ответ за 20 мин'},{name:'Al Noor Halal Stay',rating:4.9,meta:'Ответ за 5 мин'}]
   },
@@ -635,117 +635,118 @@ const DATA = [
     subcats:['Продам квартиру','Сдам квартиру','Сниму квартиру','Койко-место','Агентство','Комната','Земельные участки'],
     subIcons:{'Продам квартиру':'🏷️','Сдам квартиру':'🔑','Сниму квартиру':'🔍','Койко-место':'🛏️','Агентство':'🏢','Комната':'🚪','Земельные участки':'🌍'},
     catalog:{
-      'Продам квартиру':[['Студия JLT','380 000 AED'],['1BR Downtown','950 000 AED'],['2BR Marina','1 250 000 AED']],
-      'Сдам квартиру':[['Студия JLT','3800 AED/мес'],['1BR Downtown','7200 AED/мес'],['2BR Marina','9800 AED/мес']],
-      'Сниму квартиру':[['Ищу студию до 3500 AED/мес','Аренда'],['Ищу 1BR до 7000 AED/мес','Аренда'],['Ищу 2BR до 9000 AED/мес','Аренда']],
-      'Койко-место':[['Койко-место International City','500 AED/мес'],['Койко-место (жен.)','700 AED/мес']],
-      'Агентство':[['Подбор жилья','от 500 AED'],['Сопровождение сделки','от 1200 AED'],['Оценка недвижимости','от 300 AED']],
-      'Комната':[['Комната в квартире, Marina','2200 AED/мес'],['Комната с отдельным входом','2600 AED/мес']],
-      'Земельные участки':[['Участок 500 м², Al Ain','450 000 AED'],['Участок 1000 м², Sharjah','780 000 AED']]
+      'Продам квартиру':[['Студия, Строгино','9 500 000 ₽'],['1-комн., Митино','12 750 000 ₽'],['2-комн., Марьино','15 250 000 ₽']],
+      'Сдам квартиру':[['Студия, Строгино','45 000 ₽/мес'],['1-комн., Митино','55 000 ₽/мес'],['2-комн., Марьино','70 000 ₽/мес']],
+      'Сниму квартиру':[['Ищу студию до 40 000 ₽/мес','Аренда'],['Ищу 1-комн. до 55 000 ₽/мес','Аренда'],['Ищу 2-комн. до 70 000 ₽/мес','Аренда']],
+      'Койко-место':[['Койко-место, Тропарёво','12 500 ₽/мес'],['Койко-место (жен.), Беляево','15 000 ₽/мес']],
+      'Агентство':[['Подбор жилья','от 12 500 ₽'],['Сопровождение сделки','от 30 000 ₽'],['Оценка недвижимости','от 7 500 ₽']],
+      'Комната':[['Комната в квартире, Марьино','25 000 ₽/мес'],['Комната с отдельным входом, Митино','28 000 ₽/мес']],
+      'Земельные участки':[['Участок 6 соток, Новая Москва','3 500 000 ₽'],['Участок 10 соток, Московская область','5 900 000 ₽']]
     },
     listings:{
       'Продам квартиру':[
-        {photo:'realty-sale1', title:'Студия JLT', desc:'Студия 38 м², полностью меблирована, встроенная кухня', price:'380 000 AED', old:'420 000 AED', user:'Данияр'},
-        {photo:'realty-sale2', title:'1BR Downtown', desc:'1-спальная, вид на Burj Khalifa, паркинг включён', price:'950 000 AED', old:'1 050 000 AED', user:'Айгуль'},
-        {photo:'realty-sale3', title:'2BR Marina', desc:'2-спальная, полная отделка, рядом марина', price:'1 250 000 AED', old:'1 350 000 AED', user:'Марат'}
+        {photo:'realty-sale1', title:'Студия, Строгино', desc:'Студия 38 м², полностью меблирована, встроенная кухня, 5 мин до метро', price:'9 500 000 ₽', old:'10 200 000 ₽', user:'Данияр'},
+        {photo:'realty-sale2', title:'1-комн., Митино', desc:'1-комнатная, свежий ремонт, окна во двор, рядом парк', price:'12 750 000 ₽', old:'13 500 000 ₽', user:'Айгуль'},
+        {photo:'realty-sale3', title:'2-комн., Марьино', desc:'2-комнатная, полная отделка, вид на парк, кладовая', price:'15 250 000 ₽', old:'16 300 000 ₽', user:'Марат'}
       ],
       'Сдам квартиру':[
-        {photo:'realty-rent1', title:'Студия JLT', desc:'Студия 40 м², вся техника, wi-fi включён', price:'3800 AED/мес', old:'4200 AED/мес', user:'Бермет'},
-        {photo:'realty-rent2', title:'1BR Downtown', desc:'1-спальная, консьерж 24/7, бассейн', price:'7200 AED/мес', old:'7900 AED/мес', user:'Нурлан'},
-        {photo:'realty-rent3', title:'2BR Marina', desc:'2-спальная, панорамные окна, парковка', price:'9800 AED/мес', old:'10 500 AED/мес', user:'Гульнара'}
+        {photo:'realty-rent1', title:'Студия, Строгино', desc:'Студия 40 м², вся техника, wi-fi включён, 3 мин до метро', price:'45 000 ₽/мес', old:'50 000 ₽/мес', user:'Бермет'},
+        {photo:'realty-rent2', title:'1-комн., Митино', desc:'1-комнатная, консьерж, парковка во дворе', price:'55 000 ₽/мес', old:'60 000 ₽/мес', user:'Нурлан'},
+        {photo:'realty-rent3', title:'2-комн., Марьино', desc:'2-комнатная, панорамные окна, парковка', price:'70 000 ₽/мес', old:'78 000 ₽/мес', user:'Гульнара'}
       ],
       'Сниму квартиру':[
-        {photo:'realty-seek1', title:'Ищу студию', desc:'Рассмотрю варианты в JLT, Marina, JVC', price:'до 3500 AED/мес', old:'', user:'Ержан'},
-        {photo:'realty-seek2', title:'Ищу 1BR', desc:'Срочно, заселение в течение недели', price:'до 7000 AED/мес', old:'', user:'Айым'}
+        {photo:'realty-seek1', title:'Ищу студию', desc:'Рассмотрю варианты рядом с метро Строгино, Митино, Тушинская', price:'до 40 000 ₽/мес', old:'', user:'Ержан'},
+        {photo:'realty-seek2', title:'Ищу 1-комн.', desc:'Срочно, заселение в течение недели', price:'до 55 000 ₽/мес', old:'', user:'Айым'}
       ],
       'Койко-место':[
-        {photo:'realty-bed1', title:'Койко-место International City', desc:'Общая комната, кондиционер, wi-fi', price:'500 AED/мес', old:'600 AED/мес', user:'Данияр'},
-        {photo:'realty-bed2', title:'Койко-место (жен.)', desc:'Al Barsha, чисто, рядом супермаркет', price:'700 AED/мес', old:'800 AED/мес', user:'Айгуль'}
+        {photo:'realty-bed1', title:'Койко-место, Тропарёво', desc:'Общая комната, кондиционер, wi-fi', price:'12 500 ₽/мес', old:'15 000 ₽/мес', user:'Данияр'},
+        {photo:'realty-bed2', title:'Койко-место (жен.), Беляево', desc:'Чисто, рядом супермаркет и метро', price:'15 000 ₽/мес', old:'17 000 ₽/мес', user:'Айгуль'}
       ],
       'Агентство':[
-        {photo:'realty-agency1', title:'Подбор жилья', desc:'Поможем найти квартиру под бюджет за 1 день', price:'от 500 AED', old:'', user:'Emirates Realty'},
-        {photo:'realty-agency2', title:'Сопровождение сделки', desc:'Полное юридическое сопровождение аренды/покупки', price:'от 1200 AED', old:'', user:'Prime Properties'}
+        {photo:'realty-agency1', title:'Подбор жилья', desc:'Поможем найти квартиру под бюджет за 1 день', price:'от 12 500 ₽', old:'', user:'Столица Риэлт'},
+        {photo:'realty-agency2', title:'Сопровождение сделки', desc:'Полное юридическое сопровождение аренды/покупки', price:'от 30 000 ₽', old:'', user:'Прайм Недвижимость'}
       ],
       'Комната':[
-        {photo:'realty-room1', title:'Комната в квартире, Marina', desc:'Отдельная комната с окном, общая кухня', price:'2200 AED/мес', old:'2500 AED/мес', user:'Марат'},
-        {photo:'realty-room2', title:'Комната с отдельным входом', desc:'Тихий район, парковка во дворе', price:'2600 AED/мес', old:'', user:'Бермет'}
+        {photo:'realty-room1', title:'Комната в квартире, Марьино', desc:'Отдельная комната с окном, общая кухня', price:'25 000 ₽/мес', old:'28 000 ₽/мес', user:'Марат'},
+        {photo:'realty-room2', title:'Комната с отдельным входом, Митино', desc:'Тихий район, парковка во дворе', price:'28 000 ₽/мес', old:'', user:'Бермет'}
       ]
     },
-    providers:[{name:'Emirates Realty',rating:4.7,meta:'Ответ за 15 мин'},{name:'Дубай Резиденс',rating:4.5,meta:'Ответ за 30 мин'},{name:'Prime Properties UAE',rating:4.9,meta:'Ответ за 10 мин'}]
+    providers:[{name:'Столица Риэлт',rating:4.7,meta:'Ответ за 15 мин'},{name:'Мосжилсервис',rating:4.5,meta:'Ответ за 30 мин'},{name:'Прайм Недвижимость',rating:4.9,meta:'Ответ за 10 мин'}]
   },
   { id:'auto', name:'Автомобиль', icon:'🚗', tag:'Купить, продать, взять в аренду',
     subcats:['Седаны','Внедорожники','Аренда авто','Запчасти'],
     catalog:{
-      'Седаны':[['Toyota Camry 2022','78 000 AED'],['Honda Accord 2021','69 500 AED'],['Nissan Altima 2023','72 000 AED']],
-      'Внедорожники':[['Nissan Patrol 2020','145 000 AED'],['Toyota Land Cruiser 2019','155 000 AED']],
-      'Аренда авто':[['Аренда economy/сутки','95 AED'],['Аренда SUV/сутки','220 AED']],
-      'Запчасти':[['Комплект тормозных колодок','240 AED'],['Аккумулятор 70Ah','310 AED']]
+      'Седаны':[['Toyota Camry 2022','1 950 000 ₽'],['Honda Accord 2021','1 737 500 ₽'],['Nissan Altima 2023','1 800 000 ₽']],
+      'Внедорожники':[['Nissan Patrol 2020','3 625 000 ₽'],['Toyota Land Cruiser 2019','3 875 000 ₽']],
+      'Аренда авто':[['Аренда economy/сутки','2 375 ₽'],['Аренда SUV/сутки','5 500 ₽']],
+      'Запчасти':[['Комплект тормозных колодок','6 000 ₽'],['Аккумулятор 70Ah','7 750 ₽']]
     },
     providers:[{name:'AutoDXB',rating:4.6,meta:'20 объявлений'},{name:'Gulf Motors',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
   },
   { id:'fashion', name:'Магазины одежды', icon:'👕', tag:'Мужская, женская, детская',
     subcats:['Мужская','Женская','Детская','Аксессуары'],
     catalog:{
-      'Мужская':[['Рубашка льняная','149 AED'],['Джинсы slim fit','199 AED'],['Кроссовки кожаные','349 AED']],
-      'Женская':[['Абайя вышитая','259 AED'],['Платье летнее','179 AED'],['Сумка кожаная','299 AED']],
-      'Детская':[['Комплект детский','119 AED'],['Кроссовки детские','159 AED']],
-      'Аксессуары':[['Ремень кожаный','89 AED'],['Очки солнцезащитные','129 AED']]
+      'Мужская':[['Рубашка льняная','3 725 ₽'],['Джинсы slim fit','4 975 ₽'],['Кроссовки кожаные','8 725 ₽']],
+      'Женская':[['Абайя вышитая','6 475 ₽'],['Платье летнее','4 475 ₽'],['Сумка кожаная','7 475 ₽']],
+      'Детская':[['Комплект детский','2 975 ₽'],['Кроссовки детские','3 975 ₽']],
+      'Аксессуары':[['Ремень кожаный','2 225 ₽'],['Очки солнцезащитные','3 225 ₽']]
     },
     providers:[{name:'Style Hub',rating:4.7,meta:'Новая коллекция'},{name:'Sandy Fashion',rating:4.5,meta:'Скидки до 30%'},{name:'Oasis Wear',rating:4.6,meta:'Доставка 1–2 дня'}]
   },
   { id:'electronics', name:'Электроника', icon:'📱', tag:'Смартфоны, ноутбуки, аудио',
     subcats:['Смартфоны','Ноутбуки','Аудио','Умный дом'],
     catalog:{
-      'Смартфоны':[['iPhone 15 128GB','3399 AED'],['Samsung S24','2999 AED'],['Xiaomi 14','2199 AED']],
-      'Ноутбуки':[['MacBook Air M2','4299 AED'],['Lenovo ThinkPad','2799 AED'],['Asus Zenbook','3199 AED']],
-      'Аудио':[['AirPods Pro 2','899 AED'],['JBL колонка','349 AED'],['Наушники накладные','249 AED']],
-      'Умный дом':[['Умная лампа','69 AED'],['Робот-пылесос','899 AED']]
+      'Смартфоны':[['iPhone 15 128GB','84 975 ₽'],['Samsung S24','74 975 ₽'],['Xiaomi 14','54 975 ₽']],
+      'Ноутбуки':[['MacBook Air M2','107 475 ₽'],['Lenovo ThinkPad','69 975 ₽'],['Asus Zenbook','79 975 ₽']],
+      'Аудио':[['AirPods Pro 2','22 475 ₽'],['JBL колонка','8 725 ₽'],['Наушники накладные','6 225 ₽']],
+      'Умный дом':[['Умная лампа','1 725 ₽'],['Робот-пылесос','22 475 ₽']]
     },
     providers:[{name:'TechPoint',rating:4.8,meta:'Гарантия 1 год'},{name:'GadgetPro',rating:4.5,meta:'Рассрочка 0%'},{name:'ElectroMax',rating:4.6,meta:'Доставка сегодня'}]
   },
   { id:'services', name:'Услуги', icon:'🛠️', tag:'Ремонт, клининг, обучение',
     subcats:['Ремонт','Клининг','Переезды','Обучение'],
     catalog:{
-      'Ремонт':[['Ремонт кондиционера','150 AED'],['Сантехник на дом','120 AED'],['Электрик','130 AED']],
-      'Клининг':[['Генеральная уборка','220 AED'],['Химчистка дивана','180 AED']],
-      'Переезды':[['Переезд по городу','350 AED'],['Грузчики + Ford','400 AED']],
-      'Обучение':[['Репетитор английского','80 AED/час'],['Курсы вождения','2200 AED']]
+      'Ремонт':[['Ремонт кондиционера','3 750 ₽'],['Сантехник на дом','3 000 ₽'],['Электрик','3 250 ₽']],
+      'Клининг':[['Генеральная уборка','5 500 ₽'],['Химчистка дивана','4 500 ₽']],
+      'Переезды':[['Переезд по городу','8 750 ₽'],['Грузчики + Ford','10 000 ₽']],
+      'Обучение':[['Репетитор английского','2 000 ₽/час'],['Курсы вождения','55 000 ₽']]
     },
     providers:[{name:'FixIt Dubai',rating:4.7,meta:'Выезд за 40 мин'},{name:'CleanPro',rating:4.6,meta:'Выезд сегодня'},{name:'HandyHub',rating:4.5,meta:'Работаем 24/7'}]
   },
   { id:'jobs', name:'Работа', icon:'💼', tag:'Вакансии и резюме',
     subcats:['Вакансии','Резюме','Стажировки'],
     catalog:{
-      'Вакансии':[['Продавец-консультант','3500 AED/мес'],['Водитель категории B','4200 AED/мес'],['Менеджер по продажам','5500 AED/мес']],
+      'Вакансии':[['Продавец-консультант','87 500 ₽/мес'],['Водитель категории B','105 000 ₽/мес'],['Менеджер по продажам','137 500 ₽/мес']],
       'Резюме':[['Резюме: бухгалтер','Ищу работу'],['Резюме: SMM-специалист','Ищу работу']],
-      'Стажировки':[['Стажировка маркетинг','1500 AED/мес'],['Стажировка разработка','2000 AED/мес']]
+      'Стажировки':[['Стажировка маркетинг','37 500 ₽/мес'],['Стажировка разработка','50 000 ₽/мес']]
     },
     providers:[{name:'JobHub UAE',rating:4.6,meta:'120+ вакансий'},{name:'CareerLine',rating:4.4,meta:'Отклик за 1 клик'},{name:'WorkNow',rating:4.7,meta:'Проверенные компании'}]
   },
   { id:'food', name:'Рестораны', icon:'🍔', tag:'Доставка еды',
     subcats:['Бургеры','Суши','Пицца','Шаурма','Шашлык'],
     catalog:{
-      'Бургеры':[['Чизбургер classic','22 AED'],['Двойной бургер','32 AED']],
-      'Суши':[['Филадельфия ролл','38 AED'],['Калифорния ролл','34 AED']],
-      'Пицца':[['Пепперони','45 AED'],['Маргарита','38 AED']],
-      'Шаурма':[['Шаурма classic','14 AED'],['Шаурма острая','16 AED']],
-      'Шашлык':[['Шашлык из баранины','42 AED'],['Шашлык куриный','28 AED']]
+      'Бургеры':[['Чизбургер classic','550 ₽'],['Двойной бургер','800 ₽']],
+      'Суши':[['Филадельфия ролл','950 ₽'],['Калифорния ролл','850 ₽']],
+      'Пицца':[['Пепперони','1 125 ₽'],['Маргарита','950 ₽']],
+      'Шаурма':[['Шаурма classic','350 ₽'],['Шаурма острая','400 ₽']],
+      'Шашлык':[['Шашлык из баранины','1 050 ₽'],['Шашлык куриный','700 ₽']]
     },
     providers:[{name:'Crispy King',rating:4.5,meta:'20–30 мин'},{name:'Osak Kebab',rating:4.7,meta:'35–45 мин'},{name:'Sushi Wave',rating:4.6,meta:'25–35 мин'},{name:'Toyboss Catering',rating:4.8,meta:'40–50 мин'}]
   },
   { id:'construction', name:'Строительство', icon:'🏗️', tag:'Ремонт и стройка',
     subcats:['Ремонт','Стройматериалы','Бригады','Дизайн интерьера'],
     catalog:{
-      'Ремонт':[['Косметический ремонт','от 60 AED/м²'],['Капитальный ремонт','от 150 AED/м²']],
-      'Стройматериалы':[['Цемент 50 кг','28 AED'],['Гипсокартон, лист','35 AED']],
-      'Бригады':[['Бригада маляров','800 AED/день'],['Бригада плиточников','950 AED/день']],
-      'Дизайн интерьера':[['Дизайн-проект квартиры','от 3500 AED'],['3D-визуализация','от 900 AED']]
+      'Ремонт':[['Косметический ремонт','от 1 500 ₽/м²'],['Капитальный ремонт','от 3 750 ₽/м²']],
+      'Стройматериалы':[['Цемент 50 кг','700 ₽'],['Гипсокартон, лист','875 ₽']],
+      'Бригады':[['Бригада маляров','20 000 ₽/день'],['Бригада плиточников','23 750 ₽/день']],
+      'Дизайн интерьера':[['Дизайн-проект квартиры','от 87 500 ₽'],['3D-визуализация','от 22 500 ₽']]
     },
     providers:[{name:'BuildDXB',rating:4.6,meta:'Выезд за 1 день'},{name:'Emirates Construct',rating:4.7,meta:'15 лет на рынке'},{name:'RemontPro UAE',rating:4.5,meta:'Гарантия 2 года'}]
   }
 ];
 
-const WA_NUMBER = '971500000000'; // TODO: заменить на реальный номер WhatsApp
+const WA_NUMBER = '79000000000'; // TODO: заменить на реальный номер MAX
+const MAX_LINK = `https://max.ru/${WA_NUMBER}`; // TODO: заменить на реальную ссылку на профиль в MAX
 
 /* ===================== STATE ===================== */
 const state = {
@@ -873,15 +874,15 @@ function renderCatsStrip(){
   $all('.cat-chip').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
 }
 const LISTINGS = [
-  {photo:'ailun-a1', price:'780$ в сутки', old:'1200$', desc:'2-комн. кв., 80 м², 5 этаж из 10, вид на море, ремонт 2024', tag:'Отель в сутки', user:'Данияр'},
-  {photo:'ailun-a2', price:'650$ в сутки', old:'950$',  desc:'Студия 45 м², Dubai Marina, вся техника, wi-fi включён',   tag:'Апартаменты',   user:'Айгуль'},
-  {photo:'ailun-a3', price:'420$ в сутки', old:'600$',  desc:'Вилла 3BR, бассейн, парковка на 2 авто, Arabian Ranches',  tag:'Вилла посуточно', user:'Марат'},
-  {photo:'ailun-a4', price:'55$ в сутки',  old:'80$',   desc:'Койко-место в общей комнате, International City, чисто', tag:'Койко-место',    user:'Бермет'},
-  {photo:'ailun-a5', price:'980$ в сутки', old:'1400$', desc:'2-спальная, Downtown, вид на Burj Khalifa, консьерж 24/7', tag:'Отель в сутки', user:'Нурлан'},
-  {photo:'ailun-a6', price:'340$ в сутки', old:'480$',  desc:'1-спальная, JVC, бесплатная парковка, рядом супермаркет',  tag:'Апартаменты',   user:'Гульнара'},
-  {photo:'ailun-a7', price:'610$ в сутки', old:'890$',  desc:'Таунхаус 4BR, сад, тихий район, до пляжа 10 минут',        tag:'Вилла посуточно', user:'Данияр'},
-  {photo:'ailun-a8', price:'60$ в сутки',  old:'90$',   desc:'Койко-место (жен.), Al Barsha, кондиционер, wi-fi',       tag:'Койко-место',    user:'Айым'},
-  {photo:'ailun-a9', price:'510$ в сутки', old:'740$',  desc:'2-комн. кв., 70 м², Business Bay, панорамные окна',       tag:'Апартаменты',   user:'Ержан'},
+  {photo:'ailun-a1', price:'6 500 ₽ в сутки', old:'8 500 ₽', desc:'2-комн. кв., 80 м², 5 этаж из 10, вид на парк, ремонт 2024', tag:'Посуточно', user:'Данияр'},
+  {photo:'ailun-a2', price:'4 800 ₽ в сутки', old:'6 000 ₽',  desc:'Студия 45 м², м. Строгино, вся техника, wi-fi включён',   tag:'Апартаменты',   user:'Айгуль'},
+  {photo:'ailun-a3', price:'12 000 ₽ в сутки', old:'15 000 ₽',  desc:'Дом 3BR, баня, парковка на 2 авто, Московская область',  tag:'Дом посуточно', user:'Марат'},
+  {photo:'ailun-a4', price:'900 ₽ в сутки',  old:'1 200 ₽',   desc:'Койко-место в общей комнате, м. Тропарёво, чисто', tag:'Койко-место',    user:'Бермет'},
+  {photo:'ailun-a5', price:'9 200 ₽ в сутки', old:'11 500 ₽', desc:'2-спальная, м. Митино, вид на город, консьерж 24/7', tag:'Посуточно', user:'Нурлан'},
+  {photo:'ailun-a6', price:'5 300 ₽ в сутки', old:'6 800 ₽',  desc:'1-спальная, м. Марьино, бесплатная парковка, рядом супермаркет',  tag:'Апартаменты',   user:'Гульнара'},
+  {photo:'ailun-a7', price:'8 900 ₽ в сутки', old:'11 000 ₽',  desc:'Таунхаус 4BR, сад, тихий район, Новая Москва',        tag:'Дом посуточно', user:'Данияр'},
+  {photo:'ailun-a8', price:'950 ₽ в сутки',  old:'1 300 ₽',   desc:'Койко-место (жен.), м. Беляево, кондиционер, wi-fi',       tag:'Койко-место',    user:'Айым'},
+  {photo:'ailun-a9', price:'6 100 ₽ в сутки', old:'7 800 ₽',  desc:'2-комн. кв., 70 м², м. Марьино, панорамные окна',       tag:'Апартаменты',   user:'Ержан'},
 ];
 
 function renderFeatureTiles(){
@@ -980,7 +981,7 @@ function openListingDetail(item, related, backScreen){
       <h3 class="detail-title">${title}</h3>
       ${item.desc?`<p class="detail-desc">${item.desc}</p>`:''}
       <div class="detail-price-row"><b>${item.price}</b>${item.old?`<s>${item.old}</s>`:''}</div>
-      <div class="detail-meta"><span>📍 ОАЭ, Дубай</span><span>Сегодня</span></div>
+      <div class="detail-meta"><span>📍 Москва</span><span>Сегодня</span></div>
       <button class="btn btn-primary" style="width:100%;justify-content:center" id="detailContactBtn">Показать контакты</button>
       ${item.user?`<div class="detail-seller"><span class="avatar-circle">${item.user[0]}</span><div><strong>${item.user}</strong><span>Продавец</span></div></div>`:''}
     </div>
@@ -1322,7 +1323,7 @@ function openContactModal(itemName){
   openModal(`
     <div class="modal-head"><h3>Связаться с продавцом</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <p style="font-size:13px;color:var(--ink-soft);margin-bottom:16px">По объявлению «${itemName}»</p>
-    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Здравствуйте! Интересует: '+itemName)}" target="_blank" rel="noopener">Написать в WhatsApp</a>
+    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" href="${MAX_LINK}" target="_blank" rel="noopener">Написать в МАКС</a>
     <button class="btn btn-outline" style="width:100%;justify-content:center" onclick="closeModal()">Отмена</button>
   `);
 }
@@ -1330,7 +1331,7 @@ function openContactModal(itemName){
 function openLoginModal(){
   openModal(`
     <div class="modal-head"><h3>Вход в Ailun</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <div class="field-group"><label>Номер телефона</label><input type="tel" placeholder="+971 50 000 00 00"></div>
+    <div class="field-group"><label>Номер телефона</label><input type="tel" placeholder="+7 900 000-00-00"></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" onclick="doLogin()">Получить код</button>
     <p style="font-size:11.5px;color:var(--ink-soft);text-align:center">Продолжая, вы принимаете <span data-legal-inline="terms" style="text-decoration:underline;cursor:pointer">условия использования</span></p>
   `);
@@ -1343,7 +1344,7 @@ function openProfileModal(){
     <div class="modal-head"><h3>Профиль</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <div style="display:flex;align-items:center;gap:12px;margin-bottom:18px">
       <span class="avatar-circle" style="width:44px;height:44px;font-size:16px">Д</span>
-      <div><strong style="font-size:14px">Данияр</strong><div style="font-size:12px;color:var(--ink-soft)">+971 50 123 45 67</div></div>
+      <div><strong style="font-size:14px">Данияр</strong><div style="font-size:12px;color:var(--ink-soft)">+7 903 123-45-67</div></div>
     </div>
     <div class="subcat-list">
       <button onclick="toast('Демо-раздел')"><span>⚙️ Настройки профиля</span> ›</button>
@@ -1398,13 +1399,55 @@ function openListingForm(catId, subcat){
     <div class="field-group"><label>Название*</label><input type="text" placeholder="Например: ${(cat.catalog[subcat]&&cat.catalog[subcat][0][0])||subcat}"></div>
     <div class="field-group"><label>Описание*</label><textarea placeholder="Расскажите подробнее о вашем объявлении"></textarea></div>
     <div class="field-group"><label>Город*</label>
-      <select><option>Дубай</option><option>Абу-Даби</option><option>Шарджа</option><option>Аджман</option></select>
+      <select><option>Москва</option><option>Московская область</option><option>Другое</option></select>
     </div>
-    <div class="field-group"><label>Цена*</label><input type="text" placeholder="Договорная или сумма в AED"></div>
-    <div class="field-group"><label>Номер телефона*</label><input type="tel" placeholder="+971 50 000 00 00"></div>
+    <div class="field-group"><label>Ближайшее метро</label>
+      <div class="search-field" style="background:var(--green-50)">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z" stroke="#167A47" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="#167A47" stroke-width="2"/></svg>
+        <input type="text" id="listingMetroInput" placeholder="Например: Строгино" autocomplete="off" style="border:none;background:transparent;outline:none;flex:1;font-size:13.5px;color:var(--ink)">
+      </div>
+      <div id="listingMetroSuggestions"></div>
+      <div id="listingMetroSelected" style="margin-top:8px"></div>
+    </div>
+    <div class="field-group"><label>Цена*</label><input type="text" placeholder="Договорная или сумма в ₽"></div>
+    <div class="field-group"><label>Номер телефона*</label><input type="tel" placeholder="+7 900 000-00-00"></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitListing()">Опубликовать бесплатно</button>
   `);
   wireUploadRow();
+  wireListingMetro();
+}
+function wireListingMetro(){
+  state.listing.metro = null;
+  renderListingMetroSelected();
+  const input = $('#listingMetroInput');
+  input.addEventListener('input', e=>{
+    const q = e.target.value.toLowerCase().trim();
+    const box = $('#listingMetroSuggestions');
+    if(!q){ box.innerHTML=''; return; }
+    const matches = METRO_LIST.filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,5);
+    box.innerHTML = matches.length ? matches.map(m=>`
+      <div class="search-result-row" data-metro="${m.name}" style="cursor:pointer">
+        <div class="ico" style="width:28px;height:28px;font-size:13px">🚇</div><div><strong>${m.name}</strong></div>
+      </div>`).join('') : `<p style="color:var(--ink-soft);font-size:12px;padding:8px 4px">Станция не найдена</p>`;
+    $all('#listingMetroSuggestions [data-metro]').forEach(row=>{
+      row.onclick=()=>{
+        state.listing.metro = row.dataset.metro;
+        input.value = '';
+        box.innerHTML = '';
+        renderListingMetroSelected();
+      };
+    });
+  });
+}
+function renderListingMetroSelected(){
+  const el = $('#listingMetroSelected');
+  if(!el) return;
+  el.innerHTML = state.listing.metro
+    ? `<span class="metro-chip">🚇 ${state.listing.metro}<button type="button" id="removeListingMetro">✕</button></span>`
+    : '';
+  if($('#removeListingMetro')){
+    $('#removeListingMetro').onclick=()=>{ state.listing.metro=null; renderListingMetroSelected(); };
+  }
 }
 function wireUploadRow(){
   $all('#uploadRow .upload-box').forEach(box=>{
@@ -1439,18 +1482,19 @@ function wireUploadRow(){
   });
 }
 function submitListing(){
+  const metro = state.listing.metro;
   closeModal();
-  toast('Объявление отправлено на модерацию ✓');
+  toast(metro ? `Объявление отправлено на модерацию ✓ · 🚇 ${metro}` : 'Объявление отправлено на модерацию ✓');
 }
 
 function openPartnerModal(){
   openModal(`
     <div class="modal-head"><h3>Стать партнёром AILUN</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px">Разместите свой бренд, магазин или сервис на AILUN и получайте клиентов из русскоязычного сообщества ОАЭ. Напишите нам — подключим за 1 день.</p>
-    <a class="btn btn-primary" style="width:100%;justify-content:center" href="https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Здравствуйте! Хочу стать партнёром AILUN')}" target="_blank" rel="noopener">Написать в WhatsApp</a>
+    <p style="font-size:13px;color:var(--ink-soft);line-height:1.6;margin-bottom:16px">Разместите свой бренд, магазин или сервис на AILUN и получайте клиентов по всей России. Напишите нам — подключим за 1 день.</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center" href="${MAX_LINK}" target="_blank" rel="noopener">Написать в МАКС</a>
   `);
 }
-$('#miniWaLink').href = `https://wa.me/${WA_NUMBER}`;
+$('#miniWaLink').href = MAX_LINK;
 
 /* Legal modals */
 const LEGAL = {
@@ -1463,12 +1507,12 @@ const LEGAL = {
   terms:{title:'Условия использования', body:`
     <h4>1. Принятие условий</h4><p>Используя Ailun.ru, вы соглашаетесь с настоящими условиями.</p>
     <h4>2. Размещение объявлений</h4><p>Пользователь несёт ответственность за достоверность размещаемой информации.</p>
-    <h4>3. Запрещённый контент</h4><p>Запрещено размещение объявлений, нарушающих законодательство ОАЭ.</p>
+    <h4>3. Запрещённый контент</h4><p>Запрещено размещение объявлений, нарушающих законодательство РФ.</p>
     <h4>4. Ответственность</h4><p>Ailun.ru является площадкой для размещения объявлений и не несёт ответственности за сделки между пользователями.</p>
     <p style="margin-top:16px;color:var(--ink-soft)">Демо-текст. Финальная редакция готовится юристом перед публикацией.</p>`},
-  about:{title:'О нас', body:`<p style="line-height:1.7">Ailun — маркетплейс объявлений для русскоязычного сообщества ОАЭ. Мы объединяем недвижимость, авто, работу, магазины и Halal-сервисы в одном приложении, чтобы жизнь в Эмиратах была проще.</p>`},
-  ads:{title:'Реклама', body:`<p style="line-height:1.7">Хотите разместить рекламу на AILUN? Свяжитесь с нами через WhatsApp — подберём формат под ваш бюджет и аудиторию.</p>
-    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">Написать в WhatsApp</a>`}
+  about:{title:'О нас', body:`<p style="line-height:1.7">Ailun — маркетплейс объявлений для Москвы и всей России. Мы объединяем недвижимость, авто, работу и магазины в одном приложении, чтобы находить нужное было проще.</p>`},
+  ads:{title:'Реклама', body:`<p style="line-height:1.7">Хотите разместить рекламу на AILUN? Свяжитесь с нами через МАКС — подберём формат под ваш бюджет и аудиторию.</p>
+    <a class="btn btn-primary" style="width:100%;justify-content:center;margin-top:12px" href="${MAX_LINK}" target="_blank" rel="noopener">Написать в МАКС</a>`}
 };
 function openLegal(key){
   const l = LEGAL[key];
