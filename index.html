@@ -326,6 +326,25 @@
   .product-price{font-size:13px;font-weight:800;color:var(--green-700);margin-bottom:8px;}
   .product-body .btn{width:100%;justify-content:center;padding:8px;font-size:12px;}
 
+  /* ---------- Listing detail screen ---------- */
+  .detail-media{
+    margin:-18px -16px 0;height:260px;background:var(--green-100);background-size:cover;background-position:center;
+    display:flex;align-items:center;justify-content:center;font-size:40px;
+  }
+  .detail-thumbs{display:flex;gap:6px;padding:10px 0;margin:0 -16px;padding-left:16px;padding-right:16px;overflow-x:auto;}
+  .detail-thumbs::-webkit-scrollbar{display:none;}
+  .detail-thumb{width:52px;height:52px;border-radius:8px;flex-shrink:0;background-size:cover;background-position:center;border:2px solid transparent;}
+  .detail-thumb.active{border-color:var(--green-700);}
+  .detail-title{font-size:18px;margin:4px 0 8px;color:var(--green-950);}
+  .detail-desc{font-size:13px;line-height:1.6;color:var(--ink-soft);margin:0 0 14px;}
+  .detail-price-row{display:flex;align-items:baseline;gap:8px;margin-bottom:10px;}
+  .detail-price-row b{font-size:20px;color:var(--green-700);font-weight:800;}
+  .detail-price-row s{font-size:13px;color:#9aa79f;}
+  .detail-meta{display:flex;gap:10px;font-size:12px;color:var(--ink-soft);margin-bottom:16px;}
+  .detail-seller{display:flex;align-items:center;gap:10px;margin-top:16px;padding-top:16px;border-top:1px solid var(--line);}
+  .detail-seller strong{display:block;font-size:13px;color:var(--green-950);}
+  .detail-seller span{font-size:11px;color:var(--ink-soft);}
+
   /* ---------- Bottom nav ---------- */
   .bottom-nav{
     position:sticky;bottom:0;left:0;right:0;background:var(--white);border-top:1px solid var(--line);
@@ -524,6 +543,9 @@
 
     <!-- PROVIDER -->
     <section class="screen" data-screen="provider" id="screenProvider"></section>
+
+    <!-- LISTING DETAIL -->
+    <section class="screen" data-screen="detail" id="screenDetail"></section>
 
     <!-- SUPER ADMIN PANEL (demo) -->
     <section class="screen" data-screen="admin" id="screenAdmin"></section>
@@ -887,7 +909,7 @@ function renderQuickRow(){
 }
 function renderListings(){
   $('#listingsGrid').innerHTML = LISTINGS.map((l,i)=>`
-    <div class="listing-card">
+    <div class="listing-card" data-idx="${i}">
       <div class="listing-media" style="background-image:url('https://picsum.photos/seed/${l.photo}/300/220')"></div>
       <div class="listing-body">
         <div class="listing-price"><b>${l.price}</b><s>${l.old}</s></div>
@@ -899,13 +921,85 @@ function renderListings(){
         </div>
       </div>
     </div>`).join('');
+  $all('#listingsGrid .listing-card').forEach(card=>{
+    card.onclick=()=>{
+      const i = +card.dataset.idx;
+      const item = {...LISTINGS[i], key:`listing-${i}`, title:LISTINGS[i].tag};
+      const related = LISTINGS.map((l,j)=>({...l, key:`listing-${j}`, title:l.tag})).filter((_,j)=>j!==i);
+      openListingDetail(item, related, 'home');
+    };
+  });
   $all('.listing-footer [data-fav]').forEach(h=>{
-    h.onclick=()=>{
+    h.onclick=(e)=>{
+      e.stopPropagation();
       const key=h.dataset.fav;
       if(state.favorites.has(key)){state.favorites.delete(key); h.textContent='🤍';}
       else {state.favorites.add(key); h.textContent='❤️'; toast('Добавлено в избранное');}
     };
   });
+}
+
+/* ===================== LISTING DETAIL ===================== */
+function miniListingCard(l){
+  const fav = state.favorites.has(l.key) ? '❤️' : '🤍';
+  return `
+    <div class="listing-card" data-detail-key="${l.key}">
+      <div class="listing-media" style="background-image:url('https://picsum.photos/seed/${l.photo}/300/220')"></div>
+      <div class="listing-body">
+        <div class="listing-price"><b>${l.price}</b>${l.old?`<s>${l.old}</s>`:''}</div>
+        <p class="listing-desc">${l.desc||l.title||''}</p>
+        ${l.tag?`<div class="listing-tag">${l.tag}</div>`:''}
+        <div class="listing-footer">
+          ${l.user?`<span class="avatar-circle-sm">${l.user[0]}</span><span>${l.user}</span>`:''}
+          <span class="heart" data-fav="${l.key}">${fav}</span>
+        </div>
+      </div>
+    </div>`;
+}
+function openListingDetail(item, related, backScreen){
+  state.detailBack = backScreen || 'home';
+  const el = $('#screenDetail');
+  const title = item.title || item.tag || 'Объявление';
+  const thumbs = item.photo ? [item.photo, item.photo+'-b', item.photo+'-c'] : [];
+  el.innerHTML = `
+    <div class="back-row" style="padding:14px 16px 0">
+      <button class="back-btn" id="backFromDetail"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <div><h2 class="screen-title">Объявление</h2></div>
+    </div>
+    <div class="detail-media" ${item.photo?`style="background-image:url('https://picsum.photos/seed/${item.photo}/600/500')"`:''}></div>
+    ${thumbs.length?`<div class="detail-thumbs">
+      ${thumbs.map((p,i)=>`<div class="detail-thumb ${i===0?'active':''}" style="background-image:url('https://picsum.photos/seed/${p}/120/120')"></div>`).join('')}
+    </div>`:''}
+    <div style="padding:0 16px">
+      <h3 class="detail-title">${title}</h3>
+      ${item.desc?`<p class="detail-desc">${item.desc}</p>`:''}
+      <div class="detail-price-row"><b>${item.price}</b>${item.old?`<s>${item.old}</s>`:''}</div>
+      <div class="detail-meta"><span>📍 ОАЭ, Дубай</span><span>Сегодня</span></div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" id="detailContactBtn">Показать контакты</button>
+      ${item.user?`<div class="detail-seller"><span class="avatar-circle">${item.user[0]}</span><div><strong>${item.user}</strong><span>Продавец</span></div></div>`:''}
+    </div>
+    <div class="section-head" style="margin:22px 16px 12px"><h2 style="font-size:16px">Похожие объявления</h2></div>
+    <div class="listings-grid" id="relatedListings" style="padding:0 16px 10px"></div>
+  `;
+  $('#backFromDetail').onclick=()=>showScreen(state.detailBack);
+  $('#detailContactBtn').onclick=()=>openContactModal(title);
+  $('#relatedListings').innerHTML = related.slice(0,6).map(miniListingCard).join('');
+  $all('#relatedListings .listing-card').forEach(card=>{
+    card.onclick=()=>{
+      const key = card.dataset.detailKey;
+      const found = related.find(r=>r.key===key);
+      if(found) openListingDetail(found, related.filter(r=>r.key!==key), state.detailBack);
+    };
+  });
+  $all('#relatedListings [data-fav]').forEach(h=>{
+    h.onclick=(e)=>{
+      e.stopPropagation();
+      const key=h.dataset.fav;
+      if(state.favorites.has(key)){state.favorites.delete(key); h.textContent='🤍';}
+      else {state.favorites.add(key); h.textContent='❤️'; toast('Добавлено в избранное');}
+    };
+  });
+  showScreen('detail');
 }
 function renderPagination(){
   const pages=[1,2,3,4,5,6];
@@ -1028,14 +1122,14 @@ function renderListingRows(cat, subs){
       (cat.catalog[s]||[]).forEach((it,i)=>rows.push({title:it[0], price:it[1], desc:'', old:'', user:'', sub:s, idx:i}));
     }
   });
+  rows.forEach(r=>{ r.key = `${cat.id}-${r.sub}-${r.idx}`; });
   const box = $('#providerProducts');
   box.className = 'listing-row-list';
   box.innerHTML = rows.map(r=>{
-    const key = `${cat.id}-${r.sub}-${r.idx}`;
-    const fav = state.favorites.has(key) ? '❤️' : '🤍';
+    const fav = state.favorites.has(r.key) ? '❤️' : '🤍';
     const mediaStyle = r.photo ? `style="background-image:url('https://picsum.photos/seed/${r.photo}/200/200')"` : '';
     return `
-    <div class="listing-row-card">
+    <div class="listing-row-card" data-key="${r.key}">
       <div class="listing-row-media" ${mediaStyle}>${r.photo?'':cat.icon}</div>
       <div class="listing-row-body">
         ${r.desc?`<p class="listing-desc">${r.desc}</p>`:''}
@@ -1045,15 +1139,22 @@ function renderListingRows(cat, subs){
           ${r.user?`<span class="avatar-circle-sm">${r.user[0]}</span><span>${r.user}</span>`:''}
           <span class="listing-row-actions">
             <span class="msg-ico" data-contact="${r.title}">✉️</span>
-            <span class="heart" data-fav="${key}">${fav}</span>
+            <span class="heart" data-fav="${r.key}">${fav}</span>
           </span>
         </div>
       </div>
     </div>`;
   }).join('');
-  $all('#providerProducts [data-contact]').forEach(b=>b.onclick=()=>openContactModal(b.dataset.contact));
+  $all('#providerProducts .listing-row-card').forEach(card=>{
+    card.onclick=()=>{
+      const found = rows.find(r=>r.key===card.dataset.key);
+      if(found) openListingDetail(found, rows.filter(r=>r.key!==found.key), 'provider');
+    };
+  });
+  $all('#providerProducts [data-contact]').forEach(b=>b.onclick=(e)=>{e.stopPropagation(); openContactModal(b.dataset.contact);});
   $all('#providerProducts [data-fav]').forEach(h=>{
-    h.onclick=()=>{
+    h.onclick=(e)=>{
+      e.stopPropagation();
       const key=h.dataset.fav;
       if(state.favorites.has(key)){state.favorites.delete(key); h.textContent='🤍';}
       else {state.favorites.add(key); h.textContent='❤️'; toast('Добавлено в избранное');}
