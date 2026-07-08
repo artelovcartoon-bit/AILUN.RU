@@ -479,6 +479,25 @@
   }
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+  /* ---------- Fullscreen photo viewer ---------- */
+  .photo-viewer{position:fixed;inset:0;background:#000;z-index:400;display:none;align-items:center;justify-content:center;touch-action:pan-y;}
+  .photo-viewer.open{display:flex;}
+  .photo-viewer-img{width:100%;height:100%;background-size:contain;background-position:center;background-repeat:no-repeat;}
+  .photo-viewer-close{
+    position:absolute;top:16px;right:16px;width:36px;height:36px;border-radius:50%;
+    background:rgba(255,255,255,.15);color:#fff;border:none;font-size:16px;z-index:2;
+  }
+  .photo-viewer-nav{
+    position:absolute;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;
+    background:rgba(255,255,255,.15);color:#fff;border:none;font-size:20px;z-index:2;
+  }
+  .photo-viewer-nav.prev{left:12px;}
+  .photo-viewer-nav.next{right:12px;}
+  .photo-viewer-dots{position:absolute;bottom:20px;left:0;right:0;display:flex;justify-content:center;gap:6px;}
+  .photo-viewer-dots span{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);}
+  .photo-viewer-dots span.active{background:#fff;}
+  .detail-media{cursor:pointer;}
+
   .screen{display:none;}
   .screen.active{display:block;animation:fadeIn .18s ease;}
   @keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
@@ -616,6 +635,15 @@
   <div class="modal-sheet" id="modalSheet"></div>
 </div>
 
+<!-- Fullscreen photo viewer -->
+<div class="photo-viewer" id="photoViewer">
+  <button class="photo-viewer-close" id="photoViewerClose">✕</button>
+  <button class="photo-viewer-nav prev" id="photoViewerPrev">‹</button>
+  <div class="photo-viewer-img" id="photoViewerImg"></div>
+  <button class="photo-viewer-nav next" id="photoViewerNext">›</button>
+  <div class="photo-viewer-dots" id="photoViewerDots"></div>
+</div>
+
 <div class="toast" id="toast"></div>
 
 <script>
@@ -674,14 +702,18 @@ const DATA = [
     providers:[{name:'Столица Риэлт',rating:4.7,meta:'Ответ за 15 мин'},{name:'Мосжилсервис',rating:4.5,meta:'Ответ за 30 мин'},{name:'Прайм Недвижимость',rating:4.9,meta:'Ответ за 10 мин'}]
   },
   { id:'auto', name:'Автомобиль', icon:'🚗', tag:'Купить, продать, взять в аренду',
-    subcats:['Седаны','Внедорожники','Аренда авто','Запчасти'],
+    subcats:['Продажа машины','Аренда машины','Автозапчасти','Такси','Граница (заезд-выезд)','Попутки между городами'],
+    subIcons:{'Продажа машины':'🚘','Аренда машины':'🔑','Автозапчасти':'🔧','Такси':'🚕','Граница (заезд-выезд)':'🛂','Попутки между городами':'🧳'},
     catalog:{
-      'Седаны':[['Toyota Camry 2022','1 950 000 ₽'],['Honda Accord 2021','1 737 500 ₽'],['Nissan Altima 2023','1 800 000 ₽']],
-      'Внедорожники':[['Nissan Patrol 2020','3 625 000 ₽'],['Toyota Land Cruiser 2019','3 875 000 ₽']],
-      'Аренда авто':[['Аренда economy/сутки','2 375 ₽'],['Аренда SUV/сутки','5 500 ₽']],
-      'Запчасти':[['Комплект тормозных колодок','6 000 ₽'],['Аккумулятор 70Ah','7 750 ₽']]
+      'Продажа машины':[['Toyota Camry 2022','1 950 000 ₽'],['Nissan Patrol 2020','3 625 000 ₽'],['Hyundai Solaris 2021','1 150 000 ₽']],
+      'Аренда машины':[['Аренда economy/сутки','2 375 ₽'],['Аренда SUV/сутки','5 500 ₽'],['Аренда с водителем/сутки','7 000 ₽']],
+      'Автозапчасти':[['Комплект тормозных колодок','6 000 ₽'],['Аккумулятор 70Ah','7 750 ₽']],
+      'Такси':[['Такси по городу','от 300 ₽'],['Такси в аэропорт','от 1 500 ₽'],['Заказ с детским креслом','от 400 ₽']],
+      'Граница (заезд-выезд)':[['Сопровождение на границе','от 2 000 ₽'],['Трансфер до границы и обратно','от 3 500 ₽']],
+      'Попутки между городами':[['Москва — Санкт-Петербург','от 1 800 ₽'],['Москва — Нижний Новгород','от 1 200 ₽'],['Москва — Тверь','от 700 ₽']]
     },
-    providers:[{name:'AutoDXB',rating:4.6,meta:'20 объявлений'},{name:'Gulf Motors',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
+    taxiParks:['Яндекс Такси','Ситимобил','Максим','Такси Везёт','Gett','Таксовичkoff'],
+    providers:[{name:'АвтоВыкуп Москва',rating:4.6,meta:'20 объявлений'},{name:'Столица Моторс',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
   },
   { id:'fashion', name:'Магазины одежды', icon:'👕', tag:'Мужская, женская, детская',
     subcats:['Мужская','Женская','Детская','Аксессуары'],
@@ -990,13 +1022,18 @@ function openListingDetail(item, related, backScreen){
   `;
   $('#backFromDetail').onclick=()=>showScreen(state.detailBack);
   $('#detailContactBtn').onclick=()=>openContactModal(title);
-  $all('#screenDetail .detail-thumb').forEach(t=>{
+  let activePhotoIdx = 0;
+  $all('#screenDetail .detail-thumb').forEach((t,i)=>{
     t.onclick=()=>{
+      activePhotoIdx = i;
       $all('#screenDetail .detail-thumb').forEach(x=>x.classList.remove('active'));
       t.classList.add('active');
       $('#detailMedia').style.backgroundImage = `url('https://picsum.photos/seed/${t.dataset.photo}/600/500')`;
     };
   });
+  if(thumbs.length){
+    $('#detailMedia').onclick = ()=>openPhotoViewer(thumbs, activePhotoIdx);
+  }
   $('#relatedListings').innerHTML = related.slice(0,6).map(miniListingCard).join('');
   $all('#relatedListings .listing-card').forEach(card=>{
     card.onclick=()=>{
@@ -1015,6 +1052,45 @@ function openListingDetail(item, related, backScreen){
   });
   showScreen('detail');
 }
+
+/* ===================== FULLSCREEN PHOTO VIEWER ===================== */
+const photoViewerState = { photos:[], idx:0 };
+function openPhotoViewer(photos, startIdx){
+  photoViewerState.photos = photos;
+  photoViewerState.idx = startIdx || 0;
+  renderPhotoViewer();
+  $('#photoViewer').classList.add('open');
+}
+function closePhotoViewer(){ $('#photoViewer').classList.remove('open'); }
+function renderPhotoViewer(){
+  const {photos, idx} = photoViewerState;
+  $('#photoViewerImg').style.backgroundImage = `url('https://picsum.photos/seed/${photos[idx]}/900/900')`;
+  $('#photoViewerDots').innerHTML = photos.map((_,i)=>`<span class="${i===idx?'active':''}"></span>`).join('');
+}
+function photoViewerPrev(){
+  photoViewerState.idx = (photoViewerState.idx - 1 + photoViewerState.photos.length) % photoViewerState.photos.length;
+  renderPhotoViewer();
+}
+function photoViewerNext(){
+  photoViewerState.idx = (photoViewerState.idx + 1) % photoViewerState.photos.length;
+  renderPhotoViewer();
+}
+$('#photoViewerClose').onclick = closePhotoViewer;
+$('#photoViewerPrev').onclick = photoViewerPrev;
+$('#photoViewerNext').onclick = photoViewerNext;
+$('#photoViewer').addEventListener('click', e=>{ if(e.target.id==='photoViewer') closePhotoViewer(); });
+(function(){
+  let touchStartX = null;
+  const img = $('#photoViewerImg');
+  img.addEventListener('touchstart', e=>{ touchStartX = e.touches[0].clientX; });
+  img.addEventListener('touchend', e=>{
+    if(touchStartX===null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    if(Math.abs(dx) > 40){ dx < 0 ? photoViewerNext() : photoViewerPrev(); }
+    touchStartX = null;
+  });
+})();
+
 function renderPagination(){
   const pages=[1,2,3,4,5,6];
   $('#pagination').innerHTML = `
@@ -1116,6 +1192,10 @@ function renderProviderScreen(cat, provider){
 }
 function renderProviderProducts(cat){
   const subs = state.activeChip==='Все' ? cat.subcats : [state.activeChip];
+  if(cat.taxiParks && state.activeChip==='Такси'){
+    renderTaxiParks(cat);
+    return;
+  }
   if(cat.listings){
     renderListingRows(cat, subs);
     return;
@@ -1125,6 +1205,18 @@ function renderProviderProducts(cat){
   $('#providerProducts').className = 'product-grid';
   $('#providerProducts').innerHTML = entries.map(e=>productCard(cat.icon, e.name, e.price, `${cat.id}-${e.sub}-${e.idx}`)).join('');
   bindProductCards();
+}
+function renderTaxiParks(cat){
+  const box = $('#providerProducts');
+  box.className = 'grid-cats';
+  box.innerHTML = cat.taxiParks.map(name=>`
+    <div class="cat-card" data-contact="${name}">
+      <span class="ico">🚕</span>
+      <span>${name}</span>
+    </div>`).join('');
+  $all('#providerProducts .cat-card').forEach(card=>{
+    card.onclick=()=>openContactModal(card.dataset.contact);
+  });
 }
 function renderListingRows(cat, subs){
   let rows = [];
@@ -1411,6 +1503,7 @@ function openListingForm(catId, subcat){
     </div>
     <div class="field-group"><label>Цена*</label><input type="text" placeholder="Договорная или сумма в ₽"></div>
     <div class="field-group"><label>Номер телефона*</label><input type="tel" placeholder="+7 900 000-00-00"></div>
+    <div class="field-group"><label>Ссылка на MAX</label><input type="text" placeholder="Например: max.ru/ваш_профиль"></div>
     <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitListing()">Опубликовать бесплатно</button>
   `);
   wireUploadRow();
