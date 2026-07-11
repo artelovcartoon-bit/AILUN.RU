@@ -150,6 +150,30 @@
     display:flex;align-items:center;justify-content:center;font-size:10px;line-height:1;flex-shrink:0;
   }
 
+  /* ---------- Category-scoped search ---------- */
+  .cat-search-wrap{position:relative;margin:0 0 16px;}
+  .cat-search-input-row{
+    display:flex;align-items:center;gap:8px;background:var(--green-50);border:1px solid var(--line);
+    border-radius:999px;padding:10px 14px;
+  }
+  .cat-search-input-row svg{flex-shrink:0;}
+  .cat-search-input-row input{border:none;background:transparent;outline:none;flex:1;font-size:13.5px;color:var(--ink);font-family:inherit;}
+  .cat-search-suggestions{
+    display:none;position:absolute;left:0;right:0;top:50px;background:var(--white);
+    border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);z-index:30;overflow:hidden;
+  }
+  .cat-search-suggestions.open{display:block;}
+  .cat-search-suggest-item{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;text-align:left;background:none;border:none;
+    padding:11px 14px;font-size:13px;font-weight:600;color:var(--green-950);border-bottom:1px solid var(--line);cursor:pointer;font-family:inherit;
+  }
+  .cat-search-suggest-item:last-child{border-bottom:none;}
+  .cat-search-suggest-item:hover, .cat-search-suggest-item:active{background:var(--green-50);}
+  .cat-search-suggest-item .css-name{display:flex;align-items:center;gap:8px;min-width:0;}
+  .cat-search-suggest-item .css-sub{font-weight:500;color:var(--ink-soft);font-size:11px;white-space:nowrap;}
+  .cat-search-suggest-item .css-price{font-weight:700;color:var(--green-700);font-size:12px;flex-shrink:0;white-space:nowrap;}
+  .cat-search-empty{padding:12px 14px;font-size:12.5px;color:var(--ink-soft);}
+
   .cats-strip{display:flex;gap:8px;padding:6px 16px 2px;overflow-x:auto;background:var(--white);}
   .cats-strip::-webkit-scrollbar{display:none;}
   .cat-chip{
@@ -1253,7 +1277,14 @@ function openCategory(catId){
     </div>
     <h2 class="screen-title" style="margin-top:2px">${cat.icon} ${cat.name}</h2>
     <p class="screen-sub">${cat.tag}</p>
-    <div style="width:36px;height:3px;border-radius:2px;background:var(--green-700);margin:10px 0 18px"></div>
+    <div style="width:36px;height:3px;border-radius:2px;background:var(--green-700);margin:10px 0 16px"></div>
+    <div class="cat-search-wrap" id="catSearchWrap">
+      <div class="cat-search-input-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="catSearchInput" placeholder="Поиск в разделе «${cat.name}»" autocomplete="off">
+      </div>
+      <div class="cat-search-suggestions" id="catSearchSuggestions"></div>
+    </div>
     <div id="subcatList">
       ${cat.subcats.map(s=>`
         <div class="provider-card" data-sub="${s}">
@@ -1268,7 +1299,44 @@ function openCategory(catId){
   $all('#subcatList .provider-card').forEach(card=>{
     card.onclick=()=>openSubcat(catId, card.dataset.sub);
   });
+  wireCatSearch(cat);
   showScreen('category');
+}
+function buildCatSearchIndex(cat){
+  const idx = [];
+  cat.subcats.forEach(s=>{
+    idx.push({kind:'sub', label:s, sub:s});
+    if(cat.listings && cat.listings[s]){
+      cat.listings[s].forEach(l=>idx.push({kind:'item', label:l.title, price:l.price, sub:s}));
+    } else if(cat.catalog && cat.catalog[s]){
+      cat.catalog[s].forEach(it=>idx.push({kind:'item', label:it[0], price:it[1], sub:s}));
+    }
+  });
+  return idx;
+}
+function renderCatSearchSuggestions(cat, query){
+  const box = $('#catSearchSuggestions');
+  if(!box) return;
+  const q = query.trim().toLowerCase();
+  if(!q){ box.classList.remove('open'); box.innerHTML=''; return; }
+  const matches = buildCatSearchIndex(cat).filter(e=>e.label.toLowerCase().includes(q)).slice(0,8);
+  box.innerHTML = matches.length ? matches.map((e,i)=>`
+    <button type="button" class="cat-search-suggest-item" data-idx="${i}">
+      <span class="css-name">${e.kind==='sub' ? '📂' : ((cat.subIcons&&cat.subIcons[e.sub])||cat.icon)} ${e.label}</span>
+      ${e.kind==='item' ? `<span class="css-price">${e.price}</span>` : `<span class="css-sub">${(cat.subDesc&&cat.subDesc[e.sub])||''}</span>`}
+    </button>`).join('') : `<div class="cat-search-empty">Ничего не найдено по «${query}»</div>`;
+  box.classList.add('open');
+  $all('#catSearchSuggestions .cat-search-suggest-item').forEach((btn,i)=>{
+    btn.onclick=()=>openSubcat(cat.id, matches[i].sub);
+  });
+}
+function wireCatSearch(cat){
+  const input = $('#catSearchInput');
+  const box = $('#catSearchSuggestions');
+  if(!input) return;
+  input.addEventListener('input', e=>renderCatSearchSuggestions(cat, e.target.value));
+  input.addEventListener('focus', e=>{ if(e.target.value.trim()) renderCatSearchSuggestions(cat, e.target.value); });
+  input.addEventListener('blur', ()=>setTimeout(()=>{ if(box) box.classList.remove('open'); }, 150));
 }
 
 /* ===================== RENDER: PROVIDER / SUBCAT SCREEN (products) ===================== */
