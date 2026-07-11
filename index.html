@@ -816,6 +816,7 @@ const state = {
   activeChip:'Все',
   selectedMetro:[],
   searchMode:'general',
+  catFilters:{},
   listing:{catId:null, subcat:null}
 };
 
@@ -840,6 +841,59 @@ function pseudoCount(seed, min, max){
   let h = 0;
   for(let i=0;i<seed.length;i++){ h = (h*31 + seed.charCodeAt(i)) >>> 0; }
   return min + (h % (max - min));
+}
+function parsePrice(str){
+  const m = String(str).match(/\d[\d\s]*/);
+  if(!m) return null;
+  return parseInt(m[0].replace(/\s/g,''), 10);
+}
+function passesPriceFilter(priceStr, catId){
+  const f = state.catFilters[catId];
+  if(!f) return true;
+  const val = parsePrice(priceStr);
+  if(val===null) return true;
+  if(f.priceFrom && val < Number(f.priceFrom)) return false;
+  if(f.priceTo && val > Number(f.priceTo)) return false;
+  return true;
+}
+function applySortFilter(list, catId, getPrice){
+  const f = state.catFilters[catId];
+  if(!f || !f.sort || f.sort==='default') return list;
+  const dir = f.sort==='asc' ? 1 : -1;
+  return [...list].sort((a,b)=>{
+    const pa = parsePrice(getPrice(a)), pb = parsePrice(getPrice(b));
+    if(pa===null && pb===null) return 0;
+    if(pa===null) return 1;
+    if(pb===null) return -1;
+    return (pa-pb)*dir;
+  });
+}
+function openProductFiltersModal(cat){
+  const f = state.catFilters[cat.id] || {};
+  openModal(`
+    <div class="modal-head"><h3>Фильтры</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="field-group"><label>Цена от</label><input type="number" id="pfFrom" value="${f.priceFrom||''}" placeholder="Например: 1000"></div>
+    <div class="field-group"><label>Цена до</label><input type="number" id="pfTo" value="${f.priceTo||''}" placeholder="Например: 50000"></div>
+    <div class="field-group"><label>Сортировка</label>
+      <select id="pfSort">
+        <option value="default" ${(!f.sort||f.sort==='default')?'selected':''}>По умолчанию</option>
+        <option value="asc" ${f.sort==='asc'?'selected':''}>Сначала дешевле</option>
+        <option value="desc" ${f.sort==='desc'?'selected':''}>Сначала дороже</option>
+      </select>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:8px" id="pfApplyBtn">Показать</button>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center" id="pfResetBtn">Сбросить фильтры</button>
+  `);
+  $('#pfApplyBtn').onclick=()=>{
+    state.catFilters[cat.id] = { priceFrom: $('#pfFrom').value, priceTo: $('#pfTo').value, sort: $('#pfSort').value };
+    closeModal();
+    renderProviderProducts(cat);
+  };
+  $('#pfResetBtn').onclick=()=>{
+    delete state.catFilters[cat.id];
+    closeModal();
+    renderProviderProducts(cat);
+  };
 }
 
 /* ===================== METRO SEARCH (Moscow) ===================== */
@@ -1241,6 +1295,7 @@ function renderProviderScreen(cat, provider){
   const sub = provider
     ? `<span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}`
     : cat.tag;
+  const showFilters = !(cat.taxiParks && state.activeChip==='Такси');
   el.innerHTML = `
     <div class="back-row">
       <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -1249,9 +1304,13 @@ function renderProviderScreen(cat, provider){
         <p class="screen-sub">${sub}</p>
       </div>
     </div>
+    ${showFilters?`<button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="providerFiltersBtn">🔎 Фильтры: цена, сортировка</button>`:''}
     <div class="product-grid" id="providerProducts"></div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
+  if(showFilters){
+    $('#providerFiltersBtn').onclick=()=>openProductFiltersModal(cat);
+  }
   renderProviderProducts(cat);
 }
 function renderProviderProducts(cat){
@@ -1266,8 +1325,12 @@ function renderProviderProducts(cat){
   }
   let entries = [];
   subs.forEach(s=>{ (cat.catalog[s]||[]).forEach((it,i)=>entries.push({sub:s,name:it[0],price:it[1],idx:i})); });
+  entries = entries.filter(e=>passesPriceFilter(e.price, cat.id));
+  entries = applySortFilter(entries, cat.id, e=>e.price);
   $('#providerProducts').className = 'product-grid';
-  $('#providerProducts').innerHTML = entries.map(e=>productCard(cat.icon, e.name, e.price, `${cat.id}-${e.sub}-${e.idx}`)).join('');
+  $('#providerProducts').innerHTML = entries.length
+    ? entries.map(e=>productCard(cat.icon, e.name, e.price, `${cat.id}-${e.sub}-${e.idx}`)).join('')
+    : `<p style="grid-column:1/-1;color:var(--ink-soft);font-size:13px;text-align:center;margin-top:10px">Ничего не найдено по вашим фильтрам</p>`;
   bindProductCards();
 }
 function renderTaxiParks(cat){
@@ -1293,8 +1356,14 @@ function renderListingRows(cat, subs){
     }
   });
   rows.forEach(r=>{ r.key = `${cat.id}-${r.sub}-${r.idx}`; });
+  rows = rows.filter(r=>passesPriceFilter(r.price, cat.id));
+  rows = applySortFilter(rows, cat.id, r=>r.price);
   const box = $('#providerProducts');
   box.className = 'listing-row-list';
+  if(!rows.length){
+    box.innerHTML = `<p style="color:var(--ink-soft);font-size:13px;text-align:center;margin-top:10px">Ничего не найдено по вашим фильтрам</p>`;
+    return;
+  }
   box.innerHTML = rows.map(r=>{
     const fav = state.favorites.has(r.key) ? '❤️' : '🤍';
     const mediaStyle = r.photo ? `style="background-image:url('https://picsum.photos/seed/${r.photo}/200/200')"` : '';
@@ -1828,7 +1897,6 @@ function showVendorCreatedModal(vendor){
 
 /* ===================== JOBS MARKETPLACE (Работа) ===================== */
 state.jobRole = 'seeker'; // 'seeker' | 'employer'
-state.myResume = null;
 state.chats = {};
 state.jobFilters = { city:'Все города', schedule:'Любой график', experience:'Любой опыт', salaryFrom:'' };
 
@@ -1839,12 +1907,6 @@ const VACANCIES = [
   {id:4, title:'Курьер', company:'СитиЛогистик', city:'Московская область', salaryFrom:50000, salaryTo:75000, schedule:'Гибкий график', experience:'Без опыта', promoted:false, colored:false, recommended:false, desc:'Доставка заказов пешком или на авто, оплата еженедельно.'},
   {id:5, title:'Бухгалтер', company:'ФинСервис', city:'Москва', salaryFrom:70000, salaryTo:95000, schedule:'Полный день', experience:'От 3 лет', promoted:false, colored:true, recommended:false, desc:'Ведение первичной документации, отчётность в ФНС.'},
   {id:6, title:'SMM-специалист', company:'Медиа Групп', city:'Москва', salaryFrom:55000, salaryTo:85000, schedule:'Удалённо', experience:'От 1 года', promoted:false, colored:false, recommended:true, desc:'Ведение соцсетей, контент-план, таргет.'}
-];
-
-const RESUMES = [
-  {id:1, name:'Айгуль Т.', position:'Бухгалтер', city:'Москва', salary:80000, experience:'От 3 лет', schedule:'Полный день', about:'Опыт работы в 1С, знание налогового учёта.'},
-  {id:2, name:'Данияр С.', position:'Водитель категории B', city:'Москва', salary:90000, experience:'От 1 года', schedule:'Сменный график', about:'Аккуратное вождение, знание города, свой автомобиль.'},
-  {id:3, name:'Ержан К.', position:'SMM-специалист', city:'Москва', salary:70000, experience:'От 1 года', schedule:'Удалённо', about:'Веду проекты в Instagram и Telegram, есть портфолио.'}
 ];
 
 function money(n){ return Number(n||0).toLocaleString('ru-RU'); }
@@ -1870,11 +1932,6 @@ function openJobsHub(cat){
         <div class="provider-info"><h3>Вакансии</h3><p>Поиск с фильтрами</p></div>
         <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
       </div>
-      <div class="provider-card" data-go="resumes">
-        <div class="provider-thumb">🧑‍💼</div>
-        <div class="provider-info"><h3>Резюме</h3><p>${state.jobRole==='seeker'?'Создать и редактировать':'База кандидатов'}</p></div>
-        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
-      </div>
       <div class="provider-card" data-go="internships">
         <div class="provider-thumb">🎓</div>
         <div class="provider-info"><h3>Стажировки</h3></div>
@@ -1889,7 +1946,6 @@ function openJobsHub(cat){
   });
   renderJobsCta();
   $('[data-go="vacancies"]').onclick = ()=>openVacancies(cat);
-  $('[data-go="resumes"]').onclick = ()=>openResumes(cat);
   $('[data-go="internships"]').onclick = ()=>openSubcat('jobs','Стажировки');
   showScreen('category');
 }
@@ -1899,8 +1955,7 @@ function renderJobsCta(){
     el.innerHTML = `<button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" id="postVacancyBtn">+ Разместить вакансию</button>`;
     $('#postVacancyBtn').onclick = openVacancyForm;
   } else {
-    el.innerHTML = `<button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:10px" id="createResumeBtn">+ Создать резюме</button>`;
-    $('#createResumeBtn').onclick = openResumeForm;
+    el.innerHTML = '';
   }
 }
 
@@ -2129,150 +2184,6 @@ function openVacancyForm(){
     closeModal();
     toast('Вакансия отправлена на модерацию ✓');
     openPromoteModal(title);
-  };
-}
-
-/* ---- Resumes ---- */
-function openResumes(cat){
-  const el = $('#screenProvider');
-  if(state.jobRole==='seeker'){
-    el.innerHTML = `
-      <div class="back-row">
-        <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div><h2 class="screen-title">Резюме</h2><p class="screen-sub">Ваше резюме</p></div>
-      </div>
-      <div id="myResumeBox"></div>
-    `;
-    renderMyResume();
-  } else {
-    el.innerHTML = `
-      <div class="back-row">
-        <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-        <div><h2 class="screen-title">Резюме кандидатов</h2><p class="screen-sub">${RESUMES.length} резюме · Москва</p></div>
-      </div>
-      <div id="resumeList"></div>
-    `;
-    $('#resumeList').innerHTML = RESUMES.map(r=>`
-      <div class="provider-card" data-res="${r.id}" style="align-items:flex-start">
-        <div class="provider-thumb">🧑‍💼</div>
-        <div class="provider-info">
-          <h3>${r.name}</h3>
-          <p>${r.position} · ${r.city}</p>
-          <p style="color:var(--green-700);font-weight:700;margin-top:3px;font-size:13px">от ${money(r.salary)} ₽</p>
-          <div class="provider-meta" style="margin-top:4px"><span>${r.schedule}</span><span>·</span><span>${r.experience}</span></div>
-        </div>
-      </div>`).join('');
-    $all('#resumeList [data-res]').forEach(c=>c.onclick=()=>openResumeDetail(+c.dataset.res));
-  }
-  $('#backToCategory').onclick=()=>openJobsHub(cat);
-  showScreen('provider');
-}
-function renderMyResume(){
-  const box = $('#myResumeBox');
-  if(!state.myResume){
-    box.innerHTML = `
-      <div style="text-align:center;padding:30px 16px">
-        <p style="color:var(--ink-soft);font-size:13px;margin-bottom:14px">У вас пока нет резюме</p>
-        <button class="btn btn-primary" id="createResumeBtn2">+ Создать резюме</button>
-      </div>`;
-    $('#createResumeBtn2').onclick = openResumeForm;
-    return;
-  }
-  const r = state.myResume;
-  box.innerHTML = `
-    <div class="provider-card" style="align-items:flex-start">
-      <div class="provider-thumb">🧑‍💼</div>
-      <div class="provider-info">
-        <h3>${r.name}</h3>
-        <p>${r.position} · ${r.city}</p>
-        <p style="color:var(--green-700);font-weight:700;margin-top:3px;font-size:13px">от ${money(r.salary)} ₽</p>
-        <div class="provider-meta" style="margin-top:4px;flex-wrap:wrap"><span>${r.schedule}</span><span>·</span><span>${r.experience}</span>${r.employmentType?`<span>·</span><span>${r.employmentType}</span>`:''}</div>
-      </div>
-    </div>
-    <div class="provider-meta" style="flex-wrap:wrap;margin:10px 4px 14px;gap:10px">
-      ${r.citizenship?`<span>🌍 ${r.citizenship}</span>`:''}
-      ${r.permit?`<span>📄 ${r.permit}</span>`:''}
-      ${r.education?`<span>🎓 ${r.education}</span>`:''}
-      ${r.languages?`<span>🗣 ${r.languages}</span>`:''}
-      ${r.skills?`<span>🛠 ${r.skills}</span>`:''}
-      ${r.relocate?`<span>✈️ ${r.relocate}</span>`:''}
-      ${r.birthdate?`<span>🎂 ${r.birthdate}</span>`:''}
-    </div>
-    <p class="listing-desc" style="margin:6px 4px 14px">${r.about}</p>
-    <button class="btn btn-outline" style="width:100%;justify-content:center" id="editResumeBtn">Редактировать резюме</button>
-  `;
-  $('#editResumeBtn').onclick = openResumeForm;
-}
-function openResumeDetail(id){
-  const r = RESUMES.find(x=>x.id===id);
-  if(!r) return;
-  openModal(`
-    <div class="modal-head"><h3>${r.name}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <p style="font-size:13px;color:var(--ink-soft);margin-bottom:6px">${r.position} · ${r.city}</p>
-    <p style="color:var(--green-700);font-weight:700;margin-bottom:10px">от ${money(r.salary)} ₽</p>
-    <p style="font-size:13px;line-height:1.6;margin-bottom:16px">${r.about}</p>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="closeModal(); openChat('${r.name}')">Написать кандидату</button>
-  `);
-}
-function openResumeForm(){
-  const r = state.myResume || {};
-  const cities = ['Москва','Московская область','Другое'];
-  const exps = ['Без опыта','От 1 года','От 2 лет','От 3 лет'];
-  const scheds = ['Полный день','Сменный график','Гибкий график','Удалённо'];
-  const edus = ['Среднее','Среднее специальное','Неоконченное высшее','Высшее'];
-  const empTypes = ['Полная занятость','Частичная занятость','Проектная работа','Стажировка'];
-  const permits = ['Гражданин РФ','Патент','РВП','ВНЖ','Не требуется'];
-  const relocate = ['Не готов(а)','Готов(а)','Готов(а) к командировкам'];
-  openModal(`
-    <div class="modal-head"><h3>${state.myResume?'Редактировать резюме':'Создать резюме'}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
-    <div class="field-group"><label>Фотография</label>
-      <div class="upload-row" id="uploadRow">
-        <label class="upload-box"><span class="upload-icon">🙂</span><input type="file" accept="image/*" hidden></label>
-      </div>
-    </div>
-    <div class="field-group"><label>Имя*</label><input type="text" id="rName" value="${r.name||''}" placeholder="Например: Айгуль Т."></div>
-    <div class="field-group"><label>Желаемая должность*</label><input type="text" id="rPosition" value="${r.position||''}" placeholder="Например: Бухгалтер"></div>
-    <div class="field-group"><label>Желаемая зарплата, ₽*</label><input type="number" id="rSalary" value="${r.salary||''}" placeholder="Например: 80000"></div>
-    <div class="field-group"><label>Город*</label><select id="rCity">${cities.map(c=>`<option ${r.city===c?'selected':''}>${c}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Дата рождения</label><input type="date" id="rBirthdate" value="${r.birthdate||''}"></div>
-    <div class="field-group"><label>Гражданство</label><input type="text" id="rCitizenship" value="${r.citizenship||''}" placeholder="Например: Казахстан"></div>
-    <div class="field-group"><label>Разрешение на работу</label><select id="rPermit">${permits.map(o=>`<option ${r.permit===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Опыт работы</label><select id="rExperience">${exps.map(o=>`<option ${r.experience===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Образование</label><select id="rEducation">${edus.map(o=>`<option ${r.education===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Навыки</label><input type="text" id="rSkills" value="${r.skills||''}" placeholder="Например: Excel, 1С, переговоры"></div>
-    <div class="field-group"><label>Языки</label><input type="text" id="rLanguages" value="${r.languages||''}" placeholder="Например: русский, английский"></div>
-    <div class="field-group"><label>График</label><select id="rSchedule">${scheds.map(o=>`<option ${r.schedule===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Тип занятости</label><select id="rEmpType">${empTypes.map(o=>`<option ${r.employmentType===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Готовность к переезду</label><select id="rRelocate">${relocate.map(o=>`<option ${r.relocate===o?'selected':''}>${o}</option>`).join('')}</select></div>
-    <div class="field-group"><label>Номер телефона*</label><input type="tel" id="rPhone" value="${r.phone||''}" placeholder="+7 900 000-00-00"></div>
-    <div class="field-group"><label>Мессенджеры</label><input type="text" id="rMax" value="${r.max||''}" placeholder="Например: MAX — max.ru/ваш_профиль"></div>
-    <div class="field-group"><label>Краткое описание о себе</label><textarea id="rAbout" placeholder="Опыт, навыки, достижения">${r.about||''}</textarea></div>
-    <button class="btn btn-primary" style="width:100%;justify-content:center" id="saveResumeBtn">Опубликовать резюме</button>
-  `);
-  wireUploadRow();
-  $('#saveResumeBtn').onclick=()=>{
-    state.myResume = {
-      name: $('#rName').value || 'Без имени',
-      position: $('#rPosition').value || 'Не указана',
-      salary: $('#rSalary').value || 0,
-      city: $('#rCity').value,
-      birthdate: $('#rBirthdate').value,
-      citizenship: $('#rCitizenship').value,
-      permit: $('#rPermit').value,
-      experience: $('#rExperience').value,
-      education: $('#rEducation').value,
-      skills: $('#rSkills').value,
-      languages: $('#rLanguages').value,
-      schedule: $('#rSchedule').value,
-      employmentType: $('#rEmpType').value,
-      relocate: $('#rRelocate').value,
-      phone: $('#rPhone').value,
-      max: $('#rMax').value,
-      about: $('#rAbout').value
-    };
-    closeModal();
-    toast('Резюме опубликовано ✓');
-    if($('#myResumeBox')) renderMyResume();
   };
 }
 
