@@ -336,8 +336,8 @@
   /* ---------- Category tile grid (2-up 3D squares) ---------- */
   .build-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-bottom:14px;}
   .build-tile{
-    position:relative;aspect-ratio:1/0.82;border:none;border-radius:20px;cursor:pointer;
-    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+    position:relative;aspect-ratio:16/10;border:none;border-radius:20px;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
     color:#fff;overflow:hidden;font-family:inherit;
     background:
       radial-gradient(120% 90% at 22% 14%, rgba(255,255,255,.40), rgba(255,255,255,0) 55%),
@@ -351,11 +351,11 @@
     content:"";position:absolute;inset:0;border-radius:20px;border:1px solid rgba(255,255,255,.28);pointer-events:none;
   }
   .build-ico{
-    font-size:38px;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.28));
+    font-size:32px;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.28));
     display:flex;align-items:center;justify-content:center;
   }
   .build-name{
-    font-family:'Manrope',sans-serif;font-weight:800;font-size:13.5px;text-align:center;
+    font-family:'Manrope',sans-serif;font-weight:800;font-size:13px;text-align:center;
     line-height:1.2;padding:0 10px;text-shadow:0 1px 3px rgba(0,0,0,.28);letter-spacing:.1px;
   }
 
