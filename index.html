@@ -1966,7 +1966,7 @@ function showVendorCreatedModal(vendor){
 /* ===================== JOBS MARKETPLACE (Работа) ===================== */
 state.jobRole = 'seeker'; // 'seeker' | 'employer'
 state.chats = {};
-state.jobFilters = { city:'Все города', schedule:'Любой график', experience:'Любой опыт', salaryFrom:'' };
+state.jobFilters = { city:'Все города', schedule:'Любой график', experience:'Любой опыт', salaryFrom:'', search:'' };
 
 const VACANCIES = [
   {id:1, title:'Продавец-консультант', company:'Технопарк', city:'Москва', salaryFrom:60000, salaryTo:90000, schedule:'Полный день', experience:'Без опыта', promoted:true, colored:false, recommended:true, desc:'Продажа электроники, консультирование клиентов, работа с кассой.'},
@@ -2039,6 +2039,10 @@ function matchesJobFilters(v){
   if(f.schedule!=='Любой график' && v.schedule!==f.schedule) return false;
   if(f.experience!=='Любой опыт' && v.experience!==f.experience) return false;
   if(f.salaryFrom && v.salaryTo < Number(f.salaryFrom)) return false;
+  if(f.search && f.search.trim()){
+    const q = f.search.trim().toLowerCase();
+    if(!v.title.toLowerCase().includes(q) && !v.company.toLowerCase().includes(q)) return false;
+  }
   return true;
 }
 function vacancyCard(v){
@@ -2064,6 +2068,13 @@ function renderVacanciesScreen(cat){
       <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
       <div><h2 class="screen-title">Вакансии</h2><p class="screen-sub">${VACANCIES.length} вакансий · Москва и область</p></div>
     </div>
+    <div class="cat-search-wrap" id="jobSearchWrap">
+      <div class="cat-search-input-row">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+        <input type="text" id="jobSearchInput" placeholder="Поиск вакансий: должность, компания" autocomplete="off" value="${state.jobFilters.search||''}">
+      </div>
+      <div class="cat-search-suggestions" id="jobSearchSuggestions"></div>
+    </div>
     <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="openFiltersBtn">🔎 Фильтры: зарплата, город, график, опыт</button>
     ${recommended.length?`
     <div class="section-head" style="margin-top:4px"><h2 style="font-size:14px">⭐ Рекомендуемые вакансии</h2></div>
@@ -2080,7 +2091,36 @@ function renderVacanciesScreen(cat){
   $('#backToCategory').onclick=()=>openJobsHub(cat);
   $('#openFiltersBtn').onclick=()=>openJobFiltersModal(cat);
   $all('#recommendedRow [data-vac]').forEach(c=>c.onclick=()=>openVacancyDetail(+c.dataset.vac, cat));
+  wireJobSearch(cat);
   renderVacancyList(cat);
+}
+function renderJobSearchSuggestions(cat, query){
+  const box = $('#jobSearchSuggestions');
+  if(!box) return;
+  const q = query.trim().toLowerCase();
+  if(!q){ box.classList.remove('open'); box.innerHTML=''; return; }
+  const matches = VACANCIES.filter(v=>v.title.toLowerCase().includes(q) || v.company.toLowerCase().includes(q)).slice(0,8);
+  box.innerHTML = matches.length ? matches.map((v,i)=>`
+    <button type="button" class="cat-search-suggest-item" data-idx="${i}">
+      <span class="css-name">💼 ${v.title} <span class="css-sub">· ${v.company}</span></span>
+      <span class="css-price">${money(v.salaryFrom)}–${money(v.salaryTo)} ${v.currency||'₽'}</span>
+    </button>`).join('') : `<div class="cat-search-empty">Ничего не найдено по «${query}»</div>`;
+  box.classList.add('open');
+  $all('#jobSearchSuggestions .cat-search-suggest-item').forEach((btn,i)=>{
+    btn.onclick=()=>openVacancyDetail(matches[i].id, cat);
+  });
+}
+function wireJobSearch(cat){
+  const input = $('#jobSearchInput');
+  const box = $('#jobSearchSuggestions');
+  if(!input) return;
+  input.addEventListener('input', e=>{
+    state.jobFilters.search = e.target.value;
+    renderJobSearchSuggestions(cat, e.target.value);
+    renderVacancyList(cat);
+  });
+  input.addEventListener('focus', e=>{ if(e.target.value.trim()) renderJobSearchSuggestions(cat, e.target.value); });
+  input.addEventListener('blur', ()=>setTimeout(()=>{ if(box) box.classList.remove('open'); }, 150));
 }
 function renderVacancyList(cat){
   const list = VACANCIES.filter(matchesJobFilters);
@@ -2115,13 +2155,14 @@ function openJobFiltersModal(cat){
   $('#applyFiltersBtn').onclick=()=>{
     state.jobFilters = {
       city: $('#fCity').value, schedule: $('#fSchedule').value,
-      experience: $('#fExperience').value, salaryFrom: $('#fSalary').value
+      experience: $('#fExperience').value, salaryFrom: $('#fSalary').value,
+      search: state.jobFilters.search||''
     };
     closeModal();
     renderVacancyList(cat);
   };
   $('#resetFiltersBtn').onclick=()=>{
-    state.jobFilters = {city:'Все города', schedule:'Любой график', experience:'Любой опыт', salaryFrom:''};
+    state.jobFilters = {city:'Все города', schedule:'Любой график', experience:'Любой опыт', salaryFrom:'', search: state.jobFilters.search||''};
     closeModal();
     renderVacancyList(cat);
   };
