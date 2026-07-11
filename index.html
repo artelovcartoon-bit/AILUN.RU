@@ -1278,13 +1278,6 @@ function openCategory(catId){
     <h2 class="screen-title" style="margin-top:2px">${cat.icon} ${cat.name}</h2>
     <p class="screen-sub">${cat.tag}</p>
     <div style="width:36px;height:3px;border-radius:2px;background:var(--green-700);margin:10px 0 16px"></div>
-    <div class="cat-search-wrap" id="catSearchWrap">
-      <div class="cat-search-input-row">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-        <input type="text" id="catSearchInput" placeholder="Поиск в разделе «${cat.name}»" autocomplete="off">
-      </div>
-      <div class="cat-search-suggestions" id="catSearchSuggestions"></div>
-    </div>
     <div id="subcatList">
       ${cat.subcats.map(s=>`
         <div class="provider-card" data-sub="${s}">
@@ -1299,7 +1292,6 @@ function openCategory(catId){
   $all('#subcatList .provider-card').forEach(card=>{
     card.onclick=()=>openSubcat(catId, card.dataset.sub);
   });
-  wireCatSearch(cat);
   showScreen('category');
 }
 function buildCatSearchIndex(cat){
@@ -1364,6 +1356,8 @@ function renderProviderScreen(cat, provider){
     ? `<span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}`
     : cat.tag;
   const showFilters = !(cat.taxiParks && state.activeChip==='Такси');
+  const searchScope = provider ? provider.name : (state.activeChip==='Все' ? cat.name : state.activeChip);
+  state.subcatQuery = '';
   el.innerHTML = `
     <div class="back-row">
       <button class="back-btn" id="backToCategory"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
@@ -1372,12 +1366,23 @@ function renderProviderScreen(cat, provider){
         <p class="screen-sub">${sub}</p>
       </div>
     </div>
+    <div class="cat-search-input-row" style="margin-bottom:14px">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
+      <input type="text" id="subcatSearchInput" placeholder="Поиск в «${searchScope}»" autocomplete="off">
+    </div>
     ${showFilters?`<button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="providerFiltersBtn">🔎 Фильтры: цена, сортировка</button>`:''}
     <div class="product-grid" id="providerProducts"></div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
   if(showFilters){
     $('#providerFiltersBtn').onclick=()=>openProductFiltersModal(cat);
+  }
+  const subcatSearch = $('#subcatSearchInput');
+  if(subcatSearch){
+    subcatSearch.addEventListener('input', e=>{
+      state.subcatQuery = e.target.value;
+      renderProviderProducts(cat);
+    });
   }
   renderProviderProducts(cat);
 }
@@ -1393,6 +1398,8 @@ function renderProviderProducts(cat){
   }
   let entries = [];
   subs.forEach(s=>{ (cat.catalog[s]||[]).forEach((it,i)=>entries.push({sub:s,name:it[0],price:it[1],idx:i})); });
+  const pq = (state.subcatQuery||'').trim().toLowerCase();
+  if(pq) entries = entries.filter(e=>e.name.toLowerCase().includes(pq));
   entries = entries.filter(e=>passesPriceFilter(e.price, cat.id));
   entries = applySortFilter(entries, cat.id, e=>e.price);
   $('#providerProducts').className = 'product-grid';
@@ -1404,7 +1411,9 @@ function renderProviderProducts(cat){
 function renderTaxiParks(cat){
   const box = $('#providerProducts');
   box.className = 'grid-cats';
-  box.innerHTML = cat.taxiParks.map(name=>`
+  const tq = (state.subcatQuery||'').trim().toLowerCase();
+  const parks = tq ? cat.taxiParks.filter(n=>n.toLowerCase().includes(tq)) : cat.taxiParks;
+  box.innerHTML = parks.map(name=>`
     <div class="cat-card" data-contact="${name}">
       <span class="ico">🚕</span>
       <span>${name}</span>
@@ -1424,6 +1433,8 @@ function renderListingRows(cat, subs){
     }
   });
   rows.forEach(r=>{ r.key = `${cat.id}-${r.sub}-${r.idx}`; });
+  const rq = (state.subcatQuery||'').trim().toLowerCase();
+  if(rq) rows = rows.filter(r=>(r.title||'').toLowerCase().includes(rq));
   rows = rows.filter(r=>passesPriceFilter(r.price, cat.id));
   rows = applySortFilter(rows, cat.id, r=>r.price);
   const box = $('#providerProducts');
