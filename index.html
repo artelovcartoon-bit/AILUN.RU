@@ -333,6 +333,32 @@
   .rating{display:flex;align-items:center;gap:3px;color:var(--gold);font-weight:700;}
   .chev{color:var(--green-700);flex-shrink:0;}
 
+  /* ---------- Category tile grid (2-up 3D squares) ---------- */
+  .build-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:8px;}
+  .build-tile{
+    position:relative;aspect-ratio:1/1;border:none;border-radius:22px;cursor:pointer;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    color:#fff;overflow:hidden;font-family:inherit;
+    background:
+      radial-gradient(120% 90% at 22% 14%, rgba(255,255,255,.40), rgba(255,255,255,0) 55%),
+      linear-gradient(155deg, rgba(255,255,255,.24), rgba(0,0,0,.22)),
+      var(--tc);
+    box-shadow:0 12px 24px rgba(10,46,28,.22), inset 0 1px 0 rgba(255,255,255,.45);
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .build-tile:active{transform:scale(.96);box-shadow:0 6px 14px rgba(10,46,28,.22);}
+  .build-tile::after{
+    content:"";position:absolute;inset:0;border-radius:22px;border:1px solid rgba(255,255,255,.28);pointer-events:none;
+  }
+  .build-ico{
+    font-size:46px;line-height:1;filter:drop-shadow(0 6px 8px rgba(0,0,0,.28));
+    display:flex;align-items:center;justify-content:center;
+  }
+  .build-name{
+    font-family:'Manrope',sans-serif;font-weight:800;font-size:14.5px;text-align:center;
+    line-height:1.2;padding:0 10px;text-shadow:0 1px 3px rgba(0,0,0,.28);letter-spacing:.1px;
+  }
+
   /* ---------- Product grid ---------- */
   .product-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .product-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;}
@@ -817,6 +843,14 @@ const DATA = [
   },
   { id:'construction', name:'Строительство', icon:'🏗️', tag:'Ремонт и стройка',
     subcats:['Ищу работу','Ищу работников','Бригады','Услуги','Заказы','Заказы на субподряд'],
+    tiles:{
+      'Ищу работу':{ico:'👷',color:'#F4B400'},
+      'Ищу работников':{ico:'🧑‍🤝‍🧑',color:'#F97316'},
+      'Бригады':{ico:'🏗️',color:'#E11D48'},
+      'Услуги':{ico:'🛠️',color:'#2563EB'},
+      'Заказы':{ico:'📋',color:'#16A34A'},
+      'Заказы на субподряд':{ico:'🏢',color:'#0EA5A5'}
+    },
     catalog:{
       'Ищу работу':[['Разнорабочий, ищу работу','от 2 500 ₽/день'],['Отделочник, ищу работу','от 3 000 ₽/день'],['Сварщик, ищу работу','от 3 500 ₽/день']],
       'Ищу работников':[['Требуются разнорабочие','2 500 ₽/день'],['Нужны каменщики','от 4 000 ₽/день'],['Требуются плиточники','от 3 800 ₽/день']],
@@ -1281,7 +1315,16 @@ function openCategory(catId){
     <p class="screen-sub">${cat.tag}</p>
     <div style="width:36px;height:3px;border-radius:2px;background:var(--green-700);margin:10px 0 16px"></div>
     <div id="subcatList">
-      ${cat.subcats.map(s=>`
+      ${cat.tiles ? `<div class="build-grid">
+        ${cat.subcats.map(s=>{
+          const t = cat.tiles[s] || {ico:cat.icon, color:'#1B8F53'};
+          return `<button class="build-tile" data-sub="${s}" style="--tc:${t.color}">
+            <span class="build-ico">${t.ico}</span>
+            <span class="build-name">${s}</span>
+          </button>`;
+        }).join('')}
+      </div>`
+      : cat.subcats.map(s=>`
         <div class="provider-card" data-sub="${s}">
           <div class="provider-thumb">${subIco(s)}</div>
           <div class="provider-info"><h3>${s}</h3>${subDesc(s)?`<p>${subDesc(s)}</p>`:''}</div>
@@ -1291,7 +1334,7 @@ function openCategory(catId){
   `;
   $('#backToHome').onclick=()=>showScreen('home');
   $('#categoryBellBtn').onclick=()=>toast('Демо: уведомлений пока нет');
-  $all('#subcatList .provider-card').forEach(card=>{
+  $all('#subcatList [data-sub]').forEach(card=>{
     card.onclick=()=>openSubcat(catId, card.dataset.sub);
   });
   showScreen('category');
