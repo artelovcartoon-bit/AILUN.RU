@@ -539,6 +539,12 @@
     font-family:inherit;color:var(--ink);background:var(--green-50);
   }
   .field-group textarea{resize:vertical;min-height:70px;}
+  .bool-toggle{display:flex;gap:8px;}
+  .bool-toggle button{
+    flex:1;border:1px solid var(--line);border-radius:11px;padding:10px;font-size:13px;font-weight:600;
+    background:var(--green-50);color:var(--ink-soft);font-family:inherit;cursor:pointer;
+  }
+  .bool-toggle button.active{background:var(--green-700);color:#fff;border-color:var(--green-700);}
   .modal-cat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:8px;}
   .modal-cat-grid button{
     background:var(--green-50);border:1px solid var(--line);border-radius:12px;padding:12px 6px;text-align:center;
@@ -1836,17 +1842,201 @@ function openListingModal(){
 function openListingSubcats(catId){
   const cat = catById(catId);
   state.listing.catId = catId;
+  const extraSubs = cat.tiles ? ['Строительные материалы'] : [];
   openModal(`
     <div class="modal-head"><h3>${cat.icon} ${cat.name}</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px">Выберите подкатегорию</p>
     <div class="subcat-list" id="listingSubcatList">
-      ${cat.subcats.map(s=>`<button data-sub="${s}"><span>${s}</span> ›</button>`).join('')}
+      ${cat.subcats.concat(extraSubs).map(s=>`<button data-sub="${s}"><span>${s}</span> ›</button>`).join('')}
     </div>
     <button class="btn btn-ghost" onclick="openListingModal()">← Назад к категориям</button>
   `);
   $all('#listingSubcatList button').forEach(b=>b.onclick=()=>openListingForm(catId, b.dataset.sub));
 }
+/* ===================== Custom form schemas (Строительство) ===================== */
+const FORM_SCHEMAS = {
+  'Ищу работу':{
+    titlePlaceholder:'Ищу работу разнорабочим',
+    fields:[
+      {key:'workTypes',label:'Какие работы умеете выполнять*',type:'text',placeholder:'Например: штукатурка, кладка, электрика'},
+      {key:'experience',label:'Опыт работы',type:'text',placeholder:'Например: 5 лет'},
+      {key:'salary',label:'Желаемая зарплата*',type:'money',placeholder:'Сумма в ₽',periodOptions:['за день','за смену','за месяц']},
+      {key:'city',label:'Город или район',type:'text',placeholder:'Например: Москва, Строгино'},
+      {key:'relocate',label:'Готовы ли к переезду',type:'bool'},
+      {key:'housingFood',label:'Нужны ли проживание и питание',type:'bool'},
+      {key:'startDate',label:'Когда готовы начать',type:'date'},
+      {key:'phone',label:'Номер телефона*',type:'tel'},
+      {key:'language',label:'Удобный язык общения',type:'select',options:['Русский','Кыргызский','Казахский','Узбекский','Таджикский','Другой']}
+    ]
+  },
+  'Ищу работников':{
+    titlePlaceholder:'Нужны 5 разнорабочих на стройку',
+    fields:[
+      {key:'whoNeeded',label:'Кто нужен*',type:'text',placeholder:'Например: разнорабочие, каменщики'},
+      {key:'count',label:'Количество рабочих',type:'number',placeholder:'Например: 5'},
+      {key:'workTypes',label:'Виды работ',type:'text',placeholder:'Например: кладка, отделка'},
+      {key:'salary',label:'Зарплата',type:'money',placeholder:'Сумма в ₽',periodOptions:['за день','за смену','за месяц']},
+      {key:'address',label:'Адрес объекта',type:'text',placeholder:'Город, район, адрес'},
+      {key:'schedule',label:'График',type:'text',placeholder:'Например: 5/2, вахта'},
+      {key:'startDate',label:'Дата начала',type:'date'},
+      {key:'housing',label:'Есть ли проживание',type:'bool'},
+      {key:'food',label:'Есть ли питание',type:'bool'},
+      {key:'requirements',label:'Требования к работникам',type:'textarea',placeholder:'Опыт, документы, возраст и т.п.'},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  },
+  'Бригады':{
+    titlePlaceholder:'Бригада из 8 человек ищет объект',
+    fields:[
+      {key:'count',label:'Количество человек*',type:'number',placeholder:'Например: 8'},
+      {key:'workTypes',label:'Какие виды работ выполняете*',type:'text',placeholder:'Например: фасад, кровля, отделка'},
+      {key:'experience',label:'Опыт работы',type:'text',placeholder:'Например: 5 лет'},
+      {key:'ownTools',label:'Есть ли свой инструмент',type:'bool'},
+      {key:'startDate',label:'Когда готовы начать',type:'date'},
+      {key:'phone',label:'Номер телефона*',type:'tel'},
+      {key:'language',label:'Язык общения',type:'select',options:['Русский','Кыргызский','Казахский','Узбекский','Таджикский','Другой']}
+    ]
+  },
+  'Услуги':{
+    titlePlaceholder:'Выполняю плиточные работы',
+    fields:[
+      {key:'serviceName',label:'Название услуги*',type:'text',placeholder:'Например: Плиточные работы'},
+      {key:'workType',label:'Вид работ',type:'text',placeholder:'Например: укладка плитки в ванной'},
+      {key:'description',label:'Описание',type:'textarea',placeholder:'Кратко расскажите об услуге'},
+      {key:'price',label:'Цена*',type:'number',placeholder:'Сумма в ₽'},
+      {key:'unit',label:'Единица расчёта',type:'select',options:['за м²','за час','за смену','за объект','договорная']},
+      {key:'district',label:'Район работы',type:'text',placeholder:'Город, район'},
+      {key:'experience',label:'Опыт',type:'text',placeholder:'Например: 5 лет'},
+      {key:'startDate',label:'Когда можете начать',type:'date'},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  },
+  'Заказы':{
+    titlePlaceholder:'Нужно сделать ремонт двухкомнатной квартиры',
+    fields:[
+      {key:'task',label:'Что нужно сделать*',type:'text',placeholder:'Например: ремонт квартиры'},
+      {key:'workType',label:'Вид работ',type:'text',placeholder:'Например: отделка, сантехника'},
+      {key:'description',label:'Описание задачи',type:'textarea',placeholder:'Расскажите подробнее о задаче'},
+      {key:'address',label:'Адрес',type:'text',placeholder:'Город, район, адрес'},
+      {key:'budget',label:'Бюджет',type:'text',placeholder:'Сумма или «договорная»'},
+      {key:'startDate',label:'Дата начала',type:'date'},
+      {key:'whoNeeded',label:'Нужен один мастер или бригада',type:'select',options:['Мастер','Бригада','Не важно']},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  },
+  'Заказы на субподряд':{
+    titlePlaceholder:'Требуется бригада на фасадные работы',
+    fields:[
+      {key:'objectName',label:'Название объекта*',type:'text',placeholder:'Например: ЖК «Северный»'},
+      {key:'workType',label:'Какие работы нужно выполнить',type:'text',placeholder:'Например: фасадные работы'},
+      {key:'teamOrCompany',label:'Требуется бригада или компания',type:'select',options:['Бригада','Компания','Любой']},
+      {key:'peopleCount',label:'Количество человек',type:'number',placeholder:'Например: 10'},
+      {key:'scope',label:'Объём работ',type:'text',placeholder:'Например: 2000 м²'},
+      {key:'address',label:'Адрес объекта',type:'text',placeholder:'Город, район, адрес'},
+      {key:'budget',label:'Бюджет',type:'text',placeholder:'Сумма или «договорная»'},
+      {key:'startDate',label:'Срок начала',type:'date'},
+      {key:'endDate',label:'Срок выполнения',type:'date'},
+      {key:'housing',label:'Есть ли проживание',type:'bool'},
+      {key:'food',label:'Есть ли питание',type:'bool'},
+      {key:'docsNeeded',label:'Нужны ли документы',type:'bool'},
+      {key:'subcontract',label:'Можно ли работать как субподрядчик',type:'bool'},
+      {key:'files',label:'Фото, проект или смета',type:'files'},
+      {key:'contactPerson',label:'Контактное лицо',type:'text',placeholder:'Имя'},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  },
+  'Строительные материалы':{
+    titlePlaceholder:'Цемент М500',
+    submitLabel:'Опубликовать бесплатно',
+    fields:[
+      {key:'photos',label:'Фотографии',type:'files',hint:'Добавьте до 4–5 фотографий'},
+      {key:'productName',label:'Название товара*',type:'text',placeholder:'Например: «Цемент М500», «Газоблок», «Арматура 12 мм»'},
+      {key:'price',label:'Цена*',type:'number',placeholder:'Сумма в ₽'},
+      {key:'unit',label:'Единица продажи*',type:'select',options:['Шт.','Кг','Мешок','Тонна','м²','м³','Комплект','Другое']},
+      {key:'description',label:'Описание',type:'textarea',placeholder:'Кратко расскажите о товаре'},
+      {key:'address',label:'Адрес',type:'text',placeholder:'Город, район, адрес'},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  }
+};
+function renderFormField(f, idx){
+  const id = `cf_${idx}`;
+  if(f.type==='textarea'){
+    return `<div class="field-group"><label>${f.label}</label><textarea id="${id}" placeholder="${f.placeholder||''}"></textarea></div>`;
+  }
+  if(f.type==='select'){
+    return `<div class="field-group"><label>${f.label}</label><select id="${id}">${f.options.map(o=>`<option>${o}</option>`).join('')}</select></div>`;
+  }
+  if(f.type==='bool'){
+    return `<div class="field-group"><label>${f.label}</label>
+      <div class="bool-toggle" data-bool="${id}">
+        <button type="button" class="bt-yes" data-val="Да">Да</button>
+        <button type="button" class="bt-no" data-val="Нет">Нет</button>
+      </div>
+      <input type="hidden" id="${id}">
+    </div>`;
+  }
+  if(f.type==='money'){
+    return `<div class="field-group"><label>${f.label}</label>
+      <div style="display:flex;gap:8px">
+        <input id="${id}" type="number" placeholder="${f.placeholder||''}" style="flex:2">
+        <select id="${id}_period" style="flex:1">${f.periodOptions.map(o=>`<option>${o}</option>`).join('')}</select>
+      </div>
+    </div>`;
+  }
+  if(f.type==='files'){
+    return `<div class="field-group"><label>${f.label}</label>${f.hint?`<p style="font-size:11px;color:var(--ink-soft);margin:-2px 0 8px">${f.hint}</p>`:''}
+      <div class="upload-row cf-upload-row">
+        <label class="upload-box"><span class="upload-icon">📷</span><input type="file" accept="image/*,application/pdf" hidden></label>
+        <label class="upload-box"><span class="upload-icon">+</span><input type="file" accept="image/*,application/pdf" hidden></label>
+        <label class="upload-box"><span class="upload-icon">+</span><input type="file" accept="image/*,application/pdf" hidden></label>
+        <label class="upload-box"><span class="upload-icon">+</span><input type="file" accept="image/*,application/pdf" hidden></label>
+      </div>
+    </div>`;
+  }
+  if(f.type==='date'){
+    return `<div class="field-group"><label>${f.label}</label><input id="${id}" type="date"></div>`;
+  }
+  if(f.type==='tel'){
+    return `<div class="field-group"><label>${f.label}</label><input id="${id}" type="tel" placeholder="+7 900 000-00-00"></div>`;
+  }
+  if(f.type==='number'){
+    return `<div class="field-group"><label>${f.label}</label><input id="${id}" type="number" placeholder="${f.placeholder||''}"></div>`;
+  }
+  return `<div class="field-group"><label>${f.label}</label><input id="${id}" type="text" placeholder="${f.placeholder||''}"></div>`;
+}
+function wireBoolToggles(root){
+  $all('.bool-toggle', root).forEach(group=>{
+    const hiddenId = group.dataset.bool;
+    const hidden = document.getElementById(hiddenId);
+    group.querySelectorAll('button').forEach(btn=>{
+      btn.onclick = ()=>{
+        group.querySelectorAll('button').forEach(b=>b.classList.remove('active'));
+        btn.classList.add('active');
+        if(hidden) hidden.value = btn.dataset.val;
+      };
+    });
+  });
+}
+function openCustomListingForm(catId, subcat, schema){
+  const cat = catById(catId);
+  state.listing.subcat = subcat;
+  openModal(`
+    <div class="modal-head"><h3>Добавить объявление</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <p style="font-size:12.5px;color:var(--green-700);font-weight:700;margin-bottom:14px">${cat.icon} ${cat.name} → ${subcat} · бесплатно</p>
+    <div class="field-group"><label>Заголовок*</label><input id="cf_title" type="text" placeholder="Например: ${schema.titlePlaceholder}"></div>
+    ${schema.fields.map((f,i)=>renderFormField(f,i)).join('')}
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="submitListing()">${schema.submitLabel||'Опубликовать бесплатно'}</button>
+  `);
+  wireUploadRow();
+  wireBoolToggles(document);
+}
+
 function openListingForm(catId, subcat){
+  if(FORM_SCHEMAS[subcat]){
+    openCustomListingForm(catId, subcat, FORM_SCHEMAS[subcat]);
+    return;
+  }
   const cat = catById(catId);
   state.listing.subcat = subcat;
   openModal(`
