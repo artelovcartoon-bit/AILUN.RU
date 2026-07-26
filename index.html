@@ -472,6 +472,172 @@
   .shop-banner-empty b{font-family:'Manrope',sans-serif;font-size:14px;color:#fff;font-weight:800;}
   .shop-banner-empty span{font-size:11px;line-height:1.4;}
 
+  /* ---------- Shop info block ---------- */
+  .shop-info{
+    background:var(--white);border:1px solid var(--line);border-radius:18px;padding:14px;margin-bottom:16px;
+    box-shadow:0 6px 18px rgba(15,61,36,.06);
+  }
+  .shop-info-top{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
+  .shop-info-logo{
+    width:56px;height:56px;border-radius:16px;flex-shrink:0;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-weight:800;font-size:15px;background-size:cover;background-position:center;
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .shop-info-main{flex:1;min-width:0;}
+  .shop-info-main h3{font-size:16px;margin:0 0 3px;color:var(--green-950);font-weight:800;font-family:'Manrope',sans-serif;}
+  .shop-info-stats{font-size:11.5px;color:var(--ink-soft);line-height:1.45;}
+  .shop-info-stats .st{color:var(--gold);}
+  .shop-info-stats b{color:var(--green-950);font-weight:700;}
+  .shop-info-reply{
+    display:flex;align-items:center;gap:6px;font-size:11.5px;color:var(--green-700);font-weight:600;
+    background:var(--green-50);border-radius:10px;padding:8px 10px;margin-bottom:11px;
+  }
+  .shop-info-since{font-size:11px;color:var(--ink-soft);margin:0 0 11px;}
+  .shop-info-actions{display:flex;gap:8px;}
+  .shop-info-actions button{
+    flex:1;border-radius:11px;padding:10px 8px;font-size:12.5px;font-weight:700;font-family:inherit;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:6px;
+  }
+  .btn-save-shop{background:var(--white);border:1.5px solid var(--green-700);color:var(--green-700);}
+  .btn-save-shop.saved{background:var(--green-700);border-color:var(--green-700);color:#fff;}
+  .btn-write-seller{background:var(--green-700);border:1.5px solid var(--green-700);color:#fff;}
+
+  /* ---------- Full product page ---------- */
+  .pd-photo{
+    width:100%;aspect-ratio:1/1;border-radius:18px;overflow:hidden;background:var(--green-100);
+    display:flex;align-items:center;justify-content:center;font-size:60px;position:relative;margin-bottom:14px;
+  }
+  .pd-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+  .pd-photo .pd-disc{
+    position:absolute;top:12px;left:12px;background:#E0455A;color:#fff;font-size:12px;font-weight:800;
+    padding:5px 9px;border-radius:8px;
+  }
+  .pd-photo .pd-fav{
+    position:absolute;top:12px;right:12px;width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.94);
+    border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .pd-photo .pd-fav.active svg{fill:#E0455A;stroke:#E0455A;}
+  .pd-brand{font-size:12.5px;color:var(--ink-soft);font-weight:700;margin:0 0 4px;}
+  .pd-title{font-size:19px;color:var(--green-950);margin:0 0 8px;line-height:1.25;font-family:'Manrope',sans-serif;font-weight:800;}
+  .pd-rating{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--ink-soft);margin-bottom:12px;}
+  .pd-rating .st{color:var(--gold);font-size:14px;}
+  .pd-rating b{color:var(--green-950);font-weight:800;}
+  .pd-prices{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:14px;}
+  .pd-price{font-size:24px;font-weight:800;color:var(--green-700);font-family:'Manrope',sans-serif;}
+  .pd-old{font-size:14px;color:#9aa79f;text-decoration:line-through;font-weight:600;}
+  .pd-save{font-size:11.5px;font-weight:700;color:#E0455A;background:#fdecee;border-radius:7px;padding:3px 8px;}
+  .pd-block{margin-bottom:16px;}
+  .pd-block > h4{font-size:13px;margin:0 0 8px;color:var(--green-950);font-weight:800;}
+  .pd-size-chip{
+    border:1.5px solid var(--line);background:var(--white);border-radius:10px;padding:9px 15px;
+    font-size:13px;font-weight:700;color:var(--green-950);font-family:inherit;cursor:pointer;min-width:46px;
+  }
+  .pd-size-chip.active{background:var(--green-700);color:#fff;border-color:var(--green-700);}
+  .pd-specs{border:1px solid var(--line);border-radius:14px;overflow:hidden;}
+  .pd-spec-row{display:flex;gap:10px;padding:10px 12px;border-bottom:1px solid var(--line);font-size:12.5px;}
+  .pd-spec-row:last-child{border-bottom:none;}
+  .pd-spec-row span{color:var(--ink-soft);flex-shrink:0;width:44%;}
+  .pd-spec-row b{color:var(--green-950);font-weight:600;flex:1;}
+  .pd-desc{font-size:13px;line-height:1.6;color:var(--ink);margin:0;}
+  .pd-avail{display:flex;flex-direction:column;gap:8px;}
+  .pd-avail-row{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--green-950);}
+  .pd-avail-row.no{color:var(--ink-soft);}
+  .pd-buy-bar{display:flex;gap:8px;margin-bottom:18px;}
+  .pd-buy-bar .pd-cart{
+    flex:1;background:var(--green-700);color:#fff;border:none;border-radius:13px;padding:14px;
+    font-size:14.5px;font-weight:800;font-family:inherit;cursor:pointer;
+  }
+  .pd-buy-bar .pd-cart.in{background:var(--green-100);color:var(--green-700);}
+  .pd-buy-bar .pd-msg{
+    flex-shrink:0;background:var(--white);border:1.5px solid var(--green-700);color:var(--green-700);
+    border-radius:13px;padding:14px 16px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
+  }
+
+  /* ---------- Rich product card (shops) ---------- */
+  .sp-card{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
+  .sp-media{
+    position:relative;aspect-ratio:1/1;background:var(--green-100);display:flex;align-items:center;justify-content:center;
+    font-size:30px;background-size:cover;background-position:center;
+  }
+  .sp-disc{
+    position:absolute;top:7px;left:7px;background:#E0455A;color:#fff;font-size:10px;font-weight:800;
+    padding:3px 6px;border-radius:6px;letter-spacing:.2px;
+  }
+  .sp-top{
+    position:absolute;top:7px;left:7px;background:linear-gradient(135deg,#F97316,#EA580C);color:#fff;
+    font-size:9px;font-weight:800;padding:3px 6px;border-radius:6px;
+  }
+  .sp-fav{
+    position:absolute;top:7px;right:7px;width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.92);
+    border:none;display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .sp-fav.active svg{fill:#E0455A;stroke:#E0455A;}
+  .sp-body{padding:9px 9px 11px;display:flex;flex-direction:column;gap:4px;flex:1;}
+  .sp-name{
+    font-size:12px;font-weight:700;color:var(--green-950);line-height:1.3;margin:0;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:31px;
+  }
+  .sp-brand{font-size:10.5px;color:var(--ink-soft);font-weight:600;}
+  .sp-rating{display:flex;align-items:center;gap:3px;font-size:10.5px;color:var(--ink-soft);}
+  .sp-rating b{color:var(--green-950);font-weight:700;}
+  .sp-rating .st{color:var(--gold);}
+  .sp-sizes{font-size:10px;color:var(--ink-soft);line-height:1.3;}
+  .sp-color{display:flex;align-items:center;gap:5px;font-size:10px;color:var(--ink-soft);}
+  .sp-color i{width:11px;height:11px;border-radius:50%;border:1px solid rgba(0,0,0,.15);flex-shrink:0;display:block;}
+  .sp-prices{display:flex;align-items:baseline;gap:6px;flex-wrap:wrap;margin-top:2px;}
+  .sp-price{font-size:14px;font-weight:800;color:var(--green-700);}
+  .sp-old{font-size:11px;color:#9aa79f;text-decoration:line-through;font-weight:600;}
+  .sp-cart{
+    margin-top:auto;width:100%;border:none;border-radius:10px;padding:9px;cursor:pointer;font-family:inherit;
+    background:var(--green-700);color:#fff;font-size:11.5px;font-weight:700;
+  }
+  .sp-cart:active{transform:scale(.97);}
+  .sp-cart.in{background:var(--green-100);color:var(--green-700);}
+
+  /* ---------- Sort bar + filters ---------- */
+  .sort-bar{margin-bottom:14px;}
+  .sort-found{font-size:12.5px;color:var(--ink-soft);font-weight:600;margin:0 0 8px;}
+  .sort-found b{color:var(--green-950);font-weight:800;}
+  .sort-row{display:flex;gap:8px;align-items:stretch;}
+  .sort-select{
+    flex:1;min-width:0;border:1px solid var(--line);border-radius:11px;padding:10px 11px;font-size:12.5px;
+    font-family:inherit;color:var(--ink);background:var(--white);font-weight:600;
+  }
+  .filters-btn{
+    flex-shrink:0;display:flex;align-items:center;gap:6px;background:var(--white);border:1px solid var(--line);
+    border-radius:11px;padding:10px 13px;font-size:12.5px;font-weight:700;color:var(--green-950);font-family:inherit;cursor:pointer;
+  }
+  .filters-btn .fb-count{
+    background:var(--green-700);color:#fff;font-size:10px;font-weight:800;border-radius:999px;
+    min-width:17px;height:17px;display:inline-flex;align-items:center;justify-content:center;padding:0 5px;
+  }
+  .filter-group{margin-bottom:16px;}
+  .filter-group > label{display:block;font-size:12px;font-weight:700;color:var(--green-950);margin-bottom:8px;}
+  .filter-sub{font-size:10.5px;color:var(--ink-soft);font-weight:600;margin:8px 0 6px;}
+  .chip-wrap{display:flex;flex-wrap:wrap;gap:6px;}
+  .fchip{
+    border:1px solid var(--line);background:var(--green-50);border-radius:999px;padding:7px 12px;
+    font-size:11.5px;font-weight:600;color:var(--green-900);font-family:inherit;cursor:pointer;
+  }
+  .fchip.active{background:var(--green-700);color:#fff;border-color:var(--green-700);}
+  .fchip.color-chip{display:flex;align-items:center;gap:6px;}
+  .fchip.color-chip i{width:12px;height:12px;border-radius:50%;border:1px solid rgba(0,0,0,.18);display:block;flex-shrink:0;}
+  .filter-toggle-row{
+    display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);
+  }
+  .filter-toggle-row:last-of-type{border-bottom:none;}
+  .filter-toggle-row span{font-size:12.5px;color:var(--green-950);font-weight:600;}
+  .switch{
+    width:42px;height:24px;border-radius:999px;background:var(--line);border:none;position:relative;flex-shrink:0;
+    cursor:pointer;transition:background .18s ease;
+  }
+  .switch::after{
+    content:"";position:absolute;top:2px;left:2px;width:20px;height:20px;border-radius:50%;background:#fff;
+    transition:transform .18s ease;box-shadow:0 1px 3px rgba(0,0,0,.2);
+  }
+  .switch.on{background:var(--green-700);}
+  .switch.on::after{transform:translateX(18px);}
+
   /* ---------- Vendor shop dashboard ---------- */
   .vendor-header{
     background:linear-gradient(135deg,var(--green-900),var(--green-600));border-radius:20px;color:#fff;
@@ -765,6 +931,7 @@
 
     <!-- LISTING DETAIL -->
     <section class="screen" data-screen="detail" id="screenDetail"></section>
+    <section class="screen" data-screen="product" id="screenProduct"></section>
 
     <!-- SUPER ADMIN PANEL (demo) -->
     <section class="screen" data-screen="admin" id="screenAdmin"></section>
@@ -874,47 +1041,163 @@ const CONSTR_ICON_SVGS = {
   clipboard: `<svg viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><rect x="9" y="2" width="6" height="3.2" rx="1.2"/><path d="M8 10.5l1.4 1.4L12.2 9"/><path d="M8 15.6l1.4 1.4l2.8-2.8"/><line x1="14.4" y1="10.8" x2="16.8" y2="10.8"/><line x1="14.4" y1="15.9" x2="16.8" y2="15.9"/></svg>`,
   cranebuild: `<svg viewBox="0 0 24 24" fill="none" stroke="#1F2937" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="10.5" width="5.5" height="10.5"/><rect x="10.5" y="6.3" width="5.5" height="14.7"/><path d="M13.2 6.3V2.2"/><path d="M13.2 2.2h8"/><path d="M21.2 2.2v4"/><path d="M17.2 6.3v3"/></svg>`
 };
+const SIZE_SETS = {
+  clothes:['S','M','L','XL'],
+  clothesFull:['XS','S','M','L','XL','XXL'],
+  shoes:['39','40','41','42','43','44'],
+  kids:['86 см (1,5–2 года)','98 см (3 года)','110 см (5 лет)','122 см (7 лет)','134 см (9 лет)'],
+  kidsShoes:['26','28','30','32','34'],
+  one:['One size']
+};
+const COLOR_MAP = {
+  'Чёрный':'#1C1C1C','Белый':'#F2F2F2','Серый':'#8B8B8B','Синий':'#2B4C8C','Тёмно-синий':'#1B2E52',
+  'Бежевый':'#D8C3A5','Коричневый':'#6B4A2F','Зелёный':'#2C6E49','Красный':'#B3202E','Голубой':'#7FA8D9'
+};
 function makeShopCatalog(brand){
-  const meta = ()=>({photo:null, desc:'', popular:false});
-  return {
+  // [название, цена, старая цена (0 = без скидки), рейтинг, отзывы, набор размеров, цвет]
+  const defs = {
     'Футболки':[
-      [`Футболка ${brand} basic`,'2 990 ₽',meta()],[`Футболка ${brand} logo`,'3 490 ₽',meta()],
-      [`Футболка ${brand} oversize`,'3 290 ₽',meta()],[`Футболка ${brand} polo`,'4 190 ₽',meta()],
-      [`Футболка ${brand} с длинным рукавом`,'3 790 ₽',meta()],[`Футболка ${brand} в полоску`,'3 090 ₽',meta()],
-      [`Футболка ${brand} принт`,'3 590 ₽',meta()],[`Футболка ${brand} однотонная`,'2 790 ₽',meta()],
-      [`Футболка ${brand} хлопок premium`,'4 490 ₽',meta()],[`Футболка ${brand} спортивная`,'3 190 ₽',meta()]
+      ['Футболка базовая оверсайз',1690,2190,4.7,38,'clothes','Чёрный'],
+      ['Футболка с логотипом',2490,0,4.5,21,'clothes','Белый'],
+      ['Футболка оверсайз',2290,2890,4.6,54,'clothes','Серый'],
+      ['Поло классическое',3190,0,4.4,17,'clothes','Тёмно-синий'],
+      ['Лонгслив хлопковый',2790,3390,4.8,63,'clothesFull','Бежевый'],
+      ['Футболка в полоску',2090,2590,4.3,29,'clothes','Синий'],
+      ['Футболка с принтом',2590,0,4.6,45,'clothes','Белый'],
+      ['Футболка однотонная',1890,2290,4.5,72,'clothesFull','Зелёный'],
+      ['Футболка premium cotton',3490,0,4.9,12,'clothes','Чёрный'],
+      ['Футболка спортивная',2190,2790,4.4,38,'clothes','Голубой']
     ],
     'Джинсы':[
-      [`Джинсы ${brand} slim`,'6 990 ₽',meta()],[`Джинсы ${brand} straight`,'7 490 ₽',meta()],
-      [`Джинсы ${brand} skinny`,'7 190 ₽',meta()],[`Джинсы ${brand} mom`,'6 790 ₽',meta()],
-      [`Джинсы ${brand} wide leg`,'7 990 ₽',meta()],[`Джинсы ${brand} рваные`,'8 190 ₽',meta()],
-      [`Джинсы ${brand} тёмные`,'6 890 ₽',meta()],[`Джинсы ${brand} классические`,'6 590 ₽',meta()],
-      [`Джинсы ${brand} карго`,'7 690 ₽',meta()],[`Джинсы ${brand} светлые`,'6 490 ₽',meta()]
+      ['Джинсы slim fit',4990,6490,4.6,86,'clothes','Синий'],
+      ['Джинсы прямые',5490,0,4.5,41,'clothes','Тёмно-синий'],
+      ['Джинсы skinny',5190,6190,4.3,33,'clothes','Чёрный'],
+      ['Джинсы mom fit',4790,0,4.7,58,'clothesFull','Голубой'],
+      ['Джинсы wide leg',5990,7490,4.6,24,'clothes','Синий'],
+      ['Джинсы с потёртостями',6190,0,4.2,19,'clothes','Голубой'],
+      ['Джинсы тёмные классика',4890,5990,4.8,94,'clothesFull','Тёмно-синий'],
+      ['Джинсы прямого кроя',4590,0,4.5,37,'clothes','Синий'],
+      ['Джинсы карго',5690,6990,4.4,28,'clothes','Бежевый'],
+      ['Джинсы светлые',4490,5490,4.6,51,'clothes','Голубой']
     ],
     'Куртки':[
-      [`Куртка ${brand} демисезонная`,'12 990 ₽',meta()],[`Куртка ${brand} зимняя`,'18 990 ₽',meta()],
-      [`Куртка ${brand} кожаная`,'22 990 ₽',meta()],[`Куртка ${brand} джинсовая`,'9 990 ₽',meta()],
-      [`Куртка ${brand} пуховик`,'16 990 ₽',meta()],[`Куртка ${brand} бомбер`,'11 490 ₽',meta()],
-      [`Куртка ${brand} парка`,'15 990 ₽',meta()],[`Куртка ${brand} ветровка`,'8 490 ₽',meta()],
-      [`Куртка ${brand} утеплённая`,'14 490 ₽',meta()],[`Куртка ${brand} тренч`,'13 490 ₽',meta()]
+      ['Куртка демисезонная',8990,12990,4.7,47,'clothes','Чёрный'],
+      ['Куртка зимняя тёплая',14990,18990,4.8,112,'clothesFull','Тёмно-синий'],
+      ['Куртка кожаная',18990,0,4.6,23,'clothes','Коричневый'],
+      ['Куртка джинсовая',6990,9490,4.4,36,'clothes','Голубой'],
+      ['Пуховик длинный',13990,16990,4.9,88,'clothesFull','Чёрный'],
+      ['Бомбер утеплённый',8490,0,4.5,31,'clothes','Зелёный'],
+      ['Парка с капюшоном',11990,15990,4.7,64,'clothes','Бежевый'],
+      ['Ветровка лёгкая',5490,7490,4.3,42,'clothes','Синий'],
+      ['Куртка стёганая',9990,0,4.6,27,'clothesFull','Серый'],
+      ['Тренч классический',10990,13490,4.5,18,'clothes','Бежевый']
     ],
     'Обувь':[
-      [`Кроссовки ${brand}`,'9 990 ₽',meta()],[`Ботинки ${brand}`,'11 990 ₽',meta()],
-      [`Кеды ${brand}`,'6 990 ₽',meta()],[`Туфли ${brand}`,'10 490 ₽',meta()],
-      [`Сандалии ${brand}`,'5 490 ₽',meta()],[`Сапоги ${brand}`,'13 990 ₽',meta()],
-      [`Слипоны ${brand}`,'6 490 ₽',meta()],[`Кроссовки ${brand} лимитированные`,'14 990 ₽',meta()],
-      [`Лоферы ${brand}`,'9 490 ₽',meta()],[`Ботильоны ${brand}`,'12 490 ₽',meta()]
+      ['Кроссовки повседневные',6990,9990,4.7,134,'shoes','Белый'],
+      ['Ботинки на шнуровке',9490,11990,4.6,52,'shoes','Коричневый'],
+      ['Кеды текстильные',4990,0,4.4,78,'shoes','Белый'],
+      ['Туфли классические',8490,10490,4.5,26,'shoes','Чёрный'],
+      ['Сандалии летние',3990,5490,4.2,33,'shoes','Бежевый'],
+      ['Сапоги зимние',10990,13990,4.8,61,'shoes','Чёрный'],
+      ['Слипоны лёгкие',4490,0,4.3,44,'shoes','Серый'],
+      ['Кроссовки лимитированные',12990,14990,4.9,19,'shoes','Красный'],
+      ['Лоферы кожаные',7990,9490,4.6,29,'shoes','Коричневый'],
+      ['Ботильоны на каблуке',9990,12490,4.5,37,'shoes','Чёрный']
     ],
     'Аксессуары':[
-      [`Ремень ${brand}`,'3 990 ₽',meta()],[`Кепка ${brand}`,'2 490 ₽',meta()],
-      [`Сумка ${brand}`,'8 990 ₽',meta()],[`Очки ${brand}`,'5 990 ₽',meta()],
-      [`Шарф ${brand}`,'3 490 ₽',meta()],[`Перчатки ${brand}`,'2 990 ₽',meta()],
-      [`Носки ${brand} (3 пары)`,'1 490 ₽',meta()],[`Кошелёк ${brand}`,'4 490 ₽',meta()],
-      [`Рюкзак ${brand}`,'7 990 ₽',meta()],[`Часы ${brand}`,'12 990 ₽',meta()]
+      ['Ремень кожаный',2990,3990,4.6,41,'one','Коричневый'],
+      ['Кепка базовая',1790,2490,4.4,56,'one','Чёрный'],
+      ['Сумка через плечо',6990,8990,4.7,32,'one','Чёрный'],
+      ['Очки солнцезащитные',4490,5990,4.5,48,'one','Чёрный'],
+      ['Шарф тёплый',2490,3490,4.6,27,'one','Серый'],
+      ['Перчатки утеплённые',2190,2990,4.3,21,'one','Чёрный'],
+      ['Носки (3 пары)',1190,1490,4.5,89,'one','Белый'],
+      ['Кошелёк компактный',3490,4490,4.7,34,'one','Коричневый'],
+      ['Рюкзак городской',5990,7990,4.8,67,'one','Чёрный'],
+      ['Часы наручные',9990,12990,4.6,23,'one','Серый']
+    ],
+    'Детское':[
+      ['Футболка детская хлопок',890,1290,4.7,52,'kids','Белый'],
+      ['Джинсы детские',1990,2490,4.5,31,'kids','Синий'],
+      ['Куртка детская утеплённая',4490,5990,4.8,44,'kids','Красный'],
+      ['Кроссовки детские',2990,3990,4.6,63,'kidsShoes','Белый'],
+      ['Комплект детский (2 шт)',2290,2990,4.7,38,'kids','Голубой'],
+      ['Платье детское',1790,2390,4.4,22,'kids','Красный'],
+      ['Шапка детская',690,890,4.5,29,'kids','Серый'],
+      ['Спортивный костюм детский',3490,0,4.6,17,'kids','Чёрный'],
+      ['Ботинки детские зимние',3990,4990,4.8,41,'kidsShoes','Коричневый'],
+      ['Толстовка детская',1590,1990,4.5,35,'kids','Зелёный']
     ]
   };
+  const ATTRS = {
+    'Футболки':{gender:['Мужской','Женский','Унисекс'],material:['Хлопок','Хлопок','Синтетика'],season:['Лето','Всесезон'],style:['Casual','Спорт','Streetwear'],country:['Турция','Португалия','Китай']},
+    'Джинсы':{gender:['Мужской','Женский','Унисекс'],material:['Джинс','Хлопок'],season:['Демисезон','Всесезон'],style:['Casual','Streetwear','Классика'],country:['Турция','Италия','Китай']},
+    'Куртки':{gender:['Мужской','Женский','Унисекс'],material:['Синтетика','Кожа','Шерсть'],season:['Зима','Демисезон'],style:['Casual','Классика','Спорт'],country:['Китай','Италия','Россия']},
+    'Обувь':{gender:['Мужской','Женский','Унисекс'],material:['Кожа','Текстиль','Замша'],season:['Лето','Зима','Демисезон'],style:['Casual','Спорт','Классика'],country:['Италия','Китай','Португалия']},
+    'Аксессуары':{gender:['Унисекс','Мужской','Женский'],material:['Кожа','Текстиль','Металл'],season:['Всесезон','Зима'],style:['Casual','Классика','Streetwear'],country:['Италия','Китай','Турция']},
+    'Детское':{gender:['Детский'],material:['Хлопок','Синтетика'],season:['Лето','Зима','Демисезон'],style:['Casual','Спорт'],country:['Турция','Китай','Россия']}
+  };
+  const RU_BY_INT = {'XS':'44','S':'46','M':'48','L':'50','XL':'52','XXL':'54'};
+  const fmt = n => n.toLocaleString('ru-RU').replace(/,/g,' ') + ' ₽';
+  const out = {};
+  const catNames = Object.keys(defs);
+  Object.entries(defs).forEach(([cat, items])=>{
+    const a = ATTRS[cat];
+    const total = items.length;
+    out[cat] = items.map(([name, price, oldPrice, rating, reviews, sizeKey, color], i)=>{
+      const sizes = SIZE_SETS[sizeKey].slice();
+      const sizesAll = sizes.slice();
+      sizes.forEach(s=>{ if(RU_BY_INT[s]) sizesAll.push(RU_BY_INT[s]); });
+      return [
+        name,
+        fmt(price),
+        {
+          photo:null, desc:'', popular:(i%5===0),
+          brand:`${brand} Basic`,
+          oldPrice: oldPrice ? fmt(oldPrice) : '',
+          discount: oldPrice ? Math.round((1 - price/oldPrice)*100) : 0,
+          rating, reviews,
+          sizes, sizesAll, color,
+          category: cat,
+          gender: a.gender[i % a.gender.length],
+          material: a.material[i % a.material.length],
+          season: a.season[i % a.season.length],
+          style: a.style[i % a.style.length],
+          country: a.country[i % a.country.length],
+          condition: (i % 7 === 3) ? 'Б/у' : 'Новое',
+          inStock: (i % 9 !== 4),
+          delivery: (i % 6 !== 5),
+          pickup: (i % 4 !== 3),
+          added: total - i
+        }
+      ];
+    });
+  });
+  return out;
 }
-const CLOTHING_SHOP_SUBCATS = ['Футболки','Джинсы','Куртки','Обувь','Аксессуары'];
+const CLOTHING_SHOP_SUBCATS = ['Футболки','Джинсы','Куртки','Обувь','Аксессуары','Детское'];
+const SORT_OPTIONS = [
+  ['popular','По популярности'],
+  ['new','Сначала новые'],
+  ['cheap','Сначала дешёвые'],
+  ['expensive','Сначала дорогие'],
+  ['discount','По размеру скидки'],
+  ['rating','По рейтингу']
+];
+const FILTER_SIZE_GROUPS = [
+  ['Одежда (INT)', SIZE_SETS.clothesFull],
+  ['Российские размеры', ['42','44','46','48','50','52','54','56']],
+  ['Обувь', ['35','36','37','38','39','40','41','42','43','44','45','46']],
+  ['Детские (рост/возраст)', SIZE_SETS.kids.concat(SIZE_SETS.kidsShoes)]
+];
+const FILTER_DEFS = {
+  gender:['Мужской','Женский','Унисекс','Детский'],
+  condition:['Новое','Б/у'],
+  material:['Хлопок','Джинс','Кожа','Замша','Синтетика','Шерсть','Текстиль','Металл'],
+  season:['Лето','Зима','Демисезон','Всесезон'],
+  style:['Casual','Классика','Спорт','Streetwear'],
+  country:['Италия','Турция','Китай','Португалия','Россия']
+};
 const DATA = [
   { id:'halal', name:'Halal Market', icon:'🕌', tag:'Halal-сервисы',
     subcats:['Агентства','Гостиницы','Апартаменты','Койко-места'],
@@ -986,15 +1269,15 @@ const DATA = [
   },
   { id:'fashion', name:'Магазины одежды', icon:'👕', tag:'Мужская, женская, детская',
     shops:[
-      {id:'gucci', name:'Gucci', initials:'G', color:'#0B3D2E', popular:true, rating:4.9, tag:'Люкс-бренд', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Gucci')},
-      {id:'zara', name:'Zara', initials:'Z', color:'#161616', popular:true, rating:4.6, tag:'Новинки каждую неделю', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Zara')},
-      {id:'hm', name:'H&M', initials:'H&M', color:'#C8102E', popular:true, rating:4.4, tag:'Доступные цены', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('H&M')},
-      {id:'nike', name:'Nike', initials:'N', color:'#161616', popular:true, rating:4.8, tag:'Спортивная одежда', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Nike')},
-      {id:'adidas', name:'Adidas', initials:'A', color:'#1C1C1C', popular:true, rating:4.7, tag:'Спорт и стиль', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Adidas')},
-      {id:'massimo', name:'Massimo Dutti', initials:'MD', color:'#5B4636', popular:true, rating:4.6, tag:'Премиум качество', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Massimo Dutti')},
-      {id:'stylehub', name:'Style Hub', initials:'SH', color:'#1E7C4A', popular:false, rating:4.7, tag:'Новая коллекция', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Style Hub')},
-      {id:'sandy', name:'Sandy Fashion', initials:'SF', color:'#C9972E', popular:false, rating:4.5, tag:'Скидки до 30%', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Sandy Fashion')},
-      {id:'oasis', name:'Oasis Wear', initials:'OW', color:'#2563EB', popular:false, rating:4.6, tag:'Доставка 1–2 дня', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Oasis Wear')}
+      {id:'gucci', name:'Gucci', initials:'G', color:'#0B3D2E', popular:true, rating:4.9, tag:'Люкс-бренд', reviews:326, orders:1240, since:'марта 2021', reply:'15 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Gucci')},
+      {id:'zara', name:'Zara', initials:'Z', color:'#161616', popular:true, rating:4.6, tag:'Новинки каждую неделю', reviews:512, orders:2870, since:'января 2020', reply:'10 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Zara')},
+      {id:'hm', name:'H&M', initials:'H&M', color:'#C8102E', popular:true, rating:4.4, tag:'Доступные цены', reviews:438, orders:3110, since:'июня 2019', reply:'20 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('H&M')},
+      {id:'nike', name:'Nike', initials:'N', color:'#161616', popular:true, rating:4.8, tag:'Спортивная одежда', reviews:604, orders:4250, since:'ноября 2018', reply:'8 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Nike')},
+      {id:'adidas', name:'Adidas', initials:'A', color:'#1C1C1C', popular:true, rating:4.7, tag:'Спорт и стиль', reviews:571, orders:3980, since:'февраля 2019', reply:'12 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Adidas')},
+      {id:'massimo', name:'Massimo Dutti', initials:'MD', color:'#5B4636', popular:true, rating:4.6, tag:'Премиум качество', reviews:214, orders:960, since:'сентября 2022', reply:'25 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Massimo Dutti')},
+      {id:'stylehub', name:'Style Hub', initials:'SH', color:'#1E7C4A', popular:false, rating:4.7, tag:'Новая коллекция', reviews:187, orders:820, since:'апреля 2023', reply:'30 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Style Hub')},
+      {id:'sandy', name:'Sandy Fashion', initials:'SF', color:'#C9972E', popular:false, rating:4.5, tag:'Скидки до 30%', reviews:143, orders:640, since:'августа 2023', reply:'40 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Sandy Fashion')},
+      {id:'oasis', name:'Oasis Wear', initials:'OW', color:'#2563EB', popular:false, rating:4.6, tag:'Доставка 1–2 дня', reviews:98,  orders:410, since:'февраля 2024', reply:'1 час', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Oasis Wear')}
     ]
   },
   { id:'electronics', name:'Электроника', icon:'📱', tag:'Телефоны, компьютеры и не только',
@@ -1080,6 +1363,44 @@ const DATA = [
   }
 ];
 
+/* --- Пример полностью заполненной карточки товара (реальное фото) --- */
+const DEMO_POLO_PHOTO = 'data:image/jpeg;base64,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';
+(function fillDemoProduct(){
+  const fashion = DATA.find(c=>c.id==='fashion');
+  if(!fashion) return;
+  fashion.shops.forEach(shop=>{
+    const list = shop.catalog['Футболки'];
+    if(!list) return;
+    const item = list.find(it=>it[0]==='Поло классическое');
+    if(!item) return;
+    item[0] = 'Поло классическое с контрастной отделкой';
+    item[1] = '2 490 ₽';
+    Object.assign(item[2], {
+      photo: DEMO_POLO_PHOTO,
+      brand: shop.name + ' Basic',
+      oldPrice: '3 190 ₽',
+      discount: 22,
+      rating: 4.8,
+      reviews: 156,
+      sizes: ['S','M','L','XL'],
+      sizesAll: ['S','M','L','XL','46','48','50','52'],
+      color: 'Тёмно-синий',
+      gender: 'Мужской',
+      material: 'Хлопок',
+      season: 'Всесезон',
+      style: 'Классика',
+      country: 'Португалия',
+      condition: 'Новое',
+      inStock: true, delivery: true, pickup: true,
+      popular: true,
+      article: 'AL-' + shop.id.toUpperCase().slice(0,3) + '-10428',
+      composition: '95% хлопок, 5% эластан',
+      care: 'Машинная стирка 30°, не отбеливать',
+      desc: 'Классическое поло из плотного хлопкового пике. Контрастная отделка воротника и манжет, планка на трёх пуговицах, боковые разрезы по низу. Держит форму после стирок, не растягивается в вороте.'
+    });
+  });
+})();
+
 const WA_NUMBER = '79000000000'; // TODO: заменить на реальный номер MAX
 const MAX_LINK = `https://max.ru/${WA_NUMBER}`; // TODO: заменить на реальную ссылку на профиль в MAX
 
@@ -1087,6 +1408,8 @@ const MAX_LINK = `https://max.ru/${WA_NUMBER}`; // TODO: заменить на �
 const state = {
   loggedIn:false,
   favorites:new Set(),
+  cart:new Set(),
+  savedShops:new Set(),
   recent:[],
   activeCat:null,
   activeProviderIdx:null,
@@ -1713,63 +2036,425 @@ function renderShopHome(catId, shopId){
              <span>Здесь будет баннер или видео магазина (16:9)</span>
            </div>`}
     </div>
+    <div class="shop-info">
+      <div class="shop-info-top">
+        <div class="shop-info-logo" style="${shop.logo?`background-image:url('${shop.logo}')`:`background:${shop.color}`}">${shop.logo?'':shop.initials}</div>
+        <div class="shop-info-main">
+          <h3>${shop.name}</h3>
+          <div class="shop-info-stats">
+            <span class="st">★</span> <b>${String(shop.rating).replace('.',',')}</b> ·
+            ${shop.reviews} ${plural(shop.reviews,'отзыв','отзыва','отзывов')} ·
+            ${(shop.orders||0).toLocaleString('ru-RU').replace(/,/g,' ')} ${plural(shop.orders||0,'заказ','заказа','заказов')}
+          </div>
+        </div>
+      </div>
+      <div class="shop-info-reply">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+        Обычно отвечает в течение ${shop.reply}
+      </div>
+      <p class="shop-info-since">На Ailun с ${shop.since}</p>
+      <div class="shop-info-actions">
+        <button class="btn-save-shop ${state.savedShops.has(shop.id)?'saved':''}" id="saveShopBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+          <span>${state.savedShops.has(shop.id)?'В избранном':'Сохранить'}</span>
+        </button>
+        <button class="btn-write-seller" id="writeSellerBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.5-.7L3 21l1.9-5.1A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+          Написать продавцу
+        </button>
+      </div>
+    </div>
     <div class="cat-search-input-row" style="margin-bottom:14px">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <input type="text" id="shopHomeSearchInput" placeholder="Поиск в «${shop.name}»" autocomplete="off">
     </div>
-    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="shopHomeFiltersBtn">🔎 Фильтры: цена, сортировка</button>
+    <div id="shopSortBar"></div>
     <div id="shopSections"></div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
-  $('#shopHomeFiltersBtn').onclick=()=>openProductFiltersModal(shop);
+  $('#saveShopBtn').onclick=()=>{
+    const btn = $('#saveShopBtn');
+    if(state.savedShops.has(shop.id)){
+      state.savedShops.delete(shop.id);
+      btn.classList.remove('saved');
+      btn.querySelector('span').textContent = 'Сохранить';
+      toast('Магазин удалён из избранного');
+    } else {
+      state.savedShops.add(shop.id);
+      btn.classList.add('saved');
+      btn.querySelector('span').textContent = 'В избранном';
+      toast('Магазин сохранён в избранное');
+    }
+  };
+  $('#writeSellerBtn').onclick=()=>openContactModal(shop.name);
   $('#shopHomeSearchInput').addEventListener('input', e=>{
     state.subcatQuery = e.target.value;
     renderShopSections(shop);
   });
   renderShopSections(shop);
 }
+/* ===================== SHOP FILTERS & SORT ===================== */
+state.shopSort = 'popular';
+function emptyShopFilters(){
+  return {
+    category:'', gender:'', brand:'', condition:'', material:'', season:'', style:'', country:'',
+    priceFrom:'', priceTo:'',
+    sizes:new Set(), colors:new Set(),
+    inStock:false, discountOnly:false, delivery:false, pickup:false
+  };
+}
+state.shopFilters = emptyShopFilters();
+function shopFilterCount(){
+  const f = state.shopFilters;
+  let n = 0;
+  ['category','gender','brand','condition','material','season','style','country','priceFrom','priceTo'].forEach(k=>{ if(f[k]) n++; });
+  n += f.sizes.size + f.colors.size;
+  ['inStock','discountOnly','delivery','pickup'].forEach(k=>{ if(f[k]) n++; });
+  return n;
+}
+function priceNum(s){ const n = parseInt(String(s).replace(/[^\d]/g,''),10); return isNaN(n)?0:n; }
+function passesShopFilters(meta, price, sub){
+  const f = state.shopFilters;
+  if(f.category && sub !== f.category) return false;
+  if(f.gender && meta.gender !== f.gender) return false;
+  if(f.brand && meta.brand !== f.brand) return false;
+  if(f.condition && meta.condition !== f.condition) return false;
+  if(f.material && meta.material !== f.material) return false;
+  if(f.season && meta.season !== f.season) return false;
+  if(f.style && meta.style !== f.style) return false;
+  if(f.country && meta.country !== f.country) return false;
+  const p = priceNum(price);
+  if(f.priceFrom && p < Number(f.priceFrom)) return false;
+  if(f.priceTo && p > Number(f.priceTo)) return false;
+  if(f.sizes.size){
+    const all = meta.sizesAll || meta.sizes || [];
+    if(![...f.sizes].some(s=>all.includes(s))) return false;
+  }
+  if(f.colors.size && !f.colors.has(meta.color)) return false;
+  if(f.inStock && !meta.inStock) return false;
+  if(f.discountOnly && !meta.discount) return false;
+  if(f.delivery && !meta.delivery) return false;
+  if(f.pickup && !meta.pickup) return false;
+  return true;
+}
+function sortShopItems(items){
+  const s = state.shopSort;
+  const arr = [...items];
+  if(s==='cheap') arr.sort((a,b)=>priceNum(a.price)-priceNum(b.price));
+  else if(s==='expensive') arr.sort((a,b)=>priceNum(b.price)-priceNum(a.price));
+  else if(s==='discount') arr.sort((a,b)=>(b.meta.discount||0)-(a.meta.discount||0));
+  else if(s==='rating') arr.sort((a,b)=>(b.meta.rating||0)-(a.meta.rating||0));
+  else if(s==='new') arr.sort((a,b)=>(b.meta.added||0)-(a.meta.added||0));
+  else arr.sort((a,b)=>((b.meta.popular?1:0)-(a.meta.popular?1:0)) || ((b.meta.reviews||0)-(a.meta.reviews||0)));
+  return arr;
+}
+function collectShopItems(shop, onlySub){
+  const q = (state.subcatQuery||'').trim().toLowerCase();
+  const subs = onlySub ? [onlySub] : shop.subcats;
+  const out = [];
+  subs.forEach(sub=>{
+    (shop.catalog[sub]||[]).forEach((it,i)=>{
+      const meta = it[2]||{};
+      if(q && !it[0].toLowerCase().includes(q)) return;
+      if(!passesShopFilters(meta, it[1], sub)) return;
+      out.push({sub, idx:i, name:it[0], price:it[1], meta});
+    });
+  });
+  return out;
+}
+function sortBarHtml(count){
+  const n = shopFilterCount();
+  return `
+  <div class="sort-bar">
+    <p class="sort-found">Найдено <b>${count}</b> ${plural(count,'товар','товара','товаров')}</p>
+    <div class="sort-row">
+      <select class="sort-select" id="shopSortSelect">
+        ${SORT_OPTIONS.map(([v,l])=>`<option value="${v}" ${state.shopSort===v?'selected':''}>${l}</option>`).join('')}
+      </select>
+      <button class="filters-btn" id="shopFiltersBtn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5h18M6 12h12M10 19h4"/></svg>
+        Фильтры${n?`<span class="fb-count">${n}</span>`:''}
+      </button>
+    </div>
+  </div>`;
+}
+function wireSortBar(shop, rerender){
+  const sel = $('#shopSortSelect');
+  if(sel) sel.onchange = e=>{ state.shopSort = e.target.value; rerender(); };
+  const btn = $('#shopFiltersBtn');
+  if(btn) btn.onclick = ()=>openShopFiltersModal(shop, rerender);
+}
+function openShopFiltersModal(shop, rerender){
+  const f = state.shopFilters;
+  const brands = [...new Set(shop.subcats.flatMap(s=>(shop.catalog[s]||[]).map(it=>(it[2]||{}).brand).filter(Boolean)))];
+  const selectRow = (key, label, options) => `
+    <div class="filter-group">
+      <label>${label}</label>
+      <select id="sf_${key}">
+        <option value="">Любой</option>
+        ${options.map(o=>`<option ${f[key]===o?'selected':''}>${o}</option>`).join('')}
+      </select>
+    </div>`;
+  openModal(`
+    <div class="modal-head"><h3>Фильтры</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    ${selectRow('category','Категория', shop.subcats)}
+    ${selectRow('gender','Пол', FILTER_DEFS.gender)}
+    <div class="filter-group">
+      <label>Размер (можно выбрать несколько)</label>
+      ${FILTER_SIZE_GROUPS.map(([title,sizes])=>`
+        <p class="filter-sub">${title}</p>
+        <div class="chip-wrap">
+          ${sizes.map(s=>`<button type="button" class="fchip ${f.sizes.has(s)?'active':''}" data-size="${s}">${s}</button>`).join('')}
+        </div>`).join('')}
+    </div>
+    <div class="filter-group">
+      <label>Цена, ₽</label>
+      <div style="display:flex;gap:8px">
+        <input type="number" id="sf_priceFrom" value="${f.priceFrom}" placeholder="от" style="flex:1">
+        <input type="number" id="sf_priceTo" value="${f.priceTo}" placeholder="до" style="flex:1">
+      </div>
+    </div>
+    <div class="filter-group">
+      <label>Цвет (можно выбрать несколько)</label>
+      <div class="chip-wrap">
+        ${Object.entries(COLOR_MAP).map(([name,hex])=>`
+          <button type="button" class="fchip color-chip ${f.colors.has(name)?'active':''}" data-color="${name}"><i style="background:${hex}"></i>${name}</button>`).join('')}
+      </div>
+    </div>
+    ${selectRow('brand','Бренд', brands)}
+    ${selectRow('condition','Состояние', FILTER_DEFS.condition)}
+    ${selectRow('material','Материал', FILTER_DEFS.material)}
+    ${selectRow('season','Сезон', FILTER_DEFS.season)}
+    ${selectRow('style','Стиль', FILTER_DEFS.style)}
+    ${selectRow('country','Страна производства', FILTER_DEFS.country)}
+    <div class="filter-group">
+      <label>Дополнительно</label>
+      <div class="filter-toggle-row"><span>Только в наличии</span><button type="button" class="switch ${f.inStock?'on':''}" data-sw="inStock"></button></div>
+      <div class="filter-toggle-row"><span>Товары со скидкой</span><button type="button" class="switch ${f.discountOnly?'on':''}" data-sw="discountOnly"></button></div>
+      <div class="filter-toggle-row"><span>Есть доставка</span><button type="button" class="switch ${f.delivery?'on':''}" data-sw="delivery"></button></div>
+      <div class="filter-toggle-row"><span>Есть самовывоз</span><button type="button" class="switch ${f.pickup?'on':''}" data-sw="pickup"></button></div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center;margin-bottom:8px" id="sfApply">Показать товары</button>
+    <button class="btn btn-ghost" style="width:100%;justify-content:center" id="sfReset">Сбросить фильтры</button>
+  `);
+  $all('[data-size]').forEach(b=>b.onclick=()=>{
+    const s=b.dataset.size;
+    if(f.sizes.has(s)){ f.sizes.delete(s); b.classList.remove('active'); }
+    else { f.sizes.add(s); b.classList.add('active'); }
+  });
+  $all('[data-color]').forEach(b=>b.onclick=()=>{
+    const c=b.dataset.color;
+    if(f.colors.has(c)){ f.colors.delete(c); b.classList.remove('active'); }
+    else { f.colors.add(c); b.classList.add('active'); }
+  });
+  $all('[data-sw]').forEach(b=>b.onclick=()=>{
+    const k=b.dataset.sw;
+    f[k] = !f[k];
+    b.classList.toggle('on', f[k]);
+  });
+  $('#sfApply').onclick=()=>{
+    ['category','gender','brand','condition','material','season','style','country'].forEach(k=>{
+      const el = $('#sf_'+k); if(el) f[k] = el.value;
+    });
+    f.priceFrom = $('#sf_priceFrom').value;
+    f.priceTo = $('#sf_priceTo').value;
+    closeModal();
+    rerender();
+  };
+  $('#sfReset').onclick=()=>{
+    state.shopFilters = emptyShopFilters();
+    closeModal();
+    rerender();
+  };
+}
+
+/* ===================== FULL PRODUCT PAGE ===================== */
+function openProductPage(shopId, sub, idx){
+  const cat = catById(state.shopCtx ? state.shopCtx.catId : 'fashion');
+  const shop = cat.shops.find(s=>s.id===shopId);
+  if(!shop) return;
+  state.productCtx = {shopId, sub, idx};
+  renderProductPage();
+  showScreen('product');
+}
+function renderProductPage(){
+  const {shopId, sub, idx} = state.productCtx;
+  const cat = catById(state.shopCtx.catId);
+  const shop = cat.shops.find(s=>s.id===shopId);
+  const it = shop.catalog[sub][idx];
+  const m = it[2] || {};
+  const key = `${shop.id}-${sub}-${idx}`;
+  const fav = state.favorites.has(key);
+  const inCart = state.cart.has(key);
+  const colorHex = COLOR_MAP[m.color] || '#8B8B8B';
+  const saveAmount = (m.oldPrice && it[1]) ? (priceNum(m.oldPrice) - priceNum(it[1])) : 0;
+  const el = $('#screenProduct');
+  el.innerHTML = `
+    <div class="back-row">
+      <button class="back-btn" id="backFromProduct"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <p class="screen-sub">${shop.name} · ${sub}</p>
+    </div>
+    <div class="pd-photo">
+      ${m.photo ? `<img src="${m.photo}" alt="${it[0]}">` : shop.icon}
+      ${m.discount ? `<span class="pd-disc">−${m.discount}%</span>` : ''}
+      <button class="pd-fav ${fav?'active':''}" id="pdFav" aria-label="В избранное">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
+      </button>
+    </div>
+    ${m.brand ? `<p class="pd-brand">${m.brand}</p>` : ''}
+    <h1 class="pd-title">${it[0]}</h1>
+    ${m.rating ? `<div class="pd-rating"><span class="st">★</span> <b>${String(m.rating).replace('.',',')}</b> · ${m.reviews} ${plural(m.reviews,'отзыв','отзыва','отзывов')}</div>` : ''}
+    <div class="pd-prices">
+      <span class="pd-price">${it[1]}</span>
+      ${m.oldPrice ? `<span class="pd-old">${m.oldPrice}</span>` : ''}
+      ${saveAmount>0 ? `<span class="pd-save">Выгода ${saveAmount.toLocaleString('ru-RU').replace(/,/g,' ')} ₽</span>` : ''}
+    </div>
+    ${m.sizes && m.sizes.length ? `
+    <div class="pd-block">
+      <h4>Размер</h4>
+      <div class="chip-wrap">
+        ${m.sizes.map(s=>`<button class="pd-size-chip ${state.pickedSize===s?'active':''}" data-psize="${s}">${s}</button>`).join('')}
+      </div>
+    </div>` : ''}
+    ${m.color ? `
+    <div class="pd-block">
+      <h4>Цвет</h4>
+      <div class="sp-color" style="font-size:12.5px"><i style="background:${colorHex};width:14px;height:14px"></i>${m.color}</div>
+    </div>` : ''}
+    <div class="pd-buy-bar">
+      <button class="pd-cart ${inCart?'in':''}" id="pdCart">${inCart?'✓ В корзине':'В корзину'}</button>
+      <button class="pd-msg" id="pdMsg">Написать</button>
+    </div>
+    <div class="pd-block">
+      <h4>Наличие и получение</h4>
+      <div class="pd-avail">
+        <div class="pd-avail-row ${m.inStock?'':'no'}">${m.inStock?'✅':'⛔'} ${m.inStock?'В наличии':'Нет в наличии'}</div>
+        <div class="pd-avail-row ${m.delivery?'':'no'}">${m.delivery?'🚚':'—'} ${m.delivery?'Доставка по России':'Доставка недоступна'}</div>
+        <div class="pd-avail-row ${m.pickup?'':'no'}">${m.pickup?'🏬':'—'} ${m.pickup?'Самовывоз из магазина':'Самовывоз недоступен'}</div>
+      </div>
+    </div>
+    ${m.desc ? `<div class="pd-block"><h4>Описание</h4><p class="pd-desc">${m.desc}</p></div>` : ''}
+    <div class="pd-block">
+      <h4>Характеристики</h4>
+      <div class="pd-specs">
+        ${[
+          ['Категория', sub],
+          ['Бренд', m.brand],
+          ['Пол', m.gender],
+          ['Состав', m.composition],
+          ['Материал', m.material],
+          ['Цвет', m.color],
+          ['Размеры', (m.sizes||[]).join(', ')],
+          ['Сезон', m.season],
+          ['Стиль', m.style],
+          ['Страна производства', m.country],
+          ['Состояние', m.condition],
+          ['Уход', m.care],
+          ['Артикул', m.article]
+        ].filter(([,v])=>v).map(([k,v])=>`<div class="pd-spec-row"><span>${k}</span><b>${v}</b></div>`).join('')}
+      </div>
+    </div>
+    <div class="pd-block">
+      <h4>Продавец</h4>
+      <button class="shop-card" id="pdShopCard" style="margin-bottom:0">
+        <span class="shop-badge" style="${shop.logo?`background-image:url('${shop.logo}');background-size:cover`:`background:${shop.color}`}">${shop.logo?'':shop.initials}</span>
+        <div class="provider-info">
+          <h3>${shop.name}</h3>
+          <p><span class="rating" style="display:inline-flex">★ ${String(shop.rating).replace('.',',')}</span> · ${shop.reviews} отзывов · отвечает за ${shop.reply}</p>
+        </div>
+        <svg class="chev" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg>
+      </button>
+    </div>
+  `;
+  $('#backFromProduct').onclick=()=>showScreen('provider');
+  $('#pdShopCard').onclick=()=>{ renderShopHome(state.shopCtx.catId, shop.id); showScreen('provider'); };
+  $('#pdFav').onclick=()=>{
+    const b = $('#pdFav');
+    if(state.favorites.has(key)){ state.favorites.delete(key); b.classList.remove('active'); }
+    else { state.favorites.add(key); b.classList.add('active'); toast('Добавлено в избранное'); }
+  };
+  $('#pdCart').onclick=()=>{
+    const b = $('#pdCart');
+    if(!state.pickedSize && m.sizes && m.sizes.length>1){ toast('Выберите размер'); return; }
+    if(state.cart.has(key)){
+      state.cart.delete(key); b.classList.remove('in'); b.textContent='В корзину'; toast('Удалено из корзины');
+    } else {
+      state.cart.add(key); b.classList.add('in'); b.textContent='✓ В корзине';
+      toast(state.pickedSize ? `Добавлено, размер ${state.pickedSize}` : `В корзине товаров: ${state.cart.size}`);
+    }
+  };
+  $('#pdMsg').onclick=()=>openContactModal(shop.name);
+  $all('[data-psize]').forEach(b=>b.onclick=()=>{
+    state.pickedSize = b.dataset.psize;
+    $all('[data-psize]').forEach(x=>x.classList.remove('active'));
+    b.classList.add('active');
+  });
+}
+state.pickedSize = null;
+
 function shopProductCard(shop, sub, idx){
   const it = shop.catalog[sub][idx];
   const meta = it[2] || {};
   const key = `${shop.id}-${sub}-${idx}`;
   const fav = state.favorites.has(key) ? 'active' : '';
-  const mediaStyle = meta.photo ? `style="background-image:url('${meta.photo}');background-size:cover;background-position:center"` : '';
+  const inCart = state.cart.has(key);
+  const mediaStyle = meta.photo ? `style="background-image:url('${meta.photo}')"` : '';
+  const colorHex = COLOR_MAP[meta.color] || '#8B8B8B';
   return `
-  <div class="product-card">
-    <div class="product-media" ${mediaStyle}>${meta.photo ? '' : shop.icon}
-      ${meta.popular ? `<span class="pop-badge">🔥 Топ</span>` : ''}
-      <button class="fav-btn ${fav}" data-fav="${key}">
+  <div class="sp-card" data-open-product="${shop.id}|${sub}|${idx}" style="cursor:pointer">
+    <div class="sp-media" ${mediaStyle}>${meta.photo ? '' : shop.icon}
+      ${meta.discount ? `<span class="sp-disc">−${meta.discount}%</span>`
+        : (meta.popular ? `<span class="sp-top">🔥 Топ</span>` : '')}
+      <button class="sp-fav ${fav}" data-fav="${key}" aria-label="В избранное">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 1 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg>
       </button>
     </div>
-    <div class="product-body">
-      <h4>${it[0]}</h4>
-      <div class="product-price">${it[1]}</div>
-      <button class="btn btn-primary" data-contact="${it[0]}">Написать</button>
+    <div class="sp-body">
+      <h4 class="sp-name">${it[0]}</h4>
+      ${meta.brand ? `<span class="sp-brand">${meta.brand}</span>` : ''}
+      ${meta.rating ? `<span class="sp-rating"><span class="st">★</span> <b>${String(meta.rating).replace('.',',')}</b> · ${meta.reviews} ${plural(meta.reviews,'отзыв','отзыва','отзывов')}</span>` : ''}
+      ${meta.sizes && meta.sizes.length ? `<span class="sp-sizes">Размеры: ${meta.sizes.join(', ')}</span>` : ''}
+      ${meta.color ? `<span class="sp-color"><i style="background:${colorHex}"></i>${meta.color}</span>` : ''}
+      <div class="sp-prices">
+        <span class="sp-price">${it[1]}</span>
+        ${meta.oldPrice ? `<span class="sp-old">${meta.oldPrice}</span>` : ''}
+      </div>
+      <button class="sp-cart ${inCart?'in':''}" data-cart="${key}">${inCart?'✓ В корзине':'В корзину'}</button>
     </div>
   </div>`;
 }
+function plural(n, one, few, many){
+  const n10 = n % 10, n100 = n % 100;
+  if(n10===1 && n100!==11) return one;
+  if(n10>=2 && n10<=4 && (n100<10 || n100>=20)) return few;
+  return many;
+}
 function renderShopSections(shop){
   const box = $('#shopSections');
-  const q = (state.subcatQuery||'').trim().toLowerCase();
+  const all = collectShopItems(shop, null);
+  const bar = $('#shopSortBar');
+  if(bar){
+    bar.innerHTML = sortBarHtml(all.length);
+    wireSortBar(shop, ()=>renderShopSections(shop));
+  }
+  const bySub = {};
+  all.forEach(it=>{ (bySub[it.sub] = bySub[it.sub] || []).push(it); });
   const sections = shop.subcats.map(sub=>{
-    let items = (shop.catalog[sub]||[]).map((it,i)=>({name:it[0], idx:i, popular:(it[2]&&it[2].popular)||false}));
-    if(q) items = items.filter(it=>it.name.toLowerCase().includes(q));
+    const items = sortShopItems(bySub[sub]||[]);
     if(!items.length) return '';
-    items.sort((a,b)=>(b.popular?1:0)-(a.popular?1:0));
     const preview = items.slice(0,10);
     return `
     <div class="shop-cat-section">
       <div class="shop-cat-head">
         <h3>${sub}</h3>
-        ${items.length>6 ? `<button class="shop-cat-more" data-sub="${sub}">Показать все (${items.length}) ›</button>` : ''}
+        ${items.length>4 ? `<button class="shop-cat-more" data-sub="${sub}">Показать все (${items.length}) ›</button>` : ''}
       </div>
       <div class="shop-hscroll">
         ${preview.map(it=>shopProductCard(shop, sub, it.idx)).join('')}
       </div>
     </div>`;
   }).filter(Boolean).join('');
-  box.innerHTML = sections || `<p style="color:var(--ink-soft);font-size:13px;text-align:center;margin-top:20px">Ничего не найдено по вашему запросу</p>`;
+  box.innerHTML = sections || `<p style="color:var(--ink-soft);font-size:13px;text-align:center;margin-top:20px">Ничего не найдено — попробуйте изменить фильтры</p>`;
   bindProductCards();
   $all('.shop-cat-more', box).forEach(b=>b.onclick=()=>openShopCategoryFull(shop, b.dataset.sub));
 }
@@ -1789,11 +2474,10 @@ function openShopCategoryFull(shop, subcat){
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <input type="text" id="subcatSearchInput" placeholder="Поиск в «${subcat}»" autocomplete="off">
     </div>
-    <button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="providerFiltersBtn">🔎 Фильтры: цена, сортировка</button>
+    <div id="shopSortBar"></div>
     <div class="product-grid" id="providerProducts"></div>
   `;
   $('#backToShopHome').onclick=()=>renderShopHome(state.shopCtx.catId, state.shopCtx.shopId);
-  $('#providerFiltersBtn').onclick=()=>openProductFiltersModal(shop);
   $('#subcatSearchInput').addEventListener('input', e=>{
     state.subcatQuery = e.target.value;
     renderShopFullCategory(shop, subcat);
@@ -1802,19 +2486,16 @@ function openShopCategoryFull(shop, subcat){
 }
 function renderShopFullCategory(shop, subcat){
   const box = $('#providerProducts');
-  let items = (shop.catalog[subcat]||[]).map((it,i)=>({idx:i, name:it[0], price:it[1], popular:(it[2]&&it[2].popular)||false}));
-  const pq = (state.subcatQuery||'').trim().toLowerCase();
-  if(pq) items = items.filter(it=>it.name.toLowerCase().includes(pq));
-  items = items.filter(it=>passesPriceFilter(it.price, shop.id));
-  items = applySortFilter(items, shop.id, it=>it.price);
-  const activeSort = state.catFilters[shop.id] && state.catFilters[shop.id].sort;
-  if(!activeSort || activeSort==='default'){
-    items.sort((a,b)=>(b.popular?1:0)-(a.popular?1:0));
+  const items = sortShopItems(collectShopItems(shop, subcat));
+  const bar = $('#shopSortBar');
+  if(bar){
+    bar.innerHTML = sortBarHtml(items.length);
+    wireSortBar(shop, ()=>renderShopFullCategory(shop, subcat));
   }
   box.className = 'product-grid';
   box.innerHTML = items.length
     ? items.map(it=>shopProductCard(shop, subcat, it.idx)).join('')
-    : `<p style="grid-column:1/-1;color:var(--ink-soft);font-size:13px;text-align:center;margin-top:10px">Ничего не найдено по вашим фильтрам</p>`;
+    : `<p style="grid-column:1/-1;color:var(--ink-soft);font-size:13px;text-align:center;margin-top:10px">Ничего не найдено — попробуйте изменить фильтры</p>`;
   bindProductCards();
 }
 function openSubcat(catId, subcat){
@@ -1972,6 +2653,29 @@ function productCard(icon,name,price,key){
   </div>`;
 }
 function bindProductCards(){
+  $all('[data-open-product]').forEach(card=>{
+    card.onclick=(e)=>{
+      if(e.target.closest('[data-fav]') || e.target.closest('[data-cart]')) return;
+      const [shopId, sub, idx] = card.dataset.openProduct.split('|');
+      state.pickedSize = null;
+      openProductPage(shopId, sub, +idx);
+    };
+  });
+  $all('[data-cart]').forEach(b=>{
+    b.onclick=(e)=>{
+      e.stopPropagation();
+      const key=b.dataset.cart;
+      if(state.cart.has(key)){
+        state.cart.delete(key);
+        b.classList.remove('in'); b.textContent='В корзину';
+        toast('Удалено из корзины');
+      } else {
+        state.cart.add(key);
+        b.classList.add('in'); b.textContent='✓ В корзине';
+        toast(`В корзине товаров: ${state.cart.size}`);
+      }
+    };
+  });
   $all('[data-fav]').forEach(b=>{
     b.onclick=(e)=>{
       e.stopPropagation();
@@ -2688,12 +3392,51 @@ function renderVendorDashboard(){
       <input type="file" accept="image/*,video/*" hidden id="bannerInput">
     </label>
     <div class="admin-toolbar">
+      <h3>Логотип и профиль</h3>
+    </div>
+    <div class="vendor-cat-block" style="margin-bottom:20px">
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:10px">
+        <label class="shop-info-logo" style="cursor:pointer;${shop.logo?`background-image:url('${shop.logo}')`:`background:${shop.color}`}">
+          ${shop.logo?'':shop.initials}
+          <input type="file" accept="image/*" hidden id="logoInput">
+        </label>
+        <div style="flex:1;min-width:0">
+          <p style="font-size:12px;color:var(--ink-soft);margin:0 0 4px">Нажмите на логотип, чтобы заменить</p>
+          <p style="font-size:11.5px;color:var(--green-950);margin:0;font-weight:600">★ ${String(shop.rating).replace('.',',')} · ${shop.reviews} отзывов · ${(shop.orders||0).toLocaleString('ru-RU').replace(/,/g,' ')} заказов</p>
+        </div>
+      </div>
+      <div class="vendor-product-row" style="border-top:1px solid var(--line)">
+        <div class="vendor-product-info">
+          <strong>Время ответа</strong>
+          <span>Обычно отвечает в течение ${shop.reply}</span>
+        </div>
+        <button class="vendor-icon-btn" id="editReplyBtn">✏️</button>
+      </div>
+      <div class="vendor-product-row">
+        <div class="vendor-product-info">
+          <strong>На Ailun с</strong>
+          <span>${shop.since}</span>
+        </div>
+      </div>
+    </div>
+    <div class="admin-toolbar">
       <h3>Категории</h3>
       <button class="btn btn-primary" id="addCatBtn">+ Категория</button>
     </div>
     <div id="vendorCatList"></div>
   `;
   $('#backFromVendor').onclick=()=>openAdminPanel();
+  $('#logoInput').onchange = e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{ shop.logo = reader.result; renderVendorDashboard(); toast('Логотип обновлён'); };
+    reader.readAsDataURL(file);
+  };
+  $('#editReplyBtn').onclick=()=>{
+    const v = prompt('Обычно отвечает в течение…', shop.reply);
+    if(v && v.trim()){ shop.reply = v.trim(); renderVendorDashboard(); }
+  };
   $('#bannerInput').onchange = e=>{
     const file = e.target.files[0];
     if(!file) return;
@@ -2801,8 +3544,21 @@ function openVendorProductModal(shop, sub, idx){
         </label>
       </div>
     </div>
-    <div class="field-group"><label>Название*</label><input type="text" id="vpName" value="${it[0]||''}" placeholder="Например: Футболка basic"></div>
-    <div class="field-group"><label>Цена*</label><input type="text" id="vpPrice" value="${it[1]||''}" placeholder="Например: 2 990 ₽"></div>
+    <div class="field-group"><label>Название*</label><input type="text" id="vpName" value="${it[0]||''}" placeholder="Например: Футболка базовая оверсайз"></div>
+    <div class="field-group"><label>Бренд</label><input type="text" id="vpBrand" value="${meta.brand||''}" placeholder="Например: Ailun Basic"></div>
+    <div class="field-group"><label>Цена*</label><input type="text" id="vpPrice" value="${it[1]||''}" placeholder="Например: 1 690 ₽"></div>
+    <div class="field-group"><label>Старая цена (для скидки)</label><input type="text" id="vpOldPrice" value="${meta.oldPrice||''}" placeholder="Например: 2 190 ₽ — процент посчитается сам"></div>
+    <div style="display:flex;gap:8px">
+      <div class="field-group" style="flex:1"><label>Рейтинг</label><input type="text" id="vpRating" value="${meta.rating||''}" placeholder="4.7"></div>
+      <div class="field-group" style="flex:1"><label>Отзывов</label><input type="number" id="vpReviews" value="${meta.reviews||''}" placeholder="38"></div>
+    </div>
+    <div class="field-group"><label>Размеры (через запятую)</label><input type="text" id="vpSizes" value="${(meta.sizes||[]).join(', ')}" placeholder="S, M, L, XL"></div>
+    <div class="field-group"><label>Цвет</label>
+      <select id="vpColor">
+        <option value="">Не указан</option>
+        ${Object.keys(COLOR_MAP).map(c=>`<option ${meta.color===c?'selected':''}>${c}</option>`).join('')}
+      </select>
+    </div>
     <div class="field-group"><label>Описание</label><textarea id="vpDesc" placeholder="Кратко расскажите о товаре">${meta.desc||''}</textarea></div>
     <div class="field-group"><label>Показывать в топе продаж</label>
       <div class="bool-toggle" data-bool="vpPopular">
@@ -2833,7 +3589,22 @@ function openVendorProductModal(shop, sub, idx){
     const name = $('#vpName').value.trim();
     const price = $('#vpPrice').value.trim();
     if(!name || !price){ toast('Заполните название и цену'); return; }
-    const newMeta = {photo:newPhoto, desc:$('#vpDesc').value.trim(), popular:$('#vpPopular').value==='Да'};
+    const oldPrice = $('#vpOldPrice').value.trim();
+    const parseNum = s => { const n = parseInt(String(s).replace(/[^\d]/g,''),10); return isNaN(n)?0:n; };
+    const p = parseNum(price), op = parseNum(oldPrice);
+    const discount = (op && p && op>p) ? Math.round((1 - p/op)*100) : 0;
+    const newMeta = {
+      photo:newPhoto,
+      desc:$('#vpDesc').value.trim(),
+      popular:$('#vpPopular').value==='Да',
+      brand:$('#vpBrand').value.trim(),
+      oldPrice: discount ? oldPrice : '',
+      discount,
+      rating: parseFloat(String($('#vpRating').value).replace(',','.')) || null,
+      reviews: parseInt($('#vpReviews').value,10) || 0,
+      sizes: $('#vpSizes').value.split(',').map(s=>s.trim()).filter(Boolean),
+      color: $('#vpColor').value
+    };
     const newItem = [name, price, newMeta];
     if(isEdit){ shop.catalog[sub][idx] = newItem; }
     else { shop.catalog[sub].push(newItem); }
