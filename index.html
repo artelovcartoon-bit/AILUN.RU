@@ -553,6 +553,70 @@
     border-radius:13px;padding:14px 16px;font-size:14px;font-weight:700;font-family:inherit;cursor:pointer;
   }
 
+  /* ---------- In-app chat ---------- */
+  .chat-head{
+    display:flex;align-items:center;gap:11px;background:var(--white);border:1px solid var(--line);
+    border-radius:16px;padding:11px 13px;margin-bottom:12px;
+  }
+  .chat-head .shop-badge{width:42px;height:42px;border-radius:12px;font-size:13px;flex-shrink:0;}
+  .chat-head-info{flex:1;min-width:0;}
+  .chat-head-info h3{font-size:14.5px;margin:0 0 2px;color:var(--green-950);font-weight:800;font-family:'Manrope',sans-serif;}
+  .chat-head-info p{font-size:11px;color:var(--ink-soft);margin:0;}
+  .chat-ctx{
+    display:flex;align-items:center;gap:10px;background:var(--green-50);border:1px solid var(--line);
+    border-radius:14px;padding:9px;margin-bottom:12px;
+  }
+  .chat-ctx-thumb{
+    width:44px;height:44px;border-radius:10px;flex-shrink:0;background:var(--green-100);background-size:cover;
+    background-position:center;display:flex;align-items:center;justify-content:center;font-size:18px;
+  }
+  .chat-ctx-info{flex:1;min-width:0;}
+  .chat-ctx-info strong{display:block;font-size:12px;color:var(--green-950);font-weight:700;line-height:1.3;
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
+  .chat-ctx-info span{font-size:11.5px;color:var(--green-700);font-weight:800;}
+  .chat-log{
+    display:flex;flex-direction:column;gap:8px;min-height:180px;padding:4px 0 10px;
+  }
+  .chat-day{align-self:center;font-size:10.5px;color:var(--ink-soft);background:var(--green-50);
+    padding:4px 11px;border-radius:999px;margin:4px 0;}
+  .bubble{
+    max-width:80%;padding:9px 13px;border-radius:15px;font-size:13px;line-height:1.45;position:relative;
+    word-wrap:break-word;
+  }
+  .bubble.me{align-self:flex-end;background:var(--green-700);color:#fff;border-bottom-right-radius:5px;}
+  .bubble.them{align-self:flex-start;background:var(--white);border:1px solid var(--line);color:var(--ink);border-bottom-left-radius:5px;}
+  .bubble time{display:block;font-size:9.5px;opacity:.65;margin-top:4px;text-align:right;}
+  .chat-typing{align-self:flex-start;font-size:11.5px;color:var(--ink-soft);padding:4px 6px;}
+  .chat-input-bar{
+    position:sticky;bottom:0;display:flex;gap:8px;padding:10px 0 4px;background:var(--green-50);
+  }
+  .chat-input-bar input{
+    flex:1;min-width:0;border:1px solid var(--line);border-radius:999px;padding:11px 15px;font-size:13.5px;
+    font-family:inherit;background:var(--white);color:var(--ink);outline:none;
+  }
+  .chat-send{
+    width:42px;height:42px;border-radius:50%;background:var(--green-700);border:none;color:#fff;flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;cursor:pointer;
+  }
+  .chat-row{
+    display:flex;align-items:center;gap:12px;background:var(--white);border:1px solid var(--line);width:100%;
+    border-radius:16px;padding:12px;margin-bottom:10px;text-align:left;font-family:inherit;cursor:pointer;
+  }
+  .chat-row .shop-badge{width:46px;height:46px;border-radius:13px;font-size:13px;flex-shrink:0;}
+  .chat-row-info{flex:1;min-width:0;}
+  .chat-row-info strong{display:block;font-size:13.5px;color:var(--green-950);font-weight:700;margin-bottom:2px;}
+  .chat-row-info p{font-size:11.5px;color:var(--ink-soft);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .chat-row-meta{display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0;}
+  .chat-row-meta time{font-size:10px;color:var(--ink-soft);}
+  .chat-unread{
+    background:var(--green-700);color:#fff;font-size:10px;font-weight:800;border-radius:999px;
+    min-width:18px;height:18px;display:flex;align-items:center;justify-content:center;padding:0 5px;
+  }
+  .nav-badge{
+    position:absolute;top:-3px;right:calc(50% - 16px);background:#E0455A;color:#fff;font-size:9px;font-weight:800;
+    border-radius:999px;min-width:15px;height:15px;display:flex;align-items:center;justify-content:center;padding:0 4px;
+  }
+
   /* ---------- Rich product card (shops) ---------- */
   .sp-card{background:var(--white);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;}
   .sp-media{
@@ -932,6 +996,8 @@
     <!-- LISTING DETAIL -->
     <section class="screen" data-screen="detail" id="screenDetail"></section>
     <section class="screen" data-screen="product" id="screenProduct"></section>
+    <section class="screen" data-screen="chats" id="screenChats"></section>
+    <section class="screen" data-screen="chat" id="screenChat"></section>
 
     <!-- SUPER ADMIN PANEL (demo) -->
     <section class="screen" data-screen="admin" id="screenAdmin"></section>
@@ -943,9 +1009,10 @@
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-7 9 7"/><path d="M5 10v10h14V10"/></svg>
       Главная
     </button>
-    <button class="nav-item" data-nav="search">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
-      Поиск
+    <button class="nav-item" data-nav="chats" style="position:relative">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.5-.7L3 21l1.9-5.1A8.4 8.4 0 0 1 12 3a8.4 8.4 0 0 1 9 8.5z"/></svg>
+      Сообщения
+      <span class="nav-badge" id="chatsBadge" style="display:none">0</span>
     </button>
     <button class="nav-item nav-fab" data-nav="add">
       <span class="fab-circle"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></span>
@@ -1267,7 +1334,55 @@ const DATA = [
     taxiParks:['Яндекс Такси','Ситимобил','Максим','Такси Везёт','Gett','Таксовичkoff'],
     providers:[{name:'АвтоВыкуп Москва',rating:4.6,meta:'20 объявлений'},{name:'Столица Моторс',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
   },
-  { id:'fashion', name:'Магазины одежды', icon:'👕', tag:'Мужская, женская, детская',
+  { id:'clothing-private', name:'Одежда от частных лиц', icon:'🧺', tag:'Новое и б/у от людей, не магазинов',
+    subcats:['Женская','Мужская','Детская','Обувь','Аксессуары','Отдам даром'],
+    subIcons:{'Женская':'👗','Мужская':'👔','Детская':'🧸','Обувь':'👟','Аксессуары':'👜','Отдам даром':'🎁'},
+    subDesc:{'Женская':'Платья, верх, низ','Мужская':'Рубашки, брюки, верх','Детская':'Одежда и обувь для детей','Обувь':'Мужская, женская, детская','Аксессуары':'Сумки, ремни, украшения','Отдам даром':'Бесплатно, самовывоз'},
+    catalog:{
+      'Женская':[['Платье летнее, 44 р-р','1 500 ₽'],['Пальто демисезонное, 46 р-р','3 800 ₽'],['Джинсы mom, 42 р-р','900 ₽']],
+      'Мужская':[['Рубашка классическая, L','800 ₽'],['Куртка зимняя, XL','4 500 ₽'],['Джинсы прямые, 52 р-р','1 200 ₽']],
+      'Детская':[['Комбинезон зимний, 98 см','2 000 ₽'],['Пакет вещей 3–4 года','1 500 ₽'],['Школьная форма, 134 см','1 800 ₽']],
+      'Обувь':[['Кроссовки, 42 р-р','2 000 ₽'],['Сапоги зимние жен., 38 р-р','2 800 ₽'],['Туфли детские, 30 р-р','700 ₽']],
+      'Аксессуары':[['Сумка кожаная','1 900 ₽'],['Ремень мужской','500 ₽'],['Шарф шерстяной','600 ₽']],
+      'Отдам даром':[['Пакет женских вещей 44–46','Даром'],['Детские вещи 1–2 года','Даром'],['Мужская обувь 43 р-р','Даром']]
+    },
+    listings:{
+      'Женская':[
+        {photo:'pcl-w1', title:'Платье летнее, 44 р-р', desc:'Надевала пару раз, состояние отличное. Хлопок, длина миди. Самовывоз м. Строгино', price:'1 500 ₽', old:'2 900 ₽', user:'Айгуль'},
+        {photo:'pcl-w2', title:'Пальто демисезонное, 46 р-р', desc:'Носила один сезон, без дефектов. Шерсть 70%. Отправлю почтой за ваш счёт', price:'3 800 ₽', old:'7 500 ₽', user:'Гульнара'},
+        {photo:'pcl-w3', title:'Джинсы mom, 42 р-р', desc:'Не подошли по размеру, новые с биркой. Обмена нет, только продажа', price:'900 ₽', old:'2 200 ₽', user:'Бермет'},
+        {photo:'pcl-w4', title:'Свитер вязаный, 46–48', desc:'Тёплый, крупная вязка. Есть небольшая катышка на рукаве, на фото видно', price:'700 ₽', old:'', user:'Айым'}
+      ],
+      'Мужская':[
+        {photo:'pcl-m1', title:'Рубашка классическая, L', desc:'Покупал для одного мероприятия, надевал раз. Белая, хлопок', price:'800 ₽', old:'2 500 ₽', user:'Данияр'},
+        {photo:'pcl-m2', title:'Куртка зимняя, XL', desc:'Тёплая, до −25. Молния целая, капюшон отстёгивается. Носил 2 сезона', price:'4 500 ₽', old:'11 000 ₽', user:'Марат'},
+        {photo:'pcl-m3', title:'Джинсы прямые, 52 р-р', desc:'Похудел, стали велики. Состояние хорошее, без потёртостей', price:'1 200 ₽', old:'', user:'Ержан'},
+        {photo:'pcl-m4', title:'Кроссовки, 43 р-р', desc:'Носил месяц, подошва целая. Причина продажи — жмут в носке', price:'2 500 ₽', old:'6 000 ₽', user:'Нурлан'}
+      ],
+      'Детская':[
+        {photo:'pcl-k1', title:'Комбинезон зимний, 98 см', desc:'Сын вырос за сезон. Тёплый, мембрана, всё работает. Стирали, чистый', price:'2 000 ₽', old:'5 500 ₽', user:'Айгуль'},
+        {photo:'pcl-k2', title:'Пакет вещей 3–4 года', desc:'Около 15 вещей: кофты, штаны, футболки. Всё в хорошем состоянии, одним пакетом', price:'1 500 ₽', old:'', user:'Гульнара'},
+        {photo:'pcl-k3', title:'Школьная форма, 134 см', desc:'Пиджак, брюки, жилет. Проносили один учебный год', price:'1 800 ₽', old:'4 000 ₽', user:'Бермет'}
+      ],
+      'Обувь':[
+        {photo:'pcl-s1', title:'Кроссовки, 42 р-р', desc:'Оригинал, чек есть. Носил аккуратно, остался почти новый вид', price:'2 000 ₽', old:'7 900 ₽', user:'Марат'},
+        {photo:'pcl-s2', title:'Сапоги зимние жен., 38 р-р', desc:'Натуральная кожа и мех. Один сезон. Каблук ровный, набойки целые', price:'2 800 ₽', old:'8 500 ₽', user:'Айым'},
+        {photo:'pcl-s3', title:'Туфли детские, 30 р-р', desc:'Надевали на утренник два раза. Как новые', price:'700 ₽', old:'1 800 ₽', user:'Данияр'}
+      ],
+      'Аксессуары':[
+        {photo:'pcl-a1', title:'Сумка кожаная', desc:'Настоящая кожа, вместительная. Подкладка целая, фурнитура работает', price:'1 900 ₽', old:'6 500 ₽', user:'Гульнара'},
+        {photo:'pcl-a2', title:'Ремень мужской', desc:'Кожа, размер универсальный, пряжка без царапин', price:'500 ₽', old:'', user:'Ержан'},
+        {photo:'pcl-a3', title:'Шарф шерстяной', desc:'Тёплый, не колется. Цвет серый, размер большой', price:'600 ₽', old:'1 500 ₽', user:'Айгуль'}
+      ],
+      'Отдам даром':[
+        {photo:'pcl-f1', title:'Пакет женских вещей 44–46', desc:'Освобождаю шкаф. Всё чистое, есть и хорошие вещи. Забирать самовывозом м. Митино', price:'Даром', old:'', user:'Бермет'},
+        {photo:'pcl-f2', title:'Детские вещи 1–2 года', desc:'Большой пакет, сын вырос. Отдам в одни руки целиком', price:'Даром', old:'', user:'Айым'},
+        {photo:'pcl-f3', title:'Мужская обувь 43 р-р', desc:'Две пары, ношеные, но целые. Кому нужно — забирайте', price:'Даром', old:'', user:'Нурлан'}
+      ]
+    },
+    providers:[{name:'Частные объявления',rating:4.5,meta:'Продают обычные люди'}]
+  },
+  { id:'fashion', name:'Магазины и бренды', icon:'🏬', tag:'Официальные магазины и бренды',
     shops:[
       {id:'gucci', name:'Gucci', initials:'G', color:'#0B3D2E', popular:true, rating:4.9, tag:'Люкс-бренд', reviews:326, orders:1240, since:'марта 2021', reply:'15 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Gucci')},
       {id:'zara', name:'Zara', initials:'Z', color:'#161616', popular:true, rating:4.6, tag:'Новинки каждую неделю', reviews:512, orders:2870, since:'января 2020', reply:'10 минут', subcats:CLOTHING_SHOP_SUBCATS, catalog:makeShopCatalog('Zara')},
@@ -1431,7 +1546,8 @@ function catById(id){return DATA.find(c=>c.id===id);}
 function showScreen(name){
   $all('.screen').forEach(s=>s.classList.remove('active'));
   $(`.screen[data-screen="${name}"]`).classList.add('active');
-  const hideSearch = name==='category' || (name==='provider' && state.activeCat!=='realty') || name==='detail';
+  const hideSearch = name==='category' || (name==='provider' && state.activeCat!=='realty') || name==='detail'
+    || name==='product' || name==='vendor' || name==='admin';
   $('#appShell').classList.toggle('hide-top-search', hideSearch);
   $('#appShell').scrollIntoView({behavior:'instant',block:'start'});
   window.scrollTo({top:0,behavior:'instant'});
@@ -1620,12 +1736,12 @@ function renderFeatureTiles(){
         <path d="M21 23v-5a11 11 0 0 1 22 0v5" fill="none" stroke="#C9972E" stroke-width="2.6" stroke-linecap="round"/>
         <circle cx="32" cy="37" r="6.5" fill="none" stroke="#C9972E" stroke-width="1.4"/>
       </svg>
-      <span class="name">Магазин одежды</span>
+      <span class="name">Магазины и бренды</span>
     </button>`;
   $all('.feature-tile').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
 }
 function renderQuickRow(){
-  const quickIds = ['realty','auto','fashion','services','electronics','jobs','food','construction'];
+  const quickIds = ['realty','auto','clothing-private','services','electronics','jobs','food','construction'];
   $('#quickRow').innerHTML = quickIds.map(id=>{
     const c = catById(id);
     return `<button class="quick-tile" data-cat="${c.id}"><span class="ico">${c.icon}</span><span>${c.name}</span></button>`;
@@ -2086,7 +2202,7 @@ function renderShopHome(catId, shopId){
       toast('Магазин сохранён в избранное');
     }
   };
-  $('#writeSellerBtn').onclick=()=>openContactModal(shop.name);
+  $('#writeSellerBtn').onclick=()=>openShopChat(shop.id, null);
   $('#shopHomeSearchInput').addEventListener('input', e=>{
     state.subcatQuery = e.target.value;
     renderShopSections(shop);
@@ -2383,7 +2499,7 @@ function renderProductPage(){
       toast(state.pickedSize ? `Добавлено, размер ${state.pickedSize}` : `В корзине товаров: ${state.cart.size}`);
     }
   };
-  $('#pdMsg').onclick=()=>openContactModal(shop.name);
+  $('#pdMsg').onclick=()=>openShopChat(shop.id, {name:it[0], price:it[1], photo:m.photo});
   $all('[data-psize]').forEach(b=>b.onclick=()=>{
     state.pickedSize = b.dataset.psize;
     $all('[data-psize]').forEach(x=>x.classList.remove('active'));
@@ -2812,6 +2928,185 @@ function openModal(html){
 function closeModal(){ $('#modalOverlay').classList.remove('open'); }
 $('#modalOverlay').addEventListener('click', e=>{ if(e.target.id==='modalOverlay') closeModal(); });
 
+/* ===================== IN-APP CHAT (клиент <-> продавец) ===================== */
+state.shopChats = {};
+state.chatCtx = null;
+function nowTime(){
+  const d = new Date();
+  return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0');
+}
+function findShopById(shopId){
+  for(const c of DATA){
+    if(!c.shops) continue;
+    const s = c.shops.find(x=>x.id===shopId);
+    if(s) return {shop:s, catId:c.id};
+  }
+  return null;
+}
+function ensureShopChat(shopId){
+  if(!state.shopChats[shopId]){
+    const found = findShopById(shopId);
+    state.shopChats[shopId] = {
+      shopId,
+      messages:[{from:'them', text:`Здравствуйте! Это ${found?found.shop.name:'магазин'}. Чем можем помочь?`, time:nowTime()}],
+      unread:0
+    };
+  }
+  return state.shopChats[shopId];
+}
+function totalUnread(){
+  return Object.values(state.shopChats).reduce((n,c)=>n+(c.unread||0),0);
+}
+function updateChatsBadge(){
+  const b = $('#chatsBadge');
+  if(!b) return;
+  const n = totalUnread();
+  b.style.display = n ? 'flex' : 'none';
+  b.textContent = n;
+}
+function openShopChat(shopId, ctx){
+  const found = findShopById(shopId);
+  if(!found){ toast('Магазин не найден'); return; }
+  ensureShopChat(shopId);
+  state.shopChats[shopId].unread = 0;
+  state.chatCtx = ctx || null;
+  state.activeChatShop = shopId;
+  updateChatsBadge();
+  renderChatScreen();
+  showScreen('chat');
+}
+function renderChatScreen(){
+  const shopId = state.activeChatShop;
+  const {shop} = findShopById(shopId);
+  const chat = ensureShopChat(shopId);
+  const ctx = state.chatCtx;
+  const el = $('#screenChat');
+  el.innerHTML = `
+    <div class="back-row" style="margin-bottom:10px">
+      <button class="back-btn" id="backFromChat"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <p class="screen-sub">Чат с продавцом</p>
+    </div>
+    <div class="chat-head">
+      <span class="shop-badge" style="${shop.logo?`background-image:url('${shop.logo}');background-size:cover`:`background:${shop.color}`}">${shop.logo?'':shop.initials}</span>
+      <div class="chat-head-info">
+        <h3>${shop.name}</h3>
+        <p>★ ${String(shop.rating).replace('.',',')} · обычно отвечает в течение ${shop.reply}</p>
+      </div>
+    </div>
+    ${ctx ? `
+      <div class="chat-ctx">
+        <div class="chat-ctx-thumb" ${ctx.photo?`style="background-image:url('${ctx.photo}')"`:''}>${ctx.photo?'':'🛍️'}</div>
+        <div class="chat-ctx-info">
+          <strong>${ctx.name}</strong>
+          <span>${ctx.price||''}</span>
+        </div>
+      </div>` : ''}
+    <div class="chat-log" id="chatLog"></div>
+    <div class="chat-input-bar">
+      <input type="text" id="chatInputField" placeholder="Написать сообщение…" autocomplete="off">
+      <button class="chat-send" id="chatSendBtn" aria-label="Отправить">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 12l16-8-6 8 6 8z"/></svg>
+      </button>
+    </div>
+  `;
+  $('#backFromChat').onclick=()=>openChatsList();
+  const send = ()=>{
+    const input = $('#chatInputField');
+    const val = input.value.trim();
+    if(!val) return;
+    chat.messages.push({from:'me', text:val, time:nowTime()});
+    input.value='';
+    renderChatLog();
+    setTimeout(()=>{
+      chat.messages.push({from:'them', text:sellerReply(val, ctx), time:nowTime()});
+      if(state.activeChatShop === shopId && $('.screen.active') && $('.screen.active').dataset.screen==='chat'){
+        renderChatLog();
+      } else {
+        chat.unread = (chat.unread||0)+1;
+        updateChatsBadge();
+      }
+    }, 1100);
+  };
+  $('#chatSendBtn').onclick = send;
+  $('#chatInputField').addEventListener('keydown', e=>{ if(e.key==='Enter') send(); });
+  renderChatLog();
+}
+function renderChatLog(){
+  const chat = state.shopChats[state.activeChatShop];
+  const box = $('#chatLog');
+  if(!box || !chat) return;
+  box.innerHTML = `<div class="chat-day">Сегодня</div>` + chat.messages.map(m=>`
+    <div class="bubble ${m.from==='me'?'me':'them'}">${m.text}<time>${m.time}</time></div>
+  `).join('');
+  box.scrollTop = box.scrollHeight;
+  const shell = $('#appShell');
+  if(shell) shell.scrollTop = shell.scrollHeight;
+  window.scrollTo({top:document.body.scrollHeight, behavior:'instant'});
+}
+function sellerReply(text, ctx){
+  const t = (text||'').toLowerCase();
+  const has = (...ws)=>ws.some(w=>t.includes(w));
+  if(has('размер','ростов','подойд','мал','велик'))
+    return 'Да, размеры S, M, L и XL сейчас в наличии. Если сомневаетесь между двумя — берите меньший, модель садится свободно.';
+  if(has('наличи','есть ли','остал'))
+    return ctx ? `Да, «${ctx.name}» есть в наличии. Готовы отправить сегодня.` : 'Да, товар в наличии, готовы отправить сегодня.';
+  if(has('доставк','привез','отправ','сдэк','почт'))
+    return 'Доставка по Москве — 1–2 дня, по России 3–7 дней. Отправляем СДЭК или Почтой России.';
+  if(has('самовывоз','забрать','адрес','магазин где','пункт'))
+    return 'Самовывоз возможен, магазин работает с 10:00 до 21:00 без выходных. Отложим товар на 2 дня.';
+  if(has('скидк','дешевле','торг','снизить','дорого'))
+    return 'Сейчас на товар уже действует скидка. При заказе от двух вещей дадим дополнительно 10%.';
+  if(has('цена','стоит','сколько'))
+    return ctx ? `Цена «${ctx.name}» — ${ctx.price}. Это уже с учётом скидки.` : 'Актуальная цена указана в карточке товара, она уже со скидкой.';
+  if(has('возврат','обмен','брак','не подойдет','не подойдёт'))
+    return 'Обмен и возврат в течение 14 дней, если сохранены бирки. Доставку при обмене берём на себя.';
+  if(has('состав','материал','ткан','хлоп'))
+    return 'Состав: 95% хлопок, 5% эластан. Плотное пике, не растягивается в вороте.';
+  if(has('оплат','карт','налич','перевод'))
+    return 'Оплата картой онлайн или при получении. Также принимаем перевод по СБП.';
+  if(has('привет','здравств','добрый','салам','ассалам'))
+    return 'Здравствуйте! Рады помочь — что вас интересует?';
+  if(has('спасибо','благодар','ок','хорошо','понял'))
+    return 'Пожалуйста! Если появятся вопросы — пишите, всегда на связи.';
+  return 'Спасибо за сообщение! Уточню детали и вернусь с ответом в ближайшее время.';
+}
+function openChatsList(){
+  const el = $('#screenChats');
+  const chats = Object.values(state.shopChats);
+  el.innerHTML = `
+    <h2 class="screen-title" style="margin-bottom:4px">💬 Сообщения</h2>
+    <p class="screen-sub" style="margin-bottom:16px">Переписка с продавцами</p>
+    ${chats.length ? `<div id="chatList"></div>` : `
+      <div style="text-align:center;padding:40px 20px;color:var(--ink-soft)">
+        <div style="font-size:38px;margin-bottom:10px">💬</div>
+        <p style="font-size:13.5px;margin:0 0 6px;color:var(--green-950);font-weight:700">Пока нет сообщений</p>
+        <p style="font-size:12px;margin:0;line-height:1.5">Откройте любой товар и нажмите «Написать» — переписка с продавцом появится здесь</p>
+      </div>`}
+  `;
+  if(chats.length){
+    $('#chatList').innerHTML = chats.map(c=>{
+      const found = findShopById(c.shopId);
+      if(!found) return '';
+      const shop = found.shop;
+      const last = c.messages[c.messages.length-1];
+      return `
+      <button class="chat-row" data-chat="${c.shopId}">
+        <span class="shop-badge" style="${shop.logo?`background-image:url('${shop.logo}');background-size:cover`:`background:${shop.color}`}">${shop.logo?'':shop.initials}</span>
+        <div class="chat-row-info">
+          <strong>${shop.name}</strong>
+          <p>${last.from==='me'?'Вы: ':''}${last.text}</p>
+        </div>
+        <div class="chat-row-meta">
+          <time>${last.time}</time>
+          ${c.unread?`<span class="chat-unread">${c.unread}</span>`:''}
+        </div>
+      </button>`;
+    }).join('');
+    $all('[data-chat]').forEach(b=>b.onclick=()=>openShopChat(b.dataset.chat, null));
+  }
+  showScreen('chats');
+}
+
 function openContactModal(itemName){
   openModal(`
     <div class="modal-head"><h3>Связаться с продавцом</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
@@ -2863,12 +3158,16 @@ function doLogout(){ state.loggedIn=false; renderAuth(); closeModal(); toast('В
 
 function openListingModal(){
   state.listing = {catId:null, subcat:null};
+  const postable = DATA.filter(c=>!c.shops);
   openModal(`
     <div class="modal-head"><h3>Подать объявление</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
     <p style="font-size:12.5px;color:var(--ink-soft);margin-bottom:12px">Выберите категорию</p>
     <div class="modal-cat-grid" id="listingCatGrid">
-      ${DATA.map(c=>`<button data-cat="${c.id}"><span style="font-size:18px">${c.icon}</span>${c.name}</button>`).join('')}
+      ${postable.map(c=>`<button data-cat="${c.id}"><span style="font-size:18px">${c.icon}</span>${c.name}</button>`).join('')}
     </div>
+    <p style="font-size:11px;color:var(--ink-soft);line-height:1.5;margin-top:10px">
+      Продаёте свои вещи — выбирайте «Одежда от частных лиц». Раздел «Магазины и бренды» — для юрлиц и ИП, магазин туда подключает администрация.
+    </p>
   `);
   $all('#listingCatGrid button').forEach(b=>b.onclick=()=>openListingSubcats(b.dataset.cat));
 }
@@ -2995,6 +3294,32 @@ const FORM_SCHEMAS = {
 };
 function renderFormField(f, idx){
   const id = `cf_${idx}`;
+  if(f.type==='sizeChips'){
+    return `<div class="field-group"><label>${f.label}</label>
+      ${FILTER_SIZE_GROUPS.map(([title,sizes])=>`
+        <p class="filter-sub">${title}</p>
+        <div class="chip-wrap">
+          ${sizes.map(s=>`<button type="button" class="fchip" data-fsize="${s}">${s}</button>`).join('')}
+        </div>`).join('')}
+      <input type="hidden" id="${id}">
+    </div>`;
+  }
+  if(f.type==='chips'){
+    return `<div class="field-group"><label>${f.label}</label>
+      <div class="chip-wrap" data-single="${id}">
+        ${f.options.map(o=>`<button type="button" class="fchip" data-val="${o}">${o}</button>`).join('')}
+      </div>
+      <input type="hidden" id="${id}">
+    </div>`;
+  }
+  if(f.type==='multiChips'){
+    return `<div class="field-group"><label>${f.label}</label>
+      <div class="chip-wrap" data-multi="${id}">
+        ${f.options.map(o=>`<button type="button" class="fchip" data-val="${o}">${o}</button>`).join('')}
+      </div>
+      <input type="hidden" id="${id}">
+    </div>`;
+  }
   if(f.type==='textarea'){
     return `<div class="field-group"><label>${f.label}</label><textarea id="${id}" placeholder="${f.placeholder||''}"></textarea></div>`;
   }
@@ -3064,9 +3389,68 @@ function openCustomListingForm(catId, subcat, schema){
   `);
   wireUploadRow();
   wireBoolToggles(document);
+  wireFormChips();
+}
+function wireFormChips(){
+  $all('[data-fsize]').forEach(b=>{
+    b.onclick=()=>{
+      b.classList.toggle('active');
+      const hidden = b.closest('.field-group').querySelector('input[type="hidden"]');
+      if(hidden){
+        const picked = [...b.closest('.field-group').querySelectorAll('[data-fsize].active')].map(x=>x.dataset.fsize);
+        hidden.value = picked.join(', ');
+      }
+    };
+  });
+  $all('[data-single]').forEach(group=>{
+    const hidden = document.getElementById(group.dataset.single);
+    group.querySelectorAll('[data-val]').forEach(b=>{
+      b.onclick=()=>{
+        group.querySelectorAll('[data-val]').forEach(x=>x.classList.remove('active'));
+        b.classList.add('active');
+        if(hidden) hidden.value = b.dataset.val;
+      };
+    });
+  });
+  $all('[data-multi]').forEach(group=>{
+    const hidden = document.getElementById(group.dataset.multi);
+    group.querySelectorAll('[data-val]').forEach(b=>{
+      b.onclick=()=>{
+        b.classList.toggle('active');
+        if(hidden){
+          hidden.value = [...group.querySelectorAll('[data-val].active')].map(x=>x.dataset.val).join(', ');
+        }
+      };
+    });
+  });
 }
 
+const CAT_FORM_SCHEMAS = {
+  'clothing-private':{
+    titlePlaceholder:'Куртка зимняя мужская, XL',
+    submitLabel:'Опубликовать бесплатно',
+    fields:[
+      {key:'photos',label:'Фотографии',type:'files',hint:'До 5 фото. Снимите вещь при дневном свете, покажите дефекты, если есть'},
+      {key:'size',label:'Размер*',type:'sizeChips'},
+      {key:'condition',label:'Состояние*',type:'chips',options:['Новое с биркой','Отличное','Хорошее','Удовлетворительное']},
+      {key:'brand',label:'Бренд',type:'text',placeholder:'Например: Zara. Не знаете — оставьте пустым'},
+      {key:'color',label:'Цвет',type:'select',options:['Не указан','Чёрный','Белый','Серый','Синий','Тёмно-синий','Бежевый','Коричневый','Зелёный','Красный','Голубой']},
+      {key:'material',label:'Материал',type:'select',options:['Не указан','Хлопок','Джинс','Кожа','Замша','Синтетика','Шерсть','Текстиль']},
+      {key:'price',label:'Цена*',type:'text',placeholder:'Например: 1 500 ₽ или «Даром»'},
+      {key:'bargain',label:'Торг уместен',type:'bool'},
+      {key:'description',label:'Описание*',type:'textarea',placeholder:'Почему продаёте, сколько носили, есть ли дефекты — так покупают быстрее'},
+      {key:'city',label:'Город',type:'text',placeholder:'Например: Москва'},
+      {key:'metro',label:'Ближайшее метро',type:'text',placeholder:'Например: Строгино'},
+      {key:'handover',label:'Как передадите*',type:'multiChips',options:['Самовывоз','Встреча у метро','Доставка по городу','Отправка почтой']},
+      {key:'phone',label:'Номер телефона*',type:'tel'}
+    ]
+  }
+};
 function openListingForm(catId, subcat){
+  if(CAT_FORM_SCHEMAS[catId]){
+    openCustomListingForm(catId, subcat, CAT_FORM_SCHEMAS[catId]);
+    return;
+  }
   if(FORM_SCHEMAS[subcat]){
     openCustomListingForm(catId, subcat, FORM_SCHEMAS[subcat]);
     return;
@@ -3216,7 +3600,7 @@ $all('.nav-item').forEach(b=>{
     b.classList.add('active');
     const key=b.dataset.nav;
     if(key==='home') showScreen('home');
-    else if(key==='search') openSearch();
+    else if(key==='chats') openChatsList();
     else if(key==='add') state.loggedIn ? openListingModal() : openLoginModal();
     else if(key==='fav') toast(state.favorites.size? `У вас ${state.favorites.size} избранных товаров`:'Пока нет избранных товаров');
     else if(key==='profile') state.loggedIn ? openProfileModal() : openLoginModal();
