@@ -444,19 +444,33 @@
   .shop-cat-more{background:none;border:none;font-size:12px;font-weight:700;color:var(--green-700);padding:0;font-family:inherit;flex-shrink:0;}
   .shop-hscroll{
     display:grid;grid-auto-flow:column;grid-template-rows:repeat(2,auto);
-    grid-auto-columns:calc((100% - 34px)/3.35);gap:8px;
+    grid-auto-columns:calc((100% - 26px)/2.28);gap:10px;
     overflow-x:auto;overflow-y:hidden;padding-bottom:4px;
     scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;
   }
   .shop-hscroll::-webkit-scrollbar{display:none;}
   .shop-hscroll .product-card{scroll-snap-align:start;}
-  .shop-hscroll .product-media{height:74px;font-size:24px;}
-  .shop-hscroll .product-body{padding:7px 7px 9px;}
-  .shop-hscroll .product-body h4{font-size:11px;margin:0 0 4px;min-height:28px;}
-  .shop-hscroll .product-price{font-size:11.5px;margin-bottom:6px;}
-  .shop-hscroll .product-body .btn{padding:6px;font-size:10.5px;}
-  .shop-hscroll .fav-btn{width:22px;height:22px;top:5px;right:5px;}
-  .shop-hscroll .pop-badge{font-size:8px;padding:2px 5px;top:5px;left:5px;}
+  .shop-hscroll .product-media{height:100px;font-size:30px;}
+  .shop-hscroll .product-body{padding:9px 9px 11px;}
+  .shop-hscroll .product-body h4{font-size:12.5px;margin:0 0 5px;min-height:32px;}
+  .shop-hscroll .product-price{font-size:13px;margin-bottom:8px;}
+  .shop-hscroll .product-body .btn{padding:8px;font-size:12px;}
+  .shop-hscroll .fav-btn{width:26px;height:26px;top:8px;right:8px;}
+  .shop-hscroll .pop-badge{font-size:9px;padding:3px 7px;top:7px;left:7px;}
+
+  /* ---------- Shop top banner (16:9, image or video) ---------- */
+  .shop-banner{
+    position:relative;width:100%;aspect-ratio:16/9;border-radius:18px;overflow:hidden;margin-bottom:16px;
+    background:linear-gradient(135deg,var(--green-900),var(--green-600));
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 22px rgba(15,61,36,.14);
+  }
+  .shop-banner img, .shop-banner video{width:100%;height:100%;object-fit:cover;display:block;}
+  .shop-banner-empty{
+    display:flex;flex-direction:column;align-items:center;gap:6px;color:#dff2e6;text-align:center;padding:0 20px;
+  }
+  .shop-banner-empty b{font-family:'Manrope',sans-serif;font-size:14px;color:#fff;font-weight:800;}
+  .shop-banner-empty span{font-size:11px;line-height:1.4;}
 
   /* ---------- Vendor shop dashboard ---------- */
   .vendor-header{
@@ -1689,6 +1703,16 @@ function renderShopHome(catId, shopId){
         <p class="screen-sub"><span class="rating" style="display:inline-flex">${star()} ${shop.rating}</span> · ${shop.tag}</p>
       </div>
     </div>
+    <div class="shop-banner">
+      ${shop.banner
+        ? (shop.banner.type==='video'
+            ? `<video src="${shop.banner.src}" autoplay muted loop playsinline></video>`
+            : `<img src="${shop.banner.src}" alt="">`)
+        : `<div class="shop-banner-empty">
+             <b>${shop.name}</b>
+             <span>Здесь будет баннер или видео магазина (16:9)</span>
+           </div>`}
+    </div>
     <div class="cat-search-input-row" style="margin-bottom:14px">
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4B5D53" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg>
       <input type="text" id="shopHomeSearchInput" placeholder="Поиск в «${shop.name}»" autocomplete="off">
@@ -2649,12 +2673,44 @@ function renderVendorDashboard(){
       <p>${totalProducts} товаров · ${shop.subcats.length} категорий</p>
     </div>
     <div class="admin-toolbar">
+      <h3>Баннер магазина (16:9)</h3>
+      ${shop.banner?`<button class="btn btn-ghost" id="removeBannerBtn">Удалить</button>`:''}
+    </div>
+    <div class="shop-banner" style="margin-bottom:10px">
+      ${shop.banner
+        ? (shop.banner.type==='video'
+            ? `<video src="${shop.banner.src}" autoplay muted loop playsinline></video>`
+            : `<img src="${shop.banner.src}" alt="">`)
+        : `<div class="shop-banner-empty"><b>Баннер не загружен</b><span>Фото или видео 16:9 — показывается вверху магазина</span></div>`}
+    </div>
+    <label class="vendor-add-row" style="display:block;text-align:center;margin-bottom:20px;cursor:pointer">
+      ${shop.banner?'Заменить баннер':'+ Загрузить фото или видео'}
+      <input type="file" accept="image/*,video/*" hidden id="bannerInput">
+    </label>
+    <div class="admin-toolbar">
       <h3>Категории</h3>
       <button class="btn btn-primary" id="addCatBtn">+ Категория</button>
     </div>
     <div id="vendorCatList"></div>
   `;
   $('#backFromVendor').onclick=()=>openAdminPanel();
+  $('#bannerInput').onchange = e=>{
+    const file = e.target.files[0];
+    if(!file) return;
+    const reader = new FileReader();
+    reader.onload = ()=>{
+      shop.banner = {type: file.type.startsWith('video') ? 'video' : 'image', src: reader.result};
+      renderVendorDashboard();
+      toast('Баннер обновлён');
+    };
+    reader.readAsDataURL(file);
+  };
+  if($('#removeBannerBtn')){
+    $('#removeBannerBtn').onclick=()=>{
+      shop.banner = null;
+      renderVendorDashboard();
+    };
+  }
   $('#renameShopBtn').onclick=()=>{
     const name = prompt('Название магазина', shop.name);
     if(name && name.trim()){ shop.name = name.trim(); renderVendorDashboard(); }
