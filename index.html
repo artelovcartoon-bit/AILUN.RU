@@ -1465,6 +1465,110 @@ const DATA = [
     },
     providers:[{name:'Мастер на Час',rating:4.7,meta:'Выезд за 40 мин'},{name:'ЧистоДом',rating:4.6,meta:'Выезд сегодня'},{name:'СервисПро',rating:4.5,meta:'Работаем 24/7'}]
   },
+  { id:'books', name:'Книги', icon:'📚', tag:'Учебники, художественная, детская',
+    subcats:['Учебная литература','Художественная','Детские книги','Бизнес и саморазвитие','Религиозная','Отдам даром'],
+    subIcons:{'Учебная литература':'🎓','Художественная':'📖','Детские книги':'🧸','Бизнес и саморазвитие':'💼','Религиозная':'🕌','Отдам даром':'🎁'},
+    subDesc:{'Учебная литература':'Школа, вуз, курсы','Художественная':'Романы, классика, фантастика','Детские книги':'Сказки, развивашки','Бизнес и саморазвитие':'Психология, финансы','Религиозная':'Коран, богословие, история','Отдам даром':'Бесплатно, самовывоз'},
+    catalog:{
+      'Учебная литература':[['Учебники 5 класс, комплект','1 200 ₽'],['Английский Headway, б/у','600 ₽'],['Задачник по физике','350 ₽']],
+      'Художественная':[['Достоевский, собрание','2 500 ₽'],['Фантастика, 10 книг','1 800 ₽'],['Детектив, мягкая обложка','200 ₽']],
+      'Детские книги':[['Сказки народов мира','700 ₽'],['Развивашки 2–4 года','500 ₽'],['Книги-картонки, 5 шт','450 ₽']],
+      'Бизнес и саморазвитие':[['Психология влияния','600 ₽'],['Финансы для начинающих','750 ₽'],['Бизнес-литература, 4 книги','1 500 ₽']],
+      'Религиозная':[['Коран с переводом','1 500 ₽'],['Сира, жизнеописание','900 ₽'],['Сборник хадисов','1 100 ₽']],
+      'Отдам даром':[['Пакет книг, разное','Даром'],['Старые учебники','Даром'],['Журналы, подшивка','Даром']]
+    },
+    listings:{
+      'Учебная литература':[
+        {photo:'bk-u1', title:'Учебники 5 класс, комплект', desc:'Полный комплект за год, все предметы. Есть карандашные пометки, но всё читаемо', price:'1 200 ₽', old:'3 500 ₽', user:'Айгуль'},
+        {photo:'bk-u2', title:'Английский Headway, б/у', desc:'Учебник + рабочая тетрадь. Тетрадь частично заполнена карандашом', price:'600 ₽', old:'1 800 ₽', user:'Бермет'},
+        {photo:'bk-u3', title:'Задачник по физике', desc:'Состояние хорошее, обложка целая. Самовывоз или встреча у метро', price:'350 ₽', old:'', user:'Данияр'}
+      ],
+      'Художественная':[
+        {photo:'bk-h1', title:'Достоевский, собрание сочинений', desc:'8 томов, твёрдый переплёт. Стояли на полке, читали аккуратно', price:'2 500 ₽', old:'6 000 ₽', user:'Марат'},
+        {photo:'bk-h2', title:'Фантастика, 10 книг одним лотом', desc:'Разные авторы. Продаю всё вместе, по отдельности не разбиваю', price:'1 800 ₽', old:'', user:'Ержан'},
+        {photo:'bk-h3', title:'Детектив, мягкая обложка', desc:'Прочитал один раз. Состояние как новое', price:'200 ₽', old:'450 ₽', user:'Нурлан'}
+      ],
+      'Детские книги':[
+        {photo:'bk-d1', title:'Сказки народов мира', desc:'Большой формат, яркие иллюстрации. Дочка выросла, отдаём в хорошие руки', price:'700 ₽', old:'1 900 ₽', user:'Гульнара'},
+        {photo:'bk-d2', title:'Развивашки 2–4 года', desc:'Набор из 6 книг. Пара страниц подклеена скотчем, остальное целое', price:'500 ₽', old:'1 400 ₽', user:'Айым'},
+        {photo:'bk-d3', title:'Книги-картонки, 5 шт', desc:'Для самых маленьких, прочные страницы. Всё чистое', price:'450 ₽', old:'', user:'Бермет'}
+      ],
+      'Бизнес и саморазвитие':[
+        {photo:'bk-b1', title:'Психология влияния', desc:'Читал один раз, состояние отличное. Твёрдая обложка', price:'600 ₽', old:'1 300 ₽', user:'Данияр'},
+        {photo:'bk-b2', title:'Финансы для начинающих', desc:'Новая, покупал но так и не прочитал. С биркой магазина', price:'750 ₽', old:'1 600 ₽', user:'Марат'},
+        {photo:'bk-b3', title:'Бизнес-литература, 4 книги', desc:'Продаю комплектом. Все в хорошем состоянии', price:'1 500 ₽', old:'', user:'Ержан'}
+      ],
+      'Религиозная':[
+        {photo:'bk-r1', title:'Коран с переводом смыслов', desc:'Твёрдый переплёт, крупный шрифт. Хранился аккуратно', price:'1 500 ₽', old:'', user:'Нурлан'},
+        {photo:'bk-r2', title:'Сира, жизнеописание', desc:'Состояние отличное, обложка целая', price:'900 ₽', old:'1 700 ₽', user:'Айгуль'},
+        {photo:'bk-r3', title:'Сборник хадисов', desc:'Два тома, читаемое состояние', price:'1 100 ₽', old:'', user:'Гульнара'}
+      ],
+      'Отдам даром':[
+        {photo:'bk-f1', title:'Пакет книг, разное', desc:'Освобождаю полки. Художественная и немного учебной. Забирать самовывозом', price:'Даром', old:'', user:'Айым'},
+        {photo:'bk-f2', title:'Старые учебники', desc:'Отдам в одни руки целиком, разбирать не буду', price:'Даром', old:'', user:'Бермет'},
+        {photo:'bk-f3', title:'Журналы, подшивка', desc:'Кому нужно для творчества или ремонта — забирайте', price:'Даром', old:'', user:'Данияр'}
+      ]
+    },
+    providers:[{name:'Частные объявления',rating:4.6,meta:'Книги от людей'}]
+  },
+  { id:'misc', name:'Разное', icon:'📦', tag:'Всё, что не вошло в другие категории',
+    subcats:['Мебель','Бытовая техника','Детские товары','Спорт и отдых','Инструменты','Животные','Растения','Отдам даром'],
+    subIcons:{'Мебель':'🛋️','Бытовая техника':'🔌','Детские товары':'🧸','Спорт и отдых':'⚽','Инструменты':'🔨','Животные':'🐾','Растения':'🪴','Отдам даром':'🎁'},
+    subDesc:{'Мебель':'Диваны, шкафы, столы','Бытовая техника':'Для дома и кухни','Детские товары':'Коляски, игрушки, кроватки','Спорт и отдых':'Тренажёры, велосипеды','Инструменты':'Ручные и электро','Животные':'Товары для питомцев','Растения':'Комнатные и рассада','Отдам даром':'Бесплатно, самовывоз'},
+    catalog:{
+      'Мебель':[['Диван угловой','12 000 ₽'],['Шкаф-купе 2 м','8 000 ₽'],['Стол письменный','3 500 ₽']],
+      'Бытовая техника':[['Холодильник Indesit','9 000 ₽'],['Стиральная машина','11 000 ₽'],['Микроволновка','2 500 ₽']],
+      'Детские товары':[['Коляска 2 в 1','7 000 ₽'],['Кроватка с матрасом','4 500 ₽'],['Автокресло 0–13 кг','3 000 ₽']],
+      'Спорт и отдых':[['Велосипед горный','9 500 ₽'],['Беговая дорожка','14 000 ₽'],['Гантели 2×10 кг','2 200 ₽']],
+      'Инструменты':[['Перфоратор Bosch','5 500 ₽'],['Набор ключей','1 800 ₽'],['Шуруповёрт','3 200 ₽']],
+      'Животные':[['Клетка для попугая','1 500 ₽'],['Переноска для кошки','1 200 ₽'],['Аквариум 60 л','3 500 ₽']],
+      'Растения':[['Фикус большой','1 800 ₽'],['Рассада томатов','50 ₽'],['Кактусы, набор','700 ₽']],
+      'Отдам даром':[['Коробки картонные','Даром'],['Старая тумбочка','Даром'],['Посуда, разное','Даром']]
+    },
+    listings:{
+      'Мебель':[
+        {photo:'ms-m1', title:'Диван угловой', desc:'Раскладывается, механизм рабочий. Есть потёртость на подлокотнике, на фото видно. Самовывоз, поможем спустить', price:'12 000 ₽', old:'35 000 ₽', user:'Марат'},
+        {photo:'ms-m2', title:'Шкаф-купе 2 м', desc:'Зеркальные двери целые, катаются легко. Разберём сами к вашему приезду', price:'8 000 ₽', old:'24 000 ₽', user:'Гульнара'},
+        {photo:'ms-m3', title:'Стол письменный', desc:'Столешница без сколов, есть ящики. Подойдёт школьнику', price:'3 500 ₽', old:'', user:'Данияр'}
+      ],
+      'Бытовая техника':[
+        {photo:'ms-b1', title:'Холодильник Indesit', desc:'Работает исправно, морозит хорошо. Продаём из-за переезда', price:'9 000 ₽', old:'26 000 ₽', user:'Айгуль'},
+        {photo:'ms-b2', title:'Стиральная машина', desc:'6 кг, все режимы работают. Отключим и поможем вынести', price:'11 000 ₽', old:'28 000 ₽', user:'Бермет'},
+        {photo:'ms-b3', title:'Микроволновка', desc:'Небольшая, для дачи или общежития самое то', price:'2 500 ₽', old:'6 000 ₽', user:'Ержан'}
+      ],
+      'Детские товары':[
+        {photo:'ms-d1', title:'Коляска 2 в 1', desc:'Люлька + прогулочный блок. Колёса целые, дождевик в комплекте', price:'7 000 ₽', old:'22 000 ₽', user:'Айым'},
+        {photo:'ms-d2', title:'Кроватка с матрасом', desc:'Дерево, маятник работает. Сын вырос', price:'4 500 ₽', old:'12 000 ₽', user:'Нурлан'},
+        {photo:'ms-d3', title:'Автокресло 0–13 кг', desc:'Не было аварий, ремни целые. Чехол стирали', price:'3 000 ₽', old:'8 500 ₽', user:'Гульнара'}
+      ],
+      'Спорт и отдых':[
+        {photo:'ms-s1', title:'Велосипед горный', desc:'21 скорость, тормоза настроены. Катался сезон', price:'9 500 ₽', old:'25 000 ₽', user:'Марат'},
+        {photo:'ms-s2', title:'Беговая дорожка', desc:'Складная, электрическая. Стоит без дела, места много занимает', price:'14 000 ₽', old:'42 000 ₽', user:'Данияр'},
+        {photo:'ms-s3', title:'Гантели 2×10 кг', desc:'Разборные, блины в комплекте. Самовывоз, тяжёлые', price:'2 200 ₽', old:'', user:'Ержан'}
+      ],
+      'Инструменты':[
+        {photo:'ms-i1', title:'Перфоратор Bosch', desc:'Рабочий, кейс и буры в комплекте. Брал для ремонта, больше не нужен', price:'5 500 ₽', old:'13 000 ₽', user:'Нурлан'},
+        {photo:'ms-i2', title:'Набор ключей', desc:'Полный набор в кейсе, ничего не потеряно', price:'1 800 ₽', old:'4 000 ₽', user:'Марат'},
+        {photo:'ms-i3', title:'Шуруповёрт', desc:'Два аккумулятора, оба держат заряд', price:'3 200 ₽', old:'7 500 ₽', user:'Данияр'}
+      ],
+      'Животные':[
+        {photo:'ms-a1', title:'Клетка для попугая', desc:'Большая, с жёрдочками и кормушками. Помыли, всё чистое', price:'1 500 ₽', old:'3 500 ₽', user:'Айгуль'},
+        {photo:'ms-a2', title:'Переноска для кошки', desc:'Пластик, дверца целая. Использовали пару раз к ветеринару', price:'1 200 ₽', old:'', user:'Бермет'},
+        {photo:'ms-a3', title:'Аквариум 60 л', desc:'С крышкой и подсветкой. Без рыб, только сам аквариум', price:'3 500 ₽', old:'8 000 ₽', user:'Айым'}
+      ],
+      'Растения':[
+        {photo:'ms-p1', title:'Фикус большой', desc:'Высота около метра, здоровый. Отдаём из-за переезда', price:'1 800 ₽', old:'', user:'Гульнара'},
+        {photo:'ms-p2', title:'Рассада томатов', desc:'Крепкая рассада, свои семена. Цена за штуку', price:'50 ₽', old:'', user:'Ержан'},
+        {photo:'ms-p3', title:'Кактусы, набор', desc:'5 разных горшочков. Неприхотливые, поливать редко', price:'700 ₽', old:'', user:'Айым'}
+      ],
+      'Отдам даром':[
+        {photo:'ms-f1', title:'Коробки картонные', desc:'После переезда осталось много, крепкие. Заберите все сразу', price:'Даром', old:'', user:'Данияр'},
+        {photo:'ms-f2', title:'Старая тумбочка', desc:'Рабочая, но потёртая. Кому на дачу — забирайте', price:'Даром', old:'', user:'Марат'},
+        {photo:'ms-f3', title:'Посуда, разное', desc:'Тарелки, кружки. Всё целое, просто лишнее', price:'Даром', old:'', user:'Бермет'}
+      ]
+    },
+    providers:[{name:'Частные объявления',rating:4.5,meta:'Продают обычные люди'}]
+  },
   { id:'jobs', name:'Работа', icon:'💼', tag:'Вакансии и резюме',
     subcats:['Вакансии','Резюме','Стажировки'],
     catalog:{
@@ -1781,7 +1885,7 @@ function renderFeatureTiles(){
   $all('.feature-tile').forEach(b=>b.onclick=()=>openCategory(b.dataset.cat));
 }
 function renderQuickRow(){
-  const quickIds = ['realty','auto','clothing-private','services','electronics','jobs','food','construction'];
+  const quickIds = ['realty','auto','clothing-private','services','electronics','jobs','food','construction','books','misc'];
   $('#quickRow').innerHTML = quickIds.map(id=>{
     const c = catById(id);
     return `<button class="quick-tile" data-cat="${c.id}"><span class="ico">${c.icon}</span><span>${c.name}</span></button>`;
@@ -2118,11 +2222,6 @@ function openCategory(catId){
       <button class="back-btn" id="categoryBellBtn" aria-label="Уведомления"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></button>
     </div>
     ${catBannerHtml(cat)}
-    <div class="constr-hero">
-      <div class="constr-hero-art">${CONSTR_HERO_SVG}</div>
-      <h1 class="constr-title">${cat.name}</h1>
-      <p class="constr-subtitle">Работа, бригады и заказы для любых строительных задач</p>
-    </div>
     <div id="subcatList">
       <div class="constr-grid">
         ${cat.subcats.map(s=>{
@@ -3909,6 +4008,25 @@ function renderAdminBannerList(){
         Виден всем при входе в раздел. Менять может только супер-админ.
       </p>
     </div>`).join('')
+  + DATA.filter(c=>c.shops).map(c=>`
+    <div class="vendor-cat-block">
+      <div class="vendor-cat-block-head"><h4>${c.icon} ${c.name} — баннеры магазинов</h4></div>
+      ${c.shops.map(shop=>{
+        const b = shop.banner;
+        return `
+        <div style="border-top:1px solid var(--line);padding-top:10px;margin-top:10px">
+          <div class="vendor-cat-block-head" style="margin-bottom:8px">
+            <h4 style="font-size:12.5px">${shop.name}</h4>
+            ${b?`<button class="btn btn-ghost" data-delshopbanner="${c.id}|${shop.id}" style="padding:4px 10px;font-size:11.5px">Удалить</button>`:''}
+          </div>
+          ${bannerBox(b, `Вверху витрины «${shop.name}»`)}
+          <label class="vendor-add-row" style="display:block;text-align:center;cursor:pointer">
+            ${b?'Заменить':'+ Загрузить фото или видео'}
+            <input type="file" accept="image/*,video/*" hidden data-shopbanner="${c.id}|${shop.id}">
+          </label>
+        </div>`;
+      }).join('')}
+    </div>`).join('')
   + subCats.map(c=>`
     <div class="vendor-cat-block">
       <div class="vendor-cat-block-head"><h4>${c.icon} ${c.name} — баннеры подразделов</h4></div>
@@ -3951,6 +4069,22 @@ function renderAdminBannerList(){
   });
   $all('[data-delbanner]').forEach(b=>{
     b.onclick=()=>{ catById(b.dataset.delbanner).banner = null; renderAdminBannerList(); toast('Баннер удалён'); };
+  });
+  $all('[data-shopbanner]').forEach(inp=>{
+    inp.onchange = e=>{
+      const file = e.target.files[0]; if(!file) return;
+      const [catId, shopId] = inp.dataset.shopbanner.split('|');
+      const shop = catById(catId).shops.find(s=>s.id===shopId);
+      readFile(file, b=>{ shop.banner = b; renderAdminBannerList(); toast(`Баннер «${shop.name}» обновлён`); });
+    };
+  });
+  $all('[data-delshopbanner]').forEach(b=>{
+    b.onclick=()=>{
+      const [catId, shopId] = b.dataset.delshopbanner.split('|');
+      const shop = catById(catId).shops.find(s=>s.id===shopId);
+      shop.banner = null;
+      renderAdminBannerList(); toast('Баннер удалён');
+    };
   });
   $all('[data-delsubbanner]').forEach(b=>{
     b.onclick=()=>{
@@ -4064,19 +4198,17 @@ function renderVendorDashboard(){
     </div>
     <div class="admin-toolbar">
       <h3>Баннер магазина (16:9)</h3>
-      ${shop.banner?`<button class="btn btn-ghost" id="removeBannerBtn">Удалить</button>`:''}
     </div>
-    <div class="shop-banner" style="margin-bottom:10px">
+    <div class="shop-banner" style="margin-bottom:8px">
       ${shop.banner
         ? (shop.banner.type==='video'
             ? `<video src="${shop.banner.src}" autoplay muted loop playsinline></video>`
             : `<img src="${shop.banner.src}" alt="">`)
-        : `<div class="shop-banner-empty"><b>Баннер не загружен</b><span>Фото или видео 16:9 — показывается вверху магазина</span></div>`}
+        : `<div class="shop-banner-empty"><b>Баннер не загружен</b><span>Фото или видео 16:9 вверху магазина</span></div>`}
     </div>
-    <label class="vendor-add-row" style="display:block;text-align:center;margin-bottom:20px;cursor:pointer">
-      ${shop.banner?'Заменить баннер':'+ Загрузить фото или видео'}
-      <input type="file" accept="image/*,video/*" hidden id="bannerInput">
-    </label>
+    <p style="font-size:11px;color:var(--ink-soft);margin:0 0 20px;line-height:1.45;text-align:center">
+      🔒 Баннер загружает администрация Ailun. Напишите в поддержку, чтобы поставить или заменить его.
+    </p>
     <div class="admin-toolbar">
       <h3>Логотип и профиль</h3>
     </div>
@@ -4123,23 +4255,7 @@ function renderVendorDashboard(){
     const v = prompt('Обычно отвечает в течение…', shop.reply);
     if(v && v.trim()){ shop.reply = v.trim(); renderVendorDashboard(); }
   };
-  $('#bannerInput').onchange = e=>{
-    const file = e.target.files[0];
-    if(!file) return;
-    const reader = new FileReader();
-    reader.onload = ()=>{
-      shop.banner = {type: file.type.startsWith('video') ? 'video' : 'image', src: reader.result};
-      renderVendorDashboard();
-      toast('Баннер обновлён');
-    };
-    reader.readAsDataURL(file);
-  };
-  if($('#removeBannerBtn')){
-    $('#removeBannerBtn').onclick=()=>{
-      shop.banner = null;
-      renderVendorDashboard();
-    };
-  }
+
   $('#renameShopBtn').onclick=()=>{
     const name = prompt('Название магазина', shop.name);
     if(name && name.trim()){ shop.name = name.trim(); renderVendorDashboard(); }
