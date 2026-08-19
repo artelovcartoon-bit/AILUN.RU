@@ -52,6 +52,69 @@
     background-size:26px 26px;
   }
 
+  /* ===== HALAL MARKET ===== */
+  .halal-wrap{
+    margin:-8px -18px 0;padding:8px 18px 26px;
+    background:
+      radial-gradient(circle at 50% 120%, rgba(22,122,71,.07) 0%, transparent 60%),
+      linear-gradient(180deg,#FBF8F0 0%,#F7F3E8 100%);
+    position:relative;overflow:hidden;
+  }
+  .halal-domes{
+    position:absolute;left:0;right:0;bottom:0;height:190px;pointer-events:none;
+    opacity:.16;
+  }
+  .halal-head{text-align:center;padding:14px 0 4px;position:relative;z-index:1;}
+  .halal-logo{width:74px;height:74px;margin:0 auto 6px;display:block;}
+  .halal-title{
+    font-family:'Manrope',sans-serif;font-weight:800;font-size:29px;letter-spacing:.5px;
+    color:#12492C;margin:0;text-transform:uppercase;line-height:1.1;
+  }
+  .halal-tagline{
+    font-size:13.5px;color:#5D6B60;margin:8px 0 0;font-weight:500;
+  }
+  .halal-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:14px;
+    margin-top:22px;position:relative;z-index:1;
+  }
+  .halal-card{
+    border:none;border-radius:20px;padding:20px 10px 16px;
+    display:flex;flex-direction:column;align-items:center;gap:0;
+    position:relative;cursor:pointer;text-align:center;
+    box-shadow:0 4px 14px rgba(18,73,44,.07);
+    transition:transform .16s ease, box-shadow .16s ease;
+  }
+  .halal-card:active{transform:scale(.975);}
+  .halal-card:hover{box-shadow:0 8px 22px rgba(18,73,44,.13);}
+  .halal-card.c1{background:#FBF4DE;}
+  .halal-card.c2{background:#E9F2E1;}
+  .halal-card.c3{background:#FAE9E6;}
+  .halal-card.c4{background:#E3F0E9;}
+  .halal-badge{
+    position:absolute;top:-14px;left:50%;transform:translateX(-50%);
+    width:44px;height:44px;border-radius:50%;background:#1B5138;
+    display:grid;place-items:center;font-size:20px;color:#fff;
+    box-shadow:0 3px 10px rgba(18,73,44,.28);
+  }
+  .halal-ill{
+    width:112px;height:112px;border-radius:50%;background:#fff;
+    display:grid;place-items:center;font-size:52px;margin:20px 0 14px;
+    box-shadow:inset 0 0 0 1px rgba(18,73,44,.07);
+  }
+  .halal-card.c1 .halal-ill{box-shadow:inset 0 0 0 1px rgba(201,151,46,.22);}
+  .halal-label{
+    font-family:'Manrope',sans-serif;font-weight:800;font-size:14.5px;
+    line-height:1.28;letter-spacing:.2px;text-transform:uppercase;
+  }
+  .halal-card.c1 .halal-label{color:#1E5A38;}
+  .halal-card.c2 .halal-label{color:#1E5A38;}
+  .halal-card.c3 .halal-label{color:#8B3A2F;}
+  .halal-card.c4 .halal-label{color:#1E5A38;}
+  @media(max-width:400px){
+    .halal-title{font-size:25px;}
+    .halal-ill{width:96px;height:96px;font-size:44px;}
+    .halal-label{font-size:13px;}
+  }
   .app-shell{
     max-width:480px;margin:0 auto;background:var(--white);
     min-height:100vh;height:100vh;position:relative;box-shadow:var(--shadow-lg);
@@ -1303,15 +1366,15 @@ const FILTER_DEFS = {
   country:['Италия','Турция','Китай','Португалия','Россия']
 };
 const DATA = [
-  { id:'halal', name:'Halal Market', icon:'🕌', tag:'Halal-сервисы',
-    subcats:['Агентства','Гостиницы','Апартаменты','Койко-места'],
+  { id:'halal', name:'Халяль маркет', icon:'🕌', tag:'Халяль',
+    subcats:['Еда и рестораны','Продуктовые магазины','Мясо','Исламские товары'],
     catalog:{
-      'Агентства':[['Подбор жилья','от 12 500 ₽'],['Консультация Halal-агента','Бесплатно'],['Сопровождение сделки','от 30 000 ₽']],
-      'Гостиницы':[['Номер Standard','4 500 ₽/ночь'],['Номер Deluxe','8 000 ₽/ночь'],['Семейный номер','11 250 ₽/ночь']],
-      'Апартаменты':[['Студия, м. Марьино','80 000 ₽/мес'],['1-спальная, м. Митино','112 500 ₽/мес'],['2-спальная, м. Беляево','170 000 ₽/мес']],
-      'Койко-места':[['Койко-место (муж.)','16 250 ₽/мес'],['Койко-место (жен.)','17 500 ₽/мес'],['Место в общей комнате','13 750 ₽/мес']]
+      'Еда и рестораны':[['Плов по-фергански','450 ₽'],['Шаурма халяль','320 ₽'],['Лагман','420 ₽'],['Самса с бараниной','120 ₽'],['Донер-кебаб','390 ₽'],['Комплексный обед','550 ₽']],
+      'Продуктовые магазины':[['Финики Меджул, 500 г','690 ₽'],['Оливковое масло, 1 л','850 ₽'],['Мёд горный, 1 кг','1 200 ₽'],['Чай узбекский, 250 г','280 ₽'],['Специи для плова, набор','340 ₽'],['Лепёшки тандырные, 2 шт','160 ₽']],
+      'Мясо':[['Баранина, лопатка, 1 кг','950 ₽'],['Говядина, вырезка, 1 кг','1 150 ₽'],['Курица халяль, тушка','420 ₽'],['Фарш бараний, 1 кг','780 ₽'],['Казы конская, 1 кг','2 400 ₽'],['Шашлык маринованный, 1 кг','890 ₽']],
+      'Исламские товары':[['Коран в подарочном оформлении','2 500 ₽'],['Молитвенный коврик','1 400 ₽'],['Тасбих (чётки)','450 ₽'],['Хиджаб, шифон','900 ₽'],['Мужская тюбетейка','700 ₽'],['Мисвак, 3 шт','250 ₽']]
     },
-    providers:[{name:'Амвадж Резиденс',rating:4.8,meta:'Ответ за 10 мин'},{name:'Baraka Homes',rating:4.6,meta:'Ответ за 20 мин'},{name:'Al Noor Halal Stay',rating:4.9,meta:'Ответ за 5 мин'}]
+    providers:[{name:'Halal Food House',rating:4.8,meta:'Ответ за 10 мин'},{name:'Барака Маркет',rating:4.6,meta:'Ответ за 20 мин'},{name:'Мясная лавка Сунна',rating:4.9,meta:'Ответ за 5 мин'}]
   },
   { id:'realty', name:'Недвижимость', icon:'🏠', tag:'Аренда и продажа',
     subcats:['Продам квартиру','Сдам квартиру','Сниму квартиру','Койко-место','Агентство','Комната','Земельные участки'],
@@ -2161,10 +2224,62 @@ function catBannerHtml(cat){
         : `<div class="shop-banner-empty"><b>${cat.name}</b><span>Баннер раздела (16:9) — управляет супер-админ</span></div>`}
     </div>`;
 }
+function renderHalalHub(cat){
+  const el = $('#screenCategory');
+  const CARDS = [
+    {n:1, sub:'Еда и рестораны',        label:'ЕДА<br>И РЕСТОРАНЫ',        cls:'c1', badge:'\u{1F54C}', ill:'\u{1F372}'},
+    {n:2, sub:'Продуктовые магазины',   label:'ПРОДУКТОВЫЕ<br>МАГАЗИНЫ',   cls:'c2', badge:'\u{1F6D2}', ill:'\u{1F9FA}'},
+    {n:3, sub:'Мясо',                   label:'МЯСО',                       cls:'c3', badge:'\u{1F969}', ill:'\u{1F969}'},
+    {n:4, sub:'Исламские товары',       label:'ИСЛАМСКИЕ<br>ТОВАРЫ',        cls:'c4', badge:'\u06DE',   ill:'\u{1F4D7}'}
+  ];
+  el.innerHTML = `
+    <div class="back-row" style="justify-content:space-between">
+      <button class="back-btn" id="backToHome"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+      <button class="back-btn" id="categoryBellBtn" aria-label="Уведомления"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#0F3D24" stroke-width="2"><path d="M6 8a6 6 0 0 1 12 0c0 5 2 6 2 6H4s2-1 2-6z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg></button>
+    </div>
+    <div class="halal-wrap">
+      <svg class="halal-domes" viewBox="0 0 400 190" preserveAspectRatio="none" aria-hidden="true">
+        <g fill="#1B5138">
+          <path d="M40 190v-70a22 22 0 0 1 44 0v70z"/>
+          <path d="M20 190v-46a10 10 0 0 1 20 0v46z"/>
+          <path d="M300 190v-84a30 30 0 0 1 60 0v84z"/>
+          <path d="M362 190v-54a12 12 0 0 1 24 0v54z"/>
+          <path d="M276 190v-50a11 11 0 0 1 22 0v50z"/>
+        </g>
+      </svg>
+
+      <div class="halal-head">
+        <svg class="halal-logo" viewBox="0 0 64 64" aria-hidden="true">
+          <path d="M20 20V16a12 12 0 0 1 24 0v4" fill="none" stroke="#1B5138" stroke-width="3.4" stroke-linecap="round"/>
+          <path d="M13 20h38l3 34a6 6 0 0 1-6 6H16a6 6 0 0 1-6-6z" fill="#1B5138"/>
+          <path d="M36.5 31.5a9.5 9.5 0 1 0 0 17 11.5 11.5 0 1 1 0-17z" fill="#fff"/>
+          <path d="M42.2 34.6l1.5 3.4 3.7.4-2.8 2.5.8 3.6-3.2-1.9-3.2 1.9.8-3.6-2.8-2.5 3.7-.4z" fill="#fff"/>
+        </svg>
+        <h1 class="halal-title">Халяль маркет</h1>
+        <p class="halal-tagline">Покупай халяль — живи осознанно</p>
+      </div>
+
+      <div class="halal-grid">
+        ${CARDS.map(c=>`
+          <button class="halal-card ${c.cls}" data-sub="${c.sub}">
+            <span class="halal-badge">${c.badge}</span>
+            <span class="halal-ill">${c.ill}</span>
+            <span class="halal-label">${c.n}. ${c.label}</span>
+          </button>`).join('')}
+      </div>
+    </div>
+  `;
+  $('#backToHome').onclick=()=>showScreen('home');
+  $('#categoryBellBtn').onclick=()=>toast('Демо: уведомлений пока нет');
+  $all('.halal-card').forEach(b=>b.onclick=()=>openSubcat('halal', b.dataset.sub));
+  showScreen('category');
+}
+
 function openCategory(catId){
   state.activeCat = catId;
   const cat = catById(catId);
   if(catId==='jobs'){ openJobsHub(cat); return; }
+  if(catId==='halal'){ renderHalalHub(cat); return; }
   const el = $('#screenCategory');
   const subIco = s => (cat.subIcons && cat.subIcons[s]) || cat.icon;
   const subDesc = s => (cat.subDesc && cat.subDesc[s]) || '';
