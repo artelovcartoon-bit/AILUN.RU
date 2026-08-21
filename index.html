@@ -52,6 +52,19 @@
     background-size:26px 26px;
   }
 
+  /* ===== CITY SWITCHER ===== */
+  .city-btn{
+    display:inline-flex;align-items:center;gap:5px;
+    background:var(--green-50);border:1px solid var(--green-100,#DCE7E0);
+    border-radius:999px;padding:6px 11px 6px 9px;cursor:pointer;
+    font-family:'Onest',sans-serif;font-size:12.5px;font-weight:600;color:var(--green-900);
+    white-space:nowrap;max-width:150px;
+  }
+  .city-btn:hover{background:#E4F0E8;}
+  .city-btn svg{flex:none;}
+  .city-btn b{font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .city-list button{display:flex;align-items:center;justify-content:space-between;width:100%;}
+  .city-list .city-meta{font-size:11px;color:var(--ink-soft);font-weight:400;}
   /* ===== HALAL VERIFIED BADGE ===== */
   .halal-mark{
     display:inline-flex;align-items:center;gap:4px;vertical-align:middle;
@@ -1093,6 +1106,11 @@
         <span class="logo-text">Ailun</span>
       </div>
       <div style="display:flex;align-items:center;gap:8px">
+        <button class="city-btn" id="cityBtn" aria-label="Выбор города">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z" stroke="#167A47" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="#167A47" stroke-width="2"/></svg>
+          <b id="cityBtnLabel">Москва</b>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="#167A47" stroke-width="3" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
         <button class="icon-btn" id="langBtn" aria-label="Язык интерфейса" style="font-size:15px">🌐</button>
         <div class="auth-actions" id="authActions"></div>
       </div>
@@ -1100,7 +1118,7 @@
     <div class="cta-row">
       <div class="search-field" id="openSearchBtn" style="flex:1">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="#4B5D53" stroke-width="2"/><path d="M21 21l-4.3-4.3" stroke="#4B5D53" stroke-width="2" stroke-linecap="round"/></svg>
-        <span>Поиск по метро, например: Строгино</span>
+        <span id="searchHint">Поиск по метро, например: Строгино</span>
       </div>
     </div>
   </header>
@@ -2011,7 +2029,12 @@ const WA_NUMBER = '79000000000'; // TODO: заменить на реальный
 const MAX_LINK = `https://max.ru/${WA_NUMBER}`; // TODO: заменить на реальную ссылку на профиль в MAX
 
 /* ===================== STATE ===================== */
+const CITIES = [
+  {id:'msk', name:'Москва', meta:'Метро, 12 линий'},
+  {id:'spb', name:'Санкт-Петербург', meta:'Метро, 5 линий'}
+];
 const state = {
+  city:'msk',
   loggedIn:false,
   favorites:new Set(),
   cart:new Set(),
@@ -2127,14 +2150,32 @@ function translit(str){
     ь:'',э:'e',ю:'yu',я:'ya'};
   return str.toLowerCase().split('').map(ch=>map[ch]!==undefined?map[ch]:ch).join('');
 }
-const METRO_LIST = [...new Set(METRO_RAW)].map(name=>({name, tr:translit(name)}));
+const METRO_SPB_RAW = [
+  'Девяткино','Гражданский проспект','Академическая','Политехническая','Площадь Мужества','Лесная',
+  'Выборгская','Площадь Ленина','Чернышевская','Площадь Восстания','Владимирская','Пушкинская',
+  'Технологический институт','Балтийская','Нарвская','Кировский завод','Автово','Ленинский проспект',
+  'Проспект Ветеранов','Парнас','Проспект Просвещения','Озерки','Удельная','Пионерская','Чёрная речка',
+  'Петроградская','Горьковская','Невский проспект','Сенная площадь','Фрунзенская','Московские ворота',
+  'Электросила','Парк Победы','Московская','Звёздная','Купчино','Приморская','Василеостровская',
+  'Гостиный двор','Маяковская','Площадь Александра Невского','Елизаровская','Ломоносовская','Пролетарская',
+  'Обухово','Рыбацкое','Комендантский проспект','Старая Деревня','Крестовский остров','Чкаловская',
+  'Спортивная','Адмиралтейская','Садовая','Звенигородская','Обводный канал','Волковская','Бухарестская',
+  'Международная','Проспект Славы','Дунайская','Шушары','Спасская','Достоевская','Лиговский проспект',
+  'Новочеркасская','Ладожская','Проспект Большевиков','Улица Дыбенко','Зенит','Беговая'
+];
+const METRO_BY_CITY = {
+  msk: [...new Set(METRO_RAW)].map(name=>({name, tr:translit(name)})),
+  spb: [...new Set(METRO_SPB_RAW)].map(name=>({name, tr:translit(name)}))
+};
+function metroList(){ return METRO_BY_CITY[state.city] || METRO_BY_CITY.msk; }
+const METRO_LIST = METRO_BY_CITY.msk;
 
 function renderMetroSuggestions(q){
   const box = $('#metroSuggestions');
   if(!box) return;
   if(!q){ box.innerHTML=''; box.classList.remove('open'); return; }
   const query = q.toLowerCase().trim();
-  const matches = METRO_LIST.filter(m=>{
+  const matches = metroList().filter(m=>{
     if(state.selectedMetro.includes(m.name)) return false;
     return m.name.toLowerCase().startsWith(query) || m.tr.startsWith(query);
   }).slice(0,6);
@@ -2482,6 +2523,37 @@ const LANGUAGES = [
   {code:'tg', label:'Тоҷикӣ'}
 ];
 state.lang = 'ru';
+function cityById(id){ return CITIES.find(c=>c.id===id) || CITIES[0]; }
+function renderCityLabel(){
+  const el = $('#cityBtnLabel');
+  if(el) el.textContent = cityById(state.city).name;
+  const hint = $('#searchHint');
+  if(hint) hint.textContent = state.city==='spb'
+    ? 'Поиск по метро, например: Купчино'
+    : 'Поиск по метро, например: Строгино';
+}
+function setCity(id){
+  if(state.city === id){ closeModal(); return; }
+  state.city = id;
+  state.selectedMetro = [];
+  renderCityLabel();
+  closeModal();
+  toast(`Город: ${cityById(id).name}`);
+  renderListings();
+}
+function openCityModal(){
+  openModal(`
+    <div class="modal-head"><h3>Выберите город</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
+    <div class="subcat-list city-list">
+      ${CITIES.map(c=>`<button data-city="${c.id}">
+        <span>${state.city===c.id?'✓ ':''}${c.name}</span>
+        <span class="city-meta">${c.meta}</span>
+      </button>`).join('')}
+    </div>
+    <p style="font-size:11.5px;color:var(--ink-soft);margin-top:8px">Объявления, станции метро и магазины показываются по выбранному городу.</p>
+  `);
+  $all('.modal-sheet [data-city]').forEach(b=>{ b.onclick=()=>setCity(b.dataset.city); });
+}
 function openLanguageModal(){
   openModal(`
     <div class="modal-head"><h3>Язык интерфейса</h3><button class="modal-close" onclick="closeModal()">✕</button></div>
@@ -2500,6 +2572,8 @@ function openLanguageModal(){
   });
 }
 $('#langBtn').onclick = openLanguageModal;
+$('#cityBtn').onclick = openCityModal;
+renderCityLabel();
 
 /* ===================== RENDER: CATEGORY SCREEN (providers list) ===================== */
 function catBannerHtml(cat){
@@ -3601,8 +3675,8 @@ function renderMetroSearchBody(query){
   const body = $('#searchBody');
   const q = query.toLowerCase().trim();
   const list = q
-    ? METRO_LIST.filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,8)
-    : METRO_LIST.slice(0,6);
+    ? metroList().filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,8)
+    : metroList().slice(0,6);
   body.innerHTML = `
     <div class="section-head" style="margin-top:4px"><h2 style="font-size:14px">${q?'Станции':'Популярные станции'}</h2></div>
     ${list.length ? list.map(m=>`
@@ -3895,6 +3969,7 @@ function openProfileModal(){
       </div>
     </div>
     <div class="subcat-list">
+      <button onclick="closeModal(); openCityModal();"><span>📍 Город: <b>${cityById(state.city).name}</b></span> ›</button>
       <button onclick="toast('Демо-раздел')"><span>⚙️ Настройки профиля</span> ›</button>
       <button onclick="toast('Демо-раздел')"><span>📋 Мои объявления</span> ›</button>
       <button onclick="toast('Демо-раздел')"><span>💬 Чаты</span> ›</button>
@@ -4273,7 +4348,7 @@ function wireListingMetro(){
     const q = e.target.value.toLowerCase().trim();
     const box = $('#listingMetroSuggestions');
     if(!q){ box.innerHTML=''; return; }
-    const matches = METRO_LIST.filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,5);
+    const matches = metroList().filter(m=>m.name.toLowerCase().startsWith(q) || m.tr.startsWith(q)).slice(0,5);
     box.innerHTML = matches.length ? matches.map(m=>`
       <div class="search-result-row" data-metro="${m.name}" style="cursor:pointer">
         <div class="ico" style="width:28px;height:28px;font-size:13px">🚇</div><div><strong>${m.name}</strong></div>
