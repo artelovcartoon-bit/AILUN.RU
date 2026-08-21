@@ -1083,16 +1083,6 @@
     </div>
   </div>
 
-  <!-- Metro search (Moscow) -->
-  <div class="metro-search-bar" id="metroSearchBar">
-    <div class="metro-input-wrap">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z" stroke="#167A47" stroke-width="2"/><circle cx="12" cy="9" r="2.5" stroke="#167A47" stroke-width="2"/></svg>
-      <input type="text" id="metroInput" placeholder="Станция метро (например, Строгино)" autocomplete="off">
-    </div>
-    <div class="metro-suggestions" id="metroSuggestions"></div>
-    <div class="metro-chips" id="metroChips"></div>
-  </div>
-
   <!-- Header -->
   <header class="main">
     <div class="top-row">
@@ -1464,6 +1454,54 @@ function halalMenu(place, tweak){
     ...(t.extra || {})
   });
 }
+const HALAL_GROCERY_SUBCATS = ['Бакалея','Молочное','Сухофрукты и орехи','Специи','Выпечка','Напитки'];
+function groceryMenu(place){
+  return makeFoodCatalog(place, {
+    'Бакалея':[
+      ['Рис дев-зира, 1 кг',420,510,4.8,132,'Для плова, Узбекистан'],
+      ['Мука высший сорт, 2 кг',180,0,4.5,87,'Для лепёшек'],
+      ['Масло хлопковое, 1 л',320,390,4.6,64,'Для плова'],
+      ['Оливковое масло, 1 л',850,990,4.7,73,'Первый отжим'],
+      ['Нут, 1 кг',240,0,4.5,49,'Крупный, узбекский'],
+      ['Макароны твёрдых сортов, 500 г',140,170,4.4,58,'Италия']
+    ],
+    'Молочное':[
+      ['Айран домашний, 1 л',180,0,4.7,112,'Солёный'],
+      ['Катык, 500 г',160,190,4.6,78,'Домашняя закваска'],
+      ['Сулугуни, 500 г',540,0,4.7,66,'Халяль-сертификат'],
+      ['Брынза, 500 г',420,510,4.5,54,'Овечья'],
+      ['Курт, 300 г',290,0,4.4,41,'Сушёный']
+    ],
+    'Сухофрукты и орехи':[
+      ['Финики Меджул, 500 г',690,850,4.9,196,'Иордания, крупные'],
+      ['Курага, 500 г',380,0,4.6,84,'Без обработки серой'],
+      ['Изюм кишмиш, 500 г',290,350,4.5,71,'Узбекистан'],
+      ['Грецкий орех очищенный, 500 г',690,0,4.7,58,'Урожай этого года'],
+      ['Миндаль, 500 г',780,920,4.6,47,'Обжаренный'],
+      ['Фисташки, 500 г',990,0,4.8,63,'Солёные']
+    ],
+    'Специи':[
+      ['Зира, 100 г',180,0,4.8,143,'Целая, ароматная'],
+      ['Специи для плова, набор',340,410,4.7,118,'6 видов в коробке'],
+      ['Барбарис сушёный, 100 г',160,0,4.5,67,'Для плова'],
+      ['Шафран, 1 г',890,0,4.6,28,'Иран'],
+      ['Перец чёрный горошек, 100 г',140,175,4.4,52,'Свежий помол']
+    ],
+    'Выпечка':[
+      ['Лепёшка тандырная, 2 шт',160,0,4.9,224,'Из тандыра'],
+      ['Патыр, 1 шт',110,0,4.7,138,'Слоёная'],
+      ['Лаваш армянский, 3 шт',120,150,4.5,96,'Тонкий'],
+      ['Самса замороженная, 5 шт',480,0,4.6,74,'Домашняя лепка']
+    ],
+    'Напитки':[
+      ['Чай узбекский, 250 г',280,340,4.7,151,'Зелёный, крупнолистовой'],
+      ['Чай чёрный с бергамотом, 250 г',260,0,4.5,88,'Цейлон'],
+      ['Кофе молотый, 250 г',480,570,4.6,62,'Арабика'],
+      ['Гранатовый сок, 1 л',420,0,4.7,54,'Прямой отжим'],
+      ['Минеральная вода, 6 x 1,5 л',280,340,4.3,71,'Без газа']
+    ]
+  });
+}
 const CLOTHING_SHOP_SUBCATS = ['Футболки','Джинсы','Куртки','Обувь','Аксессуары','Детское'];
 const SORT_OPTIONS = [
   ['popular','По популярности'],
@@ -1510,6 +1548,18 @@ const DATA = [
       {id:'halal-bistro', name:'Halal Bistro', initials:'HB', color:'#2FA365', popular:false, rating:4.4, halal:false, tag:'Бизнес-ланчи', reviews:98, orders:1130, since:'июля 2023', reply:'30 минут', subcats:HALAL_FOOD_SUBCATS, catalog:halalMenu('Halal Bistro')},
       {id:'chaikhana-nur', name:'Чайхана Нур', initials:'ЧН', color:'#167A47', popular:false, rating:4.7, halal:true, tag:'Чайхана', reviews:205, orders:2340, since:'мая 2021', reply:'18 минут', subcats:HALAL_FOOD_SUBCATS, catalog:halalMenu('Чайхана Нур')},
       {id:'zam-zam', name:'Зам-Зам', initials:'ЗЗ', color:'#12492C', popular:false, rating:4.5, halal:false, tag:'Доставка 24/7', reviews:167, orders:3020, since:'августа 2022', reply:'14 минут', subcats:HALAL_FOOD_SUBCATS, catalog:halalMenu('Зам-Зам')}
+    ]
+  },
+  { id:'halal-grocery', name:'Продуктовые магазины', icon:'\u{1F9FA}', tag:'Халяль-продукты и бакалея', hidden:true, parent:'halal',
+    shops:[
+      {id:'baraka-market', name:'Барака Маркет', initials:'БМ', color:'#1B5138', popular:true, rating:4.8, halal:true, tag:'Халяль-супермаркет', reviews:364, orders:4820, since:'марта 2020', reply:'12 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Барака Маркет')},
+      {id:'oriental-bazar', name:'Восточный Базар', initials:'ВБ', color:'#C9972E', popular:true, rating:4.7, halal:true, tag:'Специи и сухофрукты', reviews:289, orders:3410, since:'июля 2021', reply:'15 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Восточный Базар')},
+      {id:'nur-food', name:'Нур Фуд', initials:'НФ', color:'#167A47', popular:true, rating:4.6, halal:true, tag:'Доставка от 1 часа', reviews:198, orders:2740, since:'февраля 2022', reply:'10 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Нур Фуд')},
+      {id:'samarkand-shop', name:'Самарканд', initials:'СМ', color:'#5B4636', popular:true, rating:4.7, halal:true, tag:'Узбекские продукты', reviews:241, orders:3120, since:'мая 2021', reply:'18 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Самарканд')},
+      {id:'halal-mart', name:'Halal Mart', initials:'HM', color:'#0B3D2E', popular:true, rating:4.5, halal:false, tag:'Сеть магазинов', reviews:156, orders:1980, since:'октября 2022', reply:'22 минуты', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Halal Mart')},
+      {id:'dastarkhan', name:'Дастархан', initials:'ДХ', color:'#2FA365', popular:true, rating:4.6, halal:true, tag:'Домашние продукты', reviews:134, orders:1640, since:'января 2023', reply:'25 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Дастархан')},
+      {id:'zam-zam-shop', name:'Зам-Зам Маркет', initials:'ЗЗ', color:'#12492C', popular:false, rating:4.4, halal:true, tag:'Круглосуточно', reviews:98, orders:1210, since:'августа 2023', reply:'30 минут', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Зам-Зам Маркет')},
+      {id:'shirin-grocery', name:'Ширин Бакалея', initials:'ШБ', color:'#8B3A2F', popular:false, rating:4.5, halal:true, tag:'Сладости и орехи', reviews:121, orders:1470, since:'марта 2023', reply:'24 минуты', subcats:HALAL_GROCERY_SUBCATS, catalog:groceryMenu('Ширин Бакалея')}
     ]
   },
   { id:'realty', name:'Недвижимость', icon:'🏠', tag:'Аренда и продажа',
@@ -1982,6 +2032,7 @@ const METRO_LIST = [...new Set(METRO_RAW)].map(name=>({name, tr:translit(name)})
 
 function renderMetroSuggestions(q){
   const box = $('#metroSuggestions');
+  if(!box) return;
   if(!q){ box.innerHTML=''; box.classList.remove('open'); return; }
   const query = q.toLowerCase().trim();
   const matches = METRO_LIST.filter(m=>{
@@ -2000,7 +2051,7 @@ function renderMetroSuggestions(q){
 function addMetro(name){
   if(!state.selectedMetro.includes(name)) state.selectedMetro.push(name);
   const input = $('#metroInput');
-  input.value=''; input.focus();
+  if(input){ input.value=''; input.focus(); }
   renderMetroSuggestions('');
   renderMetroChips();
   toast(`Добавлено: ${name}`);
@@ -2011,11 +2062,13 @@ function removeMetro(name){
 }
 function renderMetroChips(){
   const box = $('#metroChips');
+  if(!box) return;
   box.innerHTML = state.selectedMetro.map(n=>`<span class="metro-chip">🚇 ${n}<button data-remove="${n}" aria-label="Убрать">✕</button></span>`).join('');
   $all('[data-remove]', box).forEach(b=>b.onclick=()=>removeMetro(b.dataset.remove));
 }
 function initMetroSearch(){
   const input = $('#metroInput');
+  if(!input){ renderMetroChips(); return; }
   input.addEventListener('input', e=>renderMetroSuggestions(e.target.value));
   input.addEventListener('focus', e=>{ if(e.target.value.trim()) renderMetroSuggestions(e.target.value); });
   document.addEventListener('click', e=>{
@@ -2423,6 +2476,7 @@ function renderHalalHub(cat){
   $all('.halal-card').forEach(b=>b.onclick=()=>{
     const sub = b.dataset.sub;
     if(sub==='Еда и рестораны'){ openCategory('halal-food'); return; }
+    if(sub==='Продуктовые магазины'){ openCategory('halal-grocery'); return; }
     openSubcat('halal', sub);
   });
   showScreen('category');
