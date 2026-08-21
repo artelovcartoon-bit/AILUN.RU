@@ -1661,7 +1661,8 @@ const DATA = [
   { id:'auto', name:'Автомобиль', icon:'🚗', tag:'Купить, продать, взять в аренду',
     subcats:['Продажа машины','Аренда машины','Автозапчасти','Такси','Граница (заезд-выезд)','Попутки между городами'],
     subIcons:{'Продажа машины':'🚘','Аренда машины':'🔑','Автозапчасти':'🔧','Такси':'🚕','Граница (заезд-выезд)':'🛂','Попутки между городами':'🧳'},
-    subDesc:{'Продажа машины':'Купить или продать авто','Аренда машины':'Прокат на сутки и дольше','Автозапчасти':'Запчасти и аксессуары','Такси':'Заказ такси по городу','Граница (заезд-выезд)':'Сопровождение и трансфер','Попутки между городами':'Поездки между городами'},
+    subDesc:{'Продажа машины':'Купить или продать авто','Аренда машины':'Прокат на сутки и дольше','Автозапчасти':'Запчасти и аксессуары','Такси':'Аренда, выкуп, таксопарки','Граница (заезд-выезд)':'Сопровождение и трансфер','Попутки между городами':'Поездки между городами'},
+    subRoutes:{'Такси':'auto-taxi'},
     catalog:{
       'Продажа машины':[['Toyota Camry 2022','1 950 000 ₽'],['Nissan Patrol 2020','3 625 000 ₽'],['Hyundai Solaris 2021','1 150 000 ₽']],
       'Аренда машины':[['Аренда economy/сутки','2 375 ₽'],['Аренда SUV/сутки','5 500 ₽'],['Аренда с водителем/сутки','7 000 ₽']],
@@ -1670,10 +1671,47 @@ const DATA = [
       'Граница (заезд-выезд)':[['Сопровождение на границе','от 2 000 ₽'],['Трансфер до границы и обратно','от 3 500 ₽']],
       'Попутки между городами':[['Москва — Санкт-Петербург','от 1 800 ₽'],['Москва — Нижний Новгород','от 1 200 ₽'],['Москва — Тверь','от 700 ₽']]
     },
-    taxiParks:['Яндекс Такси','Ситимобил','Максим','Такси Везёт','Gett','Таксовичkoff'],
     providers:[{name:'АвтоВыкуп Москва',rating:4.6,meta:'20 объявлений'},{name:'Столица Моторс',rating:4.4,meta:'35 объявлений'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
   },
-  { id:'clothing-private', name:'Одежда от частных лиц', icon:'🧺', tag:'Новое и б/у от людей, не магазинов',
+  { id:'auto-taxi', name:'Такси', icon:'🚕', tag:'Аренда, выкуп, таксопарки', hidden:true, parent:'auto',
+    subcats:['Аренда авто','Выкуп авто','Таксопарки'],
+    subIcons:{'Аренда авто':'🔑','Выкуп авто':'💰','Таксопарки':'🚕'},
+    subDesc:{'Аренда авто':'Прокат под такси и для себя','Выкуп авто':'Срочный выкуп за наличные','Таксопарки':'Подключение и работа в такси'},
+    catalog:{
+      'Аренда авто':[
+        ['Kia Rio, эконом / сутки','2 400 ₽'],
+        ['Hyundai Solaris, эконом / сутки','2 600 ₽'],
+        ['Volkswagen Polo, комфорт / сутки','3 200 ₽'],
+        ['Toyota Camry, бизнес / сутки','5 500 ₽'],
+        ['Kia Sportage, кроссовер / сутки','5 900 ₽'],
+        ['Nissan Patrol, внедорожник / сутки','9 500 ₽'],
+        ['Аренда с водителем / сутки','7 000 ₽'],
+        ['Аренда на неделю, эконом','14 000 ₽'],
+        ['Аренда на месяц, эконом','48 000 ₽'],
+        ['Электромобиль под такси / сутки','3 900 ₽'],
+        ['Аренда с выкупом, первый взнос','80 000 ₽'],
+        ['Микроавтобус 8 мест / сутки','8 500 ₽']
+      ],
+      'Выкуп авто':[
+        ['Выкуп легкового авто','до 3 500 000 ₽'],
+        ['Выкуп внедорожника','до 6 000 000 ₽'],
+        ['Выкуп после ДТП','до 1 200 000 ₽'],
+        ['Выкуп с пробегом более 200 000 км','до 700 000 ₽'],
+        ['Выкуп кредитного авто','индивидуально'],
+        ['Выкуп авто с обременением','индивидуально'],
+        ['Trade-in с доплатой','индивидуально'],
+        ['Выезд оценщика','бесплатно'],
+        ['Срочный выкуп за 2 часа','по оценке'],
+        ['Выкуп микроавтобуса','до 2 500 000 ₽'],
+        ['Выкуп грузового авто','до 4 000 000 ₽'],
+        ['Комиссионная продажа','2% от суммы']
+      ],
+      'Таксопарки':[]
+    },
+    taxiParks:['Яндекс Такси','Ситимобил','Максим','Такси Везёт','Gett','Таксовичkoff','Ситидрайв','Каршеринг Делимобиль'],
+    providers:[{name:'АвтоВыкуп Москва',rating:4.6,meta:'20 объявлений'},{name:'Таксопарк Столица',rating:4.5,meta:'Подключение за день'},{name:'Prestige Cars',rating:4.8,meta:'12 объявлений'}]
+  },
+  { id:'clothing-private', name:'Одежда от частных лиц', icon:'🧺', tag:'Новое и б/у от людей, не магазинов', gridView:true,
     subcats:['Женская','Мужская','Детская','Обувь','Аксессуары','Отдам даром'],
     subIcons:{'Женская':'👗','Мужская':'👔','Детская':'🧸','Обувь':'👟','Аксессуары':'👜','Отдам даром':'🎁'},
     subDesc:{'Женская':'Платья, верх, низ','Мужская':'Рубашки, брюки, верх','Детская':'Одежда и обувь для детей','Обувь':'Мужская, женская, детская','Аксессуары':'Сумки, ремни, украшения','Отдам даром':'Бесплатно, самовывоз'},
@@ -1751,7 +1789,7 @@ const DATA = [
     },
     providers:[{name:'TechPoint',rating:4.8,meta:'Гарантия 1 год'},{name:'GadgetPro',rating:4.5,meta:'Рассрочка 0%'},{name:'ElectroMax',rating:4.6,meta:'Доставка сегодня'}]
   },
-  { id:'services', name:'Услуги', icon:'🛠️', tag:'Ремонт, транспорт, красота и не только',
+  { id:'services', name:'Услуги', icon:'🛠️', tag:'Ремонт, транспорт, красота и не только', rowView:true,
     subcats:['Транспорт, перевозки','Ремонт и обслуживание','Красота и здоровье','Обучение, курсы','Установка техники','Праздники, мероприятия','Бытовые услуги','Другое'],
     subIcons:{'Транспорт, перевозки':'🚚','Ремонт и обслуживание':'🔧','Красота и здоровье':'💅','Обучение, курсы':'📚','Установка техники':'🛠️','Праздники, мероприятия':'🎉','Бытовые услуги':'🧹','Другое':'🔹'},
     subDesc:{'Транспорт, перевозки':'Переезды и грузчики','Ремонт и обслуживание':'Мастера на дом','Красота и здоровье':'Услуги на дом','Обучение, курсы':'Репетиторы и курсы','Установка техники':'Монтаж и настройка','Праздники, мероприятия':'Организация событий','Бытовые услуги':'Уборка и мелкий ремонт','Другое':'Прочие услуги'},
@@ -2551,7 +2589,7 @@ function openCategory(catId){
   const el = $('#screenCategory');
   const subIco = s => (cat.subIcons && cat.subIcons[s]) || cat.icon;
   const subDesc = s => (cat.subDesc && cat.subDesc[s]) || '';
-  if(cat.shops){
+  if(cat.shops && !cat.tiles){
     const popularShops = cat.shops.filter(s=>s.popular);
     const regularShops = cat.shops.filter(s=>!s.popular);
     el.innerHTML = `
@@ -2657,14 +2695,18 @@ function openCategory(catId){
         </div>`).join('')}
     </div>
   `;
-  $('#backToHome').onclick=()=>showScreen('home');
+  $('#backToHome').onclick=()=> cat.parent ? openCategory(cat.parent) : showScreen('home');
   $('#categoryBellBtn').onclick=()=>toast('Демо: уведомлений пока нет');
   const materialsBanner = $('#materialsBanner');
   if(materialsBanner) materialsBanner.onclick=()=>openSubcat(catId, 'Строительные материалы');
   const postBtn = $('#postConstructionBtn');
   if(postBtn) postBtn.onclick=()=> state.loggedIn ? openListingSubcats(catId) : openLoginModal();
   $all('#subcatList [data-sub]').forEach(card=>{
-    card.onclick=()=>openSubcat(catId, card.dataset.sub);
+    card.onclick=()=>{
+      const sub = card.dataset.sub;
+      if(cat.subRoutes && cat.subRoutes[sub]){ openCategory(cat.subRoutes[sub]); return; }
+      openSubcat(catId, sub);
+    };
   });
   showScreen('category');
 }
@@ -2783,7 +2825,6 @@ function renderShopHome(catId, shopId){
     </div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
-  if(shopsInSub) $all('#screenProvider [data-shop]').forEach(b=>b.onclick=()=>openShop(cat.id, b.dataset.shop));
   $('#saveShopBtn').onclick=()=>{
     const btn = $('#saveShopBtn');
     if(state.savedShops.has(shop.id)){
@@ -3224,7 +3265,7 @@ function renderProviderScreen(cat, provider){
   const sub = provider
     ? `<span class="rating" style="display:inline-flex">${star()} ${provider.rating}</span> · ${provider.meta}`
     : cat.tag;
-  const showFilters = !(cat.taxiParks && state.activeChip==='Такси');
+  const showFilters = !(cat.taxiParks && state.activeChip==='Таксопарки');
   const searchScope = provider ? provider.name : (state.activeChip==='Все' ? cat.name : state.activeChip);
   state.subcatQuery = '';
   const subKey = provider ? null : state.activeChip;
@@ -3252,7 +3293,6 @@ function renderProviderScreen(cat, provider){
           </button>`).join('')}
       </div>` : ''}
       <div style="height:1px;background:var(--line);margin:18px 0 14px"></div>
-      <h3 class="shops-section-title" style="margin-top:0">Объявления</h3>
   ` : '';
   const bannerHtml = (!provider && subKey && subKey!=='Все') ? `
     <div class="shop-banner" style="margin-bottom:14px">
@@ -3277,6 +3317,7 @@ function renderProviderScreen(cat, provider){
       <input type="text" id="subcatSearchInput" placeholder="Поиск в «${searchScope}»" autocomplete="off">
     </div>
     ${showFilters?`<button class="btn btn-outline" style="width:100%;justify-content:center;margin-bottom:14px" id="providerFiltersBtn">🔎 Фильтры: цена, сортировка</button>`:''}
+    ${shopsInSub ? `<h3 class="shops-section-title" style="margin-top:0">Объявления</h3>` : ''}
     <div class="product-grid" id="providerProducts"></div>
   `;
   $('#backToCategory').onclick=()=>showScreen('category');
@@ -3294,11 +3335,11 @@ function renderProviderScreen(cat, provider){
 }
 function renderProviderProducts(cat){
   const subs = state.activeChip==='Все' ? cat.subcats : [state.activeChip];
-  if(cat.taxiParks && state.activeChip==='Такси'){
+  if(cat.taxiParks && state.activeChip==='Таксопарки'){
     renderTaxiParks(cat);
     return;
   }
-  if(cat.listings){
+  if((cat.listings && !cat.gridView) || cat.rowView){
     renderListingRows(cat, subs);
     return;
   }
@@ -3407,7 +3448,7 @@ function renderTaxiParks(cat){
 function renderListingRows(cat, subs){
   let rows = [];
   subs.forEach(s=>{
-    const items = cat.listings[s];
+    const items = cat.listings ? cat.listings[s] : null;
     if(items){
       items.forEach((l,i)=>rows.push({...l, sub:s, idx:i}));
     } else {
